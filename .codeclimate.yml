@@ -1,7 +1,7 @@
 ## other configuration excluded from example...
 exclude_paths:
-- "./assets/**"
-- "./saves/**"
-- "./src/tests/*"
+- "assets/**"
+- "saves/**"
+- "src/tests/*"
 
 
