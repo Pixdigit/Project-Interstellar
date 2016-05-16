@@ -1,1 +1,0 @@
-/home/studio-home/Dokumente/Projekt Interstellar/Project_interstellar_git/src/settings.py
