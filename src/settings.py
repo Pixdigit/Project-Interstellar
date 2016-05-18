@@ -126,9 +126,6 @@ def init():
 	events = []
 	loading_time = 0
 
-	from .player import player as player
-	player = player()
-
 	pygame.display.set_caption("Project Interstellar " + version)
 	pygame.display.set_icon(pygame.image.load("./assets/sprites/logo.png"))
 
@@ -167,6 +164,9 @@ def init():
 		screeny_current = int(screenx_current * 9.0 / 16)
 		screen = pygame.display.set_mode((screenx_current, screeny_current),
 		0, 32)
+
+	from .player import player as player
+	player = player()
 
 	from . import worlds
 	localmap = {}

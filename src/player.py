@@ -28,9 +28,12 @@ class player():
 		self.explosion_anim = None
 		self.new_ship("Player1")
 		self.overlay = overlay_handler.create_overlay()
-		overlay_obj = overlay_handler.overlay_element_base_class("test", (0, 0))
-		overlay_obj.set_image(pygame.Surface((5, 5)))
+		overlay_elem_pos = (settings.screenx_current / 2, settings.screeny_current)
+		overlay_obj = overlay_handler.overlay_element_base_class(
+							"items", overlay_elem_pos, "midbottom")
+		overlay_obj.load_image("./assets/sprites/item_bar.png")
 		self.overlay.add_overlay_element(overlay_obj)
+		self.overlay.activate()
 
 	def create_images(self, name):
 		"""creates new images from one image for the player"""
