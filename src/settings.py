@@ -37,6 +37,8 @@ def init():
 	global bullet_img  # image for the bullet
 	global targeton_img  # surf for target whenlight turned on
 	global targetoff_img  # surf for target when turned off
+	global border1  # A box to hold the status information about energy level
+	global item_bar_image  # The background for items in the itembar
 	global code  # used for custom user events
 	global events  # events
 	global music  # the music playlist object
@@ -53,7 +55,6 @@ def init():
 	global morevents  # custom event logger
 	global infinitevents  # A event logger which retriggers as long as condition
 	global musicend  # custom event number to show that music ended
-	global border1  # A box to hold the status information about energy level
 	global world  # a placeholder for the world class
 	global objects_on_screen  # entitys currently blitted to screen
 	global player  # abstract player class
@@ -92,6 +93,7 @@ def init():
 	targetoff_img = pygame.image.load("./assets/sprites/mine_off.tif"
 				).convert_alpha()
 	border1 = pygame.image.load("./assets/sprites/bar1.tif").convert_alpha()
+	item_bar_image = pygame.image.load("./assets/sprites/item_bar.tif")
 
 	# define some konstants or default values
 	clock = pygame.time.Clock()
@@ -126,6 +128,16 @@ def init():
 	events = []
 	loading_time = 0
 
+	if fullscreen:
+		screen = pygame.display.set_mode(
+			(screenx_current, screeny_current),
+			pygame.FULLSCREEN, 32)
+	if not fullscreen:
+		screenx_current = int(screenx_current * 0.9)
+		screeny_current = int(screenx_current * 9.0 / 16)
+		screen = pygame.display.set_mode((screenx_current, screeny_current),
+		0, 32)
+
 	pygame.display.set_caption("Project Interstellar " + version)
 	pygame.display.set_icon(pygame.image.load("./assets/sprites/logo.png"))
 
@@ -155,15 +167,11 @@ def init():
 
 	upd("get_saves")
 
-	if fullscreen:
-		screen = pygame.display.set_mode(
-			(screenx_current, screeny_current),
-			pygame.FULLSCREEN, 32)
-	if not fullscreen:
-		screenx_current = int(screenx_current * 0.9)
-		screeny_current = int(screenx_current * 9.0 / 16)
-		screen = pygame.display.set_mode((screenx_current, screeny_current),
-		0, 32)
+	old_img_size = item_bar_image.get_size()
+	new_x_size = screenx_current / 3
+	new_y_size = int(old_img_size[1] * (float(new_x_size) / old_img_size[0]))
+	item_bar_image = pygame.transform.smoothscale(item_bar_image,
+					(new_x_size, new_y_size))
 
 	from .player import player as player
 	player = player()

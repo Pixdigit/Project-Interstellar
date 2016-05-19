@@ -4,6 +4,8 @@ import math
 from libs.pyganim import pyganim
 from ConfigParser import SafeConfigParser
 from . import overlay_handler
+from . import items
+items
 
 
 class player():
@@ -31,7 +33,7 @@ class player():
 		overlay_elem_pos = (settings.screenx_current / 2, settings.screeny_current)
 		overlay_obj = overlay_handler.overlay_element_base_class(
 							"items", overlay_elem_pos, "midbottom")
-		overlay_obj.load_image("./assets/sprites/item_bar.png")
+		overlay_obj.set_image(settings.item_bar_image)
 		self.overlay.add_overlay_element(overlay_obj)
 		self.overlay.activate()
 

@@ -3,7 +3,7 @@ import pygame
 import random
 import math
 from . import settings
-#from pygame.locals import *
+from . import overlay_handler
 
 """Classes for creating objects"""
 
@@ -279,3 +279,38 @@ class warp_station():
 		data["y_pos"] = self.y_pos
 		data["x_pos"] = self.x_pos
 		return data
+
+
+class item_bar(overlay_handler.overlay_element_base_class):
+
+	def init(self):
+		#this is a list of the relative positions for the slots. Orientation Topleft
+		self.rel_pos_list = [0.002645503, 0.165343915, 0.330687831,
+				0.501322751, 0.666666667, 0.832010582]
+		self.slots = [None for i in range(6)]
+		self.slot_pos = [pygame.Rect((0, 0, 0, 0))]
+		self.slot_size = 123
+
+	def update_size(self, old_size):
+		#this is an interface to base_class
+		self.get_abs_pos()
+		self.resize_icons()
+
+	def get_abs_pos(self):
+		new_border = int(self.rel_pos_list[0] * self.pos.length)
+		self.slot_size = [int(
+				(self.pos.length - 9 * self.rel_pos_list[0] * self.pos.length)
+				/ 6.0)] * 2
+		for rel_pos in self.rel_pos_list:
+			index = self.rel_pos.index(rel_pos)
+			new_x_pos = int(rel_pos * self.pos.length)
+			self.slot_pos[index] = pygame.Rect((new_x_pos, new_border), self.slot_size)
+
+	def resize_icons(self):
+		for item in self.slots:
+			item.resize(self.slot_size)
+
+	def set_item(self, slot, item):
+		old_item = self.slot_pos[slot]
+		self.slots[slot] = item
+		return old_item

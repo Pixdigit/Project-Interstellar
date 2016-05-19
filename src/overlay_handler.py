@@ -78,6 +78,15 @@ class overlay_element_base_class():
 		self.alignment = alignment
 		self.set_alignment(pos, alignment)
 		self.active = False
+		self.init()
+
+	def init(self):
+		"""This can be used to implement custom init procedures"""
+		pass
+
+	def update_size(self, old_rect):
+		"""This can be used to implement a feature that repond to changes in size"""
+		pass
 
 	def adjust_to_image(self):
 		old_pos = self.pos.copy()
@@ -101,9 +110,7 @@ class overlay_element_base_class():
 		elif self.alignment == "midbottom":
 			new_pos = old_pos.midbottom
 		self.set_alignment(new_pos, self.alignment)
-		print self.pos.midbottom
-		print self.pos.bottom
-		print self.pos.midtop
+		self.update_size(old_pos)
 
 	def set_alignment(self, pos, alignment):
 		if not alignment in ["topleft", "topright", "bottomleft", "botomright",
