@@ -1,4 +1,4 @@
 {
             "name": "test", 
-            "icon": "/home/studio-home/Dokumente/Projekt Interstellar/Project_interstellar_git/assets/API_elems/items/test/images/icon.png"
+            "icon_path": "./images/icon.png"
 }

@@ -5,14 +5,14 @@ from libs.pyganim import pyganim
 from ConfigParser import SafeConfigParser
 from . import overlay_handler
 from . import items
-items
+from . import objects
 
 
 class player():
 
 	def __init__(self):
-		global settings
-		from . import settings  # lint:ok
+		from . import settings
+		self.global_settings = settings
 		self.speed = 15  # Speed of player (redunant see self.new_ship())
 
 		self.rotation = 0  # Current player rotation
@@ -29,12 +29,21 @@ class player():
 		self.speedboost = 1
 		self.explosion_anim = None
 		self.new_ship("Player1")
+		self.init_overlays()
+
+	def init_overlays(self):
 		self.overlay = overlay_handler.create_overlay()
-		overlay_elem_pos = (settings.screenx_current / 2, settings.screeny_current)
-		overlay_obj = overlay_handler.overlay_element_base_class(
-							"items", overlay_elem_pos, "midbottom")
-		overlay_obj.set_image(settings.item_bar_image)
+
+		overlay_elem_pos = (self.global_settings.screenx_current / 2,
+				self.global_settings.screeny_current)
+		overlay_obj = objects.item_bar("items", overlay_elem_pos, "midbottom")
+		tmp_item = items.new_item()
+		tmp_item.load_config_from_file("test")
+		overlay_obj.set_item(0, tmp_item)
+		overlay_obj.set_image(self.global_settings.item_bar_image)
+
 		self.overlay.add_overlay_element(overlay_obj)
+
 		self.overlay.activate()
 
 	def create_images(self, name):
@@ -85,10 +94,10 @@ class player():
 
 	def move_abs(self, addx, addy):
 		#lint:disable
-		self.rel_x = (self.pos.x + addx) / float(settings.screenx_current)
-		self.rel_y = (self.pos.y + addy) / float(settings.screeny_current)
-		self.pos.top = int(self.rel_y * settings.screeny_current)
-		self.pos.left = int(self.rel_x * settings.screenx_current)
+		self.rel_x = (self.pos.x + addx) / float(self.global_settings.screenx_current)
+		self.rel_y = (self.pos.y + addy) / float(self.global_settings.screeny_current)
+		self.pos.top = int(self.rel_y * self.global_settings.screeny_current)
+		self.pos.left = int(self.rel_x * self.global_settings.screenx_current)
 		#lint:enable
 
 	def move_rel(self, *args):
@@ -96,16 +105,16 @@ class player():
 			self.rel_x = args[0]
 			self.rel_y = args[1]
 		#lint:disable
-		self.pos.top = int(self.rel_y * settings.screeny_current)
-		self.pos.left = int(self.rel_x * settings.screenx_current)
+		self.pos.top = int(self.rel_y * self.global_settings.screeny_current)
+		self.pos.left = int(self.rel_x * self.global_settings.screenx_current)
 		#lint:enable
 
 	def move(self):
 		"""Handle the movement and collisions"""
 		#lint:disable
-		konstspeed = settings.konstspeed
-		windowwidth = settings.screenx_current
-		windowheight = settings.screeny_current
+		konstspeed = self.global_settings.konstspeed
+		windowwidth = self.global_settings.screenx_current
+		windowheight = self.global_settings.screeny_current
 		#lint:enable
 
 		if self.rotation > 360:
@@ -115,8 +124,8 @@ class player():
 
 		#Turns player to according rotation
 		#lint:disable
-		self.select_angle(settings.up, settings.down,
-			settings.left, settings.right)
+		self.select_angle(self.global_settings.up, self.global_settings.down,
+			self.global_settings.left, self.global_settings.right)
 		#lint:enable
 
 		# handles rotation and gives signal to update player image/surface
@@ -159,10 +168,10 @@ class player():
 
 			#lint:disable
 			# Somehow a double check is needed…
-			if self.pos.bottom >= settings.screeny_current:
-				self.pos.bottom += settings.screeny_current - self.pos.bottom
-			if self.pos.right >= settings.screenx_current:
-				self.pos.right += settings.screenx_current - self.pos.right
+			if self.pos.bottom >= self.global_settings.screeny_current:
+				self.pos.bottom += self.global_settings.screeny_current - self.pos.bottom
+			if self.pos.right >= self.global_settings.screenx_current:
+				self.pos.right += self.global_settings.screenx_current - self.pos.right
 			#lint:enable
 
 		# updates player image if neccesary

@@ -94,11 +94,7 @@ class menu_template():
 					"Could not convert {0} to bool: {1}".format(type(self.value), self.value))
 
 		def __bool__(self):
-			try:
-				return bool(int(self.value))
-			except:
-				raise ValueError(
-					"Could not convert {0} to bool: {1}".format(type(self.value), self.value))
+			return self.__nonzero__()
 
 	def run(self):
 
