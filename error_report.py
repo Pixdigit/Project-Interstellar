@@ -5,6 +5,7 @@ permission = READ_BEFORE_START.allow_data_collection
 if permission not in [1, -1]:
 	print(("Please read the READ_BEFORE_START.py"))
 	print(("It can be opend by any normal text editor."))
+	raw_input()
 	exit()
 if permission == 1:
 	print(("Thank you for helping us making this less buggy."))
@@ -17,6 +18,7 @@ if permission == 1:
 		import telegram
 	except:
 		print(("Telegram not installed. Errors can not be reported."))
+		raw_input()
 
 
 def send(message):
