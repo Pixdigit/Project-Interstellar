@@ -108,7 +108,7 @@ def process_events():
 				#Tags all targets as being shot
 				if key == "t":
 					for target in settings.world.targets:
-						target.test_ishit(pygame.Rect((-1000, -1000), (3000, 3000)))
+						target.test_ishit(pygame.Rect((-10000, -10000), (30000, 30000)))
 				#regenerates the world
 				if key == "g":
 					settings.localmap["1"].generate(settings.localmap["1"].background,
@@ -123,11 +123,14 @@ def process_events():
 				#Switches between worlds
 				if len(key) == 3 and settings.debugmode:
 					if key[0] == "[" and key[2] == "]":
-						num = int(key[1])
-						if num != 5:
-							if num > 5:
-								num -= 1
-							settings.world = settings.localmap[str(num)]
+						try:
+							num = int(key[1])
+							if num != 5:
+								if num > 5:
+									num -= 1
+								settings.world = settings.localmap[str(num)]
+						except ValueError:
+							pass
 
 
 def getall(allkeys):
