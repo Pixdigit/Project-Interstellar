@@ -12,8 +12,8 @@
 #Ninja project file
 *.nja
 
-#Gitignore
-.gitignore
+#Licence agreement
+READ_BEFORE_START.py
 
 #empty folders
 screenshots/*
