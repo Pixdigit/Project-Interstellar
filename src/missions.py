@@ -11,8 +11,8 @@ def init():
 def time(action):
 	global oldtime
 	global newtime
-#	if not "newtime" in locals():
-#		newtime = pygame.time.get_ticks()
+	if not "newtime" in globals():
+		newtime = pygame.time.get_ticks()
 	if action == "pause":
 		oldtime = newtime
 		newtime = pygame.time.get_ticks()
@@ -52,7 +52,7 @@ def target_shooting():
 
 		font = pygame.font.SysFont(settings.typeface, 50)
 
-		points = settings.player.timeplay
+		points = time("get_time")
 		color = settings.color
 		texttime = font.render("Your time: " + str(points) + "ms", True, color)
 		tmp = str(points / (settings.dtargets * 8.0))[:6]
