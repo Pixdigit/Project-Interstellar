@@ -3,9 +3,9 @@ import pygame
 import math
 from libs.pyganim import pyganim
 from ConfigParser import SafeConfigParser
-from . import overlay_handler
+from libs.overlay import overlay_handler
+from . import overlays
 from . import items
-from . import objects
 
 
 class player():
@@ -36,7 +36,7 @@ class player():
 
 		overlay_elem_pos = (self.global_settings.screenx_current / 2,
 				self.global_settings.screeny_current)
-		overlay_obj = objects.item_bar("items", overlay_elem_pos, "midbottom")
+		overlay_obj = overlays.item_bar("items", overlay_elem_pos, "midbottom")
 		tmp_item = items.new_item()
 		tmp_item.load_config_from_file("test")
 		overlay_obj.set_item(0, tmp_item)

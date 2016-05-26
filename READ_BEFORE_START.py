@@ -10,4 +10,4 @@ If you do not agree but still want to use this programm replace 0 with -1
 If you select -1 it will mean that we will not collect any data.
 Also no bugs you encounter will be fixed if you do not send us the information manually (which you always can)
 """
-allow_data_collection = 0
+allow_data_collection = -1

@@ -3,3 +3,4 @@ v0.9.0, 2014/08/03 -- Initial Pip release.
 
 I (Pixdigit) changed some code in the main library because there were some bugs.
 Because I need to implement the new lib I use the modified version until a public fix is released.
+Also I removed tests examples and docs because I dont need them.
