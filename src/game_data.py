@@ -57,6 +57,13 @@ def save(name):
 	json.dump(data, settings_file, indent=12)
 
 
+def save_user_settings(**args):
+	path = "./userdata/user_settings.json"
+	settings_file = open(path, "w+")
+	json.dump(args, settings_file, indent=12)
+	settings_file.close()
+
+
 def load(name):
 	"""Load savegame"""
 
@@ -99,3 +106,15 @@ def load(name):
 	except Exception:
 		print(("Unexpected error:", sys.exc_info()[0]))
 		print((traceback.format_exc()))
+
+
+def load_user_settings():
+	if os.path.exists("./userdata/user_settings.json"):
+		settings_file = open("./userdata/user_settings.json", "r")
+		setting = json.load(settings_file)
+		settings_file.close()
+
+		settings.volume = setting["volume"]
+		sounds.music.volume = setting["volume"]
+	else:
+		pass
