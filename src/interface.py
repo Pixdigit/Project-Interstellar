@@ -47,46 +47,46 @@ def process_events():
 			key = pygame.key.name(event.key)
 			if key == "x" or key == "y":
 				settings.player.speedboost = 1
-			if key == "w" or key == "up":
+			if key in settings.buttonmap["up"]:
 				settings.up = False
-			if key == "s" or key == "down":
+			if key in settings.buttonmap["down"]:
 				settings.down = False
-			if key == "a" or key == "left":
+			if key in settings.buttonmap["left"]:
 				settings.left = False
-			if key == "d" or key == "right":
+			if key in settings.buttonmap["right"]:
 				settings.right = False
 		#Handles keypresses
 		if event.type == KEYDOWN:
 			key = pygame.key.name(event.key)
-			if key == "escape":
+			if key in settings.buttonmap["pause"]:
 				menu.pause()
-			if key == "f3":
+			if key in settings.buttonmap["debugscreen"]:
 				settings.debugscreen = settings.toggle(settings.debugscreen, True, False)
-			if key == "f12":
+			if key in settings.buttonmap["screenshot"]:
 				filename = "./screenshots/screenshot" + time.strftime("^%d-%m-%Y^%H.%M.%S")
 				pygame.image.save(settings.screen, filename + ".png")
-			if key == "f6":
+			if key in settings.buttonmap["next_track"]:
 				sounds.music.play("next")
-			if key == "x":
+			if key in settings.buttonmap["speeddown"]:
 				settings.player.speedboost = 0.3
-			if key == "y":
+			if key in settings.buttonmap["speedup"]:
 				settings.player.speedboost = 1.7
-			if key == "w" or key == "up":
+			if key in settings.buttonmap["up"]:
 				settings.up = True
-			if key == "s" or key == "down":
+			if key in settings.buttonmap["down"]:
 				settings.down = True
-			if key == "a" or key == "left":
+			if key in settings.buttonmap["left"]:
 				settings.left = True
-			if key == "d" or key == "right":
+			if key in settings.buttonmap["right"]:
 				settings.right = True
 			if key == "o":
 				if settings.player.pos.x >= 0.9 and settings.player.pos.y >= 0.9:
 					pygame.mixer.music.load("./assets/music/$not$ard_tatort.ogg")
 					pygame.mixer.music.play(1, 0.0)
-			if key == "f" or key == "space":
+			if key in settings.buttonmap["fire"]:
 				tmp_bullet = objects.bullet(settings.player.rotation, settings.player.pos)
 				settings.bullets.append(tmp_bullet)
-			if key == "c":
+			if key in settings.buttonmap["fire2"]:
 				specials.fire = True
 			#These are debugging relevant interfaces
 			if settings.debugmode:
