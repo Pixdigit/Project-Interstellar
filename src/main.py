@@ -15,6 +15,7 @@ from . import specials
 from . import sounds
 from . import midi_in
 from . import items
+from . import overlay_handler
 from pygame.locals import USEREVENT
 
 # Starts timer/clock for the movement, so it stays constant
@@ -30,6 +31,7 @@ movement.handle()
 specials.init()
 midi_in.init()
 items.init()
+overlay_handler.init()
 
 if not settings.skip:
 	menu.main()

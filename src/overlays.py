@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from libs.overlay import overlay_handler
+from libs.overlay import overlay
 import pygame
 
 
-class item_bar(overlay_handler.overlay_element_base_class):
+class item_bar(overlay.overlay_element_base_class):
 
 	def init(self):
 		#this is a list of the relative positions for the slots. Orientation Topleft
@@ -36,9 +36,20 @@ class item_bar(overlay_handler.overlay_element_base_class):
 				item.resize(self.slot_size)
 
 	def set_item(self, slot, item):
-		old_item = self.slot_pos[slot]
+		old_item = self.slots[slot]
 		self.slots[slot] = item
 		return old_item
+
+	def set_pos_of_item(self, old_slot, new_slot):
+		#swich positions of items in old_slot and new_slot
+		new_item = self.set_item(new_slot, self.slots[old_slot])
+		self.set_item(old_slot, new_item)
+
+	def get_item_pos(self, item_name):
+		for item in self.slots:
+			if item is not None:
+				if item.name == item_name:
+					return self.slots.index(item)
 
 	def blit(self, screen):
 		if self.active:

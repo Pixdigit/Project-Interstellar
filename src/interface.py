@@ -8,6 +8,7 @@ from . import sounds
 from . import objects
 from . import midi_in
 from . import specials
+from . import overlay_handler
 from pygame.locals import QUIT, KEYUP, KEYDOWN
 
 
@@ -119,6 +120,11 @@ def process_events():
 				if key == "h":
 					for target in settings.world.targets:
 						print((target.pos))
+				#change item location
+				if key in [str(i + 1) for i in range(6)]:
+					new_pos = int(key) - 1
+					old_pos = overlay_handler.overlay.objects["items"].get_item_pos("test")
+					overlay_handler.overlay.objects["items"].set_pos_of_item(old_pos, new_pos)
 				#Numpad presses
 				#Switches between worlds
 				if len(key) == 3 and settings.debugmode:

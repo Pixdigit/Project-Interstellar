@@ -5,6 +5,7 @@ from . import settings
 from . import sounds
 from . import specials
 from . import missions
+from . import overlay_handler
 from pygame.locals import *
 
 """Blits everything and flips screen"""
@@ -50,6 +51,7 @@ def ingame():
 	drawsongname()
 	drawtargetsum()
 	drawworldname()
+	overlay_handler.blit()
 
 	if no16to9:
 		settings.screen.blit(correcture, correcture_pos)
