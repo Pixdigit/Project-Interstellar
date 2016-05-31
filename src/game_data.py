@@ -116,5 +116,7 @@ def load_user_settings():
 
 		settings.volume = setting["volume"]
 		sounds.music.volume = setting["volume"]
+
+		settings.buttonmap = setting["buttonmap"]
 	else:
 		pass

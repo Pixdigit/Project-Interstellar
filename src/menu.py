@@ -500,5 +500,6 @@ def options():
 			10 + (5 * button_size))
 	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
 	settings.upd("adjust_screen")
-	game_data.save_user_settings(volume=settings.volume)
+	game_data.save_user_settings(	volume=settings.volume,
+				buttonmap=settings.buttonmap)
 	pygame.mouse.set_visible(False)
