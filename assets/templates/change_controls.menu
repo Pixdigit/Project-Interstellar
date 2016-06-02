@@ -1,0 +1,6 @@
+&./assets/templates/default.vars
+<#background = (./assets/sprites/Background1.tif)
+
+*|Controls|30          |$typeface|$color                 |$half + 0|%10  +   0|
+
+@|Return  |$size|$ratio|$typeface|$color|$box1           |$half + 0|%90  +   0|

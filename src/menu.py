@@ -490,6 +490,9 @@ def options():
 				# found by trial and error
 				menu.IO.write("./assets/templates/default.vars", "size",
 						10 + (5 * button_size))
+			if event == "Controls":
+				change_controlls()
+				settings_menu.update()
 
 		sounds.music.update(False, False)
 		pygame.display.flip()
@@ -503,3 +506,19 @@ def options():
 	game_data.save_user_settings(	volume=settings.volume,
 				buttonmap=settings.buttonmap)
 	pygame.mouse.set_visible(False)
+
+
+def change_controlls():
+
+	controls_menu = menu_template("change_controls", 5, 5, 150, {}, [])
+
+	run = True
+
+	while run:
+		events = controls_menu.run()
+
+		for event in events:
+			if event in ["event.EXIT", "event.QUIT", "Return"]:
+				run = False
+
+		pygame.display.flip()
