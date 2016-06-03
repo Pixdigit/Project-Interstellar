@@ -510,9 +510,24 @@ def options():
 
 def change_controlls():
 
-	controls_menu = menu_template("change_controls", 5, 5, 150, {}, [])
-
 	run = True
+
+	button_text = {}
+
+	curr_button_color = menu.IO.read("./assets/templates/default.vars", "color")
+
+	curr_button_color = map(lambda x: int(x), curr_button_color[1:-1].split(","))
+
+	for i in settings.buttonmap.keys():
+
+		button_text[i] = settings.buttonmap[i][0]
+
+		if len(settings.buttonmap[i]) < 2:
+			button_text[i + "_sec"] = "not_set"  #TODO change so that the buttons can be identified
+		else:
+			button_text[i + "_sec"] = settings.buttonmap[i][1]
+
+	controls_menu = menu_template("change_controls", 5, 5, 150, button_text, [])
 
 	while run:
 		events = controls_menu.run()
@@ -521,4 +536,35 @@ def change_controlls():
 			if event in ["event.EXIT", "event.QUIT", "Return"]:
 				run = False
 
+			if event in button_text.values():
+				for i in button_text:
+					if button_text[str(i)] == event:
+						pressed = controls_menu.menu.get_elem(button_text[str(i)])
+						pressed.changetext("Press to change", curr_button_color, 8)
+						controls_menu.run()
+						pygame.display.flip()
+						choose_button(button_text, i)
+						pressed.changetext(button_text[i], curr_button_color, 3)
+
+
 		pygame.display.flip()
+
+
+def choose_button(button_text, key):
+	choose = True
+	while choose:
+		settings.upd("get_events")
+		for event in settings.events:
+			if event.type == QUIT:
+				quit()  # temporarily
+			if event.type == KEYDOWN:
+				pressed_key = pygame.key.name(event.key)
+				button_text[key] = None
+				if pressed_key in button_text.values():
+					raise ValueError("Can't assing a key multible times")
+				choose = False
+				if key[-4:] == "_sec":
+					settings.buttonmap[key[:-4]][1] = pressed_key
+				else:
+					settings.buttonmap[key][0] = pressed_key
+				button_text[key] = pressed_key

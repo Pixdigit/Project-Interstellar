@@ -114,9 +114,14 @@ def load_user_settings():
 		setting = json.load(settings_file)
 		settings_file.close()
 
-		settings.volume = setting["volume"]
-		sounds.music.volume = setting["volume"]
-
-		settings.buttonmap = setting["buttonmap"]
+		try:
+			settings.volume = setting["volume"]
+			sounds.music.volume = setting["volume"]
+		except:
+			pass
+		try:
+			settings.buttonmap = setting["buttonmap"]
+		except:
+			pass
 	else:
 		pass
