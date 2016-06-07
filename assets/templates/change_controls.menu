@@ -1,26 +1,26 @@
 &./assets/templates/default.vars
 <#background = (./assets/sprites/Background1.tif)
 
-*|Controls  |30          |$typeface|$color                 |$half + 0|%10  +   0|
-*|Up:       |$size       |$typeface|$color                 |%25   + 0|%20  +   0|
-*|Left:     |$size       |$typeface|$color                 |%25   + 0|%25  +   0|
-*|Down:     |$size       |$typeface|$color                 |%25   + 0|%30  +   0|
-*|Right:    |$size       |$typeface|$color                 |%25   + 0|%35  +   0|
-*|Shoot:    |$size       |$typeface|$color                 |%25   + 0|%40  +   0|
-*|Shoot 2:  |$size       |$typeface|$color                 |%25   + 0|%45  +   0|
+*|Controls  |30          |$typeface|$color      |$half + 0|%10  +   0|
+*|Up:       |$size       |$typeface|$color      |%25   + 0|%20  +   0|
+*|Left:     |$size       |$typeface|$color      |%25   + 0|%25  +   0|
+*|Down:     |$size       |$typeface|$color      |%25   + 0|%30  +   0|
+*|Right:    |$size       |$typeface|$color      |%25   + 0|%35  +   0|
+*|Shoot:    |$size       |$typeface|$color      |%25   + 0|%40  +   0|
+*|Shoot 2:  |$size       |$typeface|$color      |%25   + 0|%45  +   0|
 
-@|$up       |$size|5     |$typeface|$color|$box1           |%50   + 0|%20  +   0|
-@|$left     |$size|5     |$typeface|$color|$box1           |%50   + 0|%25  +   0|
-@|$down     |$size|5     |$typeface|$color|$box1           |%50   + 0|%30  +   0|
-@|$right    |$size|5     |$typeface|$color|$box1           |%50   + 0|%35  +   0|
-@|$fire2    |$size|5     |$typeface|$color|$box1           |%50   + 0|%45  +   0|
-@|$fire     |$size|5     |$typeface|$color|$box1           |%50   + 0|%40  +   0|
+@|$up       |$size|5     |$typeface|$color|$box1|%50   + 0|%20  +   0|
+@|$left     |$size|5     |$typeface|$color|$box1|%50   + 0|%25  +   0|
+@|$down     |$size|5     |$typeface|$color|$box1|%50   + 0|%30  +   0|
+@|$right    |$size|5     |$typeface|$color|$box1|%50   + 0|%35  +   0|
+@|$fire2    |$size|5     |$typeface|$color|$box1|%50   + 0|%45  +   0|
+@|$fire     |$size|5     |$typeface|$color|$box1|%50   + 0|%40  +   0|
 
-@|$up_sec   |$size|5     |$typeface|$color|$box1           |%75   + 0|%20  +   0|
-@|$left_sec |$size|5     |$typeface|$color|$box1           |%75   + 0|%25  +   0|
-@|$down_sec |$size|5     |$typeface|$color|$box1           |%75   + 0|%30  +   0|
-@|$right_sec|$size|5     |$typeface|$color|$box1           |%75   + 0|%35  +   0|
-@|$fire2_sec|$size|5     |$typeface|$color|$box1           |%75   + 0|%45  +   0|
-@|$fire_sec |$size|5     |$typeface|$color|$box1           |%75   + 0|%40  +   0|
+@|$up_sec   |$size|5     |$typeface|$color|$box1|%75   + 0|%20  +   0|
+@|$left_sec |$size|5     |$typeface|$color|$box1|%75   + 0|%25  +   0|
+@|$down_sec |$size|5     |$typeface|$color|$box1|%75   + 0|%30  +   0|
+@|$right_sec|$size|5     |$typeface|$color|$box1|%75   + 0|%35  +   0|
+@|$fire2_sec|$size|5     |$typeface|$color|$box1|%75   + 0|%45  +   0|
+@|$fire_sec |$size|5     |$typeface|$color|$box1|%75   + 0|%40  +   0|
 
-@|Return    |$size|$ratio|$typeface|$color|$box1           |$half + 0|%90  +   0|
+@|Return    |$size|$ratio|$typeface|$color|$box1|$half + 0|%90  +   0|
