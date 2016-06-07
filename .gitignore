@@ -21,3 +21,6 @@ assets/sprites/player/*
 
 #symlinks in testing folder
 src/tests/settings.py
+
+#user settings
+userdata/user_settings.json

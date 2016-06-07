@@ -490,6 +490,9 @@ def options():
 				# found by trial and error
 				menu.IO.write("./assets/templates/default.vars", "size",
 						10 + (5 * button_size))
+			if event == "Controls":
+				change_controlls()
+				settings_menu.update()
 
 		sounds.music.update(False, False)
 		pygame.display.flip()
@@ -500,4 +503,67 @@ def options():
 			10 + (5 * button_size))
 	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
 	settings.upd("adjust_screen")
+	game_data.save_user_settings(	volume=settings.volume,
+				buttonmap=settings.buttonmap)
 	pygame.mouse.set_visible(False)
+
+
+def change_controlls():
+
+	run = True
+	button_text = {}
+	curr_button_color = menu.IO.read("./assets/templates/default.vars", "color")
+	curr_button_color = list(map(lambda x: int(x), curr_button_color[1:-1].split(",")))
+
+	for i in list(settings.buttonmap):
+		button_text[i] = settings.buttonmap[i][0]
+		if len(settings.buttonmap[i]) < 2:
+			#TODO change it so that the buttons can be identified
+			button_text[i + "_sec"] = "not_set"
+		else:
+			button_text[i + "_sec"] = settings.buttonmap[i][1]
+
+	controls_menu = menu_template("change_controls", 5, 5, 150, button_text, [])
+
+	while run:
+		events = controls_menu.run()
+
+		for event in events:
+			if event in ["event.EXIT", "event.QUIT", "Return"]:
+				run = False
+				break
+			for name in button_text:
+				pass
+				if button_text[str(name)] == event:
+					pressed = controls_menu.menu.get_elem(button_text[str(name)])
+					ratio = pressed.ratio
+					pressed.changetext("Press to change", curr_button_color, ratio)
+					controls_menu.run()
+					pygame.display.flip()
+					choose_button(button_text, name)
+					#pressed.changetext(button_text[i], curr_button_color, 3)
+					#TODO fix alpha
+					controls_menu = menu_template("change_controls", 0, 25, 150, button_text, [])
+					controls_menu.run()
+
+		pygame.display.flip()
+
+
+def choose_button(button_text, key):
+	choose = True
+	while choose:
+		settings.upd("get_events")
+		for event in settings.events:
+			if event.type == QUIT:
+				quit()  # temporarily
+			if event.type == KEYDOWN:
+				pressed_key = pygame.key.name(event.key)
+				button_text[key] = None
+				if pressed_key in list(button_text.values()):
+					raise ValueError("Can't assign a key multible times")
+				choose = False
+				if key[-4:] == "_sec":
+					settings.buttonmap[key[:-4]][1] = pressed_key
+				else:
+					settings.buttonmap[key][0] = pressed_key
+				button_text[key] = pressed_key

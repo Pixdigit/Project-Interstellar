@@ -6,4 +6,5 @@
 -|Volume            |$volume     |$size|$ratio|$typeface|$color|$box2           |$half + 0|%40 + 10|
 ~-|Button Size|$sizes|$button size|$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0  + 10|
 ~~-|Fullscreen |$offon|$fullscreen |$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0  + 10|
+~~~@|Controls                       |$size|$ratio|$typeface|$color|$box1|BottomLeft|%0    + 0|%0  + 10|
 @|Return                         |$size|$ratio|$typeface|$color|$box1           |$half + 0|%90 +  0|

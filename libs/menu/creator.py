@@ -428,7 +428,8 @@ class create_menu():
 		return klicked
 
 	def get_elem(self, name):
-		for elem in self.elems:
-			if type(elem) != pygame.Surface:
-				if elem.name == name:
-					return elem
+		for key in self.elems:
+			for elem in self.elems[key]:
+				if type(elem) != pygame.Surface:
+					if elem.name == name:
+						return elem
