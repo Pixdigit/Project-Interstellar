@@ -17,7 +17,7 @@ def init():
 	overlay_elem_pos = (settings.screenx_current / 2, settings.screeny_current)
 	overlay_obj = overlays.item_bar("items", overlay_elem_pos, "midbottom")
 	tmp_item = items.new_item()
-	tmp_item.load_config_from_file("test")
+	tmp_item.load_config_from_file("speed_boost")
 	overlay_obj.set_item(0, tmp_item)
 	overlay_obj.set_image(settings.item_bar_image)
 

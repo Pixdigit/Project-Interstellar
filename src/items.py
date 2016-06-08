@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import pygame
 import json
+import importlib
+import settings
 
 
 def init():
@@ -28,6 +30,11 @@ class new_item():
 		self.name = data["name"]
 		self.orig_img = pygame.image.load(config_folder + data["icon_path"])
 		self.img = pygame.transform.smoothscale(self.orig_img, (123, 123))
+		directory = config_folder[2:].replace("/", ".") + "item"
+		functions = importlib.import_module(directory)
+		self.init = functions.init
+		self.use = functions.use
+		self.init(self, settings.player, settings.world, settings)
 
 	def resize(self, new_size):
 		self.img = pygame.transform.smoothscale(self.orig_img, new_size)
