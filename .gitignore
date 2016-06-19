@@ -12,8 +12,8 @@
 #Ninja project file
 *.nja
 
-#Gitignore
-.gitignore
+#Licence agreement
+READ_BEFORE_START.py
 
 #empty folders
 screenshots/*
@@ -21,3 +21,6 @@ assets/sprites/player/*
 
 #symlinks in testing folder
 src/tests/settings.py
+
+#user settings
+userdata/user_settings.json
