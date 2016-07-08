@@ -123,11 +123,13 @@ def process_events():
 				#change item location
 				if key in [str(i + 1) for i in range(6)]:
 					new_pos = int(key) - 1
-					old_pos = overlay_handler.overlay.objects["items"].get_item_pos("test")
-					overlay_handler.overlay.objects["items"].set_pos_of_item(old_pos, new_pos)
+					items_overlay = overlay_handler.overlay.objects["items"]
+					old_pos = items_overlay.get_item_pos("speed_boost")
+					if old_pos is not None:
+						overlay_handler.overlay.objects["items"].set_pos_of_item(old_pos, new_pos)
 				#Numpad presses
 				#Switches between worlds
-				if len(key) == 3 and settings.debugmode:
+				if len(key) == 3:
 					if key[0] == "[" and key[2] == "]":
 						try:
 							num = int(key[1])

@@ -513,7 +513,9 @@ def change_controlls():
 	run = True
 	button_text = {}
 	curr_button_color = menu.IO.read("./assets/templates/default.vars", "color")
-	curr_button_color = list(map(lambda x: int(x), curr_button_color[1:-1].split(",")))
+	#Transfer "tuple" string to list type
+	curr_button_color = list(map(lambda x: int(x),
+				curr_button_color[1:-1].split(",")))
 
 	for i in list(settings.buttonmap):
 		button_text[i] = settings.buttonmap[i][0]

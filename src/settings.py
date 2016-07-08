@@ -296,7 +296,7 @@ def quit():
 	"""Routine for exiting"""
 	from . import midi_in
 	midi_in.quit()
-	pygame.quit()
+	#pygame.quit()
 	shutil.rmtree('./assets/sprites/player')
 	sys.exit()
 
