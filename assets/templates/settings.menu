@@ -1,10 +1,10 @@
-&./assets/templates/default.vars
+&../.././assets/templates/default.vars
 <[sizes = (Very Small, Small, Medium, Big, Very Big)
-<#background = (./assets/sprites/Background1.tif)
+<#background = (../.././assets/sprites/Background1.tif)
 
-*|Settings                       |30          |$typeface|$color                 |$half + 0|$qrt +   0|
--|Volume            |$volume     |$size|$ratio|$typeface|$color|$box2           |$half + 0|%40 + 10|
-~-|Button Size|$sizes|$button size|$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0  + 10|
-~~-|Fullscreen |$offon|$fullscreen |$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0  + 10|
-~~~@|Controls                       |$size|$ratio|$typeface|$color|$box1|BottomLeft|%0    + 0|%0  + 10|
-@|Return                         |$size|$ratio|$typeface|$color|$box1           |$half + 0|%90 +  0|
+*|Settings                       |30          |$typeface|$color                 |$half + 0|$qrt +  0|
+-|Volume            |$volume     |$size|$ratio|$typeface|$color|$box2           |$half + 0|%40  + 10|
+~-|Button Size|$sizes|$button size|$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0   + 10|
+~~-|Fullscreen |$offon|$fullscreen |$size|$ratio|$typeface|$color|$box2|BottomLeft|%0    + 0|%0   + 10|
+~~~@|Controls                       |$size|$ratio|$typeface|$color|$box1|BottomLeft|%0    + 0|%0   + 10|
+@|Return                         |$size|$ratio|$typeface|$color|$box1           |$half + 0|%90  +  0|

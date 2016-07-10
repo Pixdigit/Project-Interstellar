@@ -1,0 +1,31 @@
+{
+	"variables": {
+		"designs": {
+			"box1": [
+				"../.././assets/templates/nr1.design",
+				6
+			],
+			"box2": [
+				"../.././assets/templates/nr1.design",
+				"../.././assets/sprites/knob1.tif",
+				6
+			]
+		},
+		"floats": {
+			"ratio": 11.0,
+			"size": 0.2,
+			"half": 0.5,
+			"qrt": 25
+		},
+		"typefaces": {
+			"typeface": "monospace"
+		},
+		"colors": {
+			"color": [
+			255,
+			255,
+			10
+			]
+		}
+	}
+}

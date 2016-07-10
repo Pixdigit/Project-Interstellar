@@ -1,2 +1,0 @@
-import pygame
-pygame.init()

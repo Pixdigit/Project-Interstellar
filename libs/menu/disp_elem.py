@@ -334,7 +334,7 @@ class create_outline():
 					self.resources[option] = var
 
 	def create_template(self, pos):
-		from .creator import convert2list
+		from creator import convert2list
 		design = self.resources["design"]
 		design = pygame.image.load(design)
 		self.color = None
