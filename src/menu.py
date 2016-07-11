@@ -58,7 +58,7 @@ class menu_template():
 
 		# create menu
 		self.menu = menu.create_menu(
-					"./assets/templates/" + self.menu_name + ".menu",
+					"./assets/templates/" + self.menu_name + ".json",
 					self.variables, pygame.Rect((0, 0), (self.screenx, self.screeny)))
 
 		# create fade effect

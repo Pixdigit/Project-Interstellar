@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import pygame
-import disp_elem
 import json
 
 
@@ -44,25 +43,35 @@ def analyse_num(string, variables):
 
 class create_menu():
 
-	def __init__(self, filename, ref, additional_variables={}):
+	def __init__(self, filename, ref, ref_updater):
 
 		#load variables and dependencies
 		self.variables = self.load_vars(filename)
 
 		#merge all types into list
-		merged_variables = {}
-		for variable in self.variables.values():
-			merged_variables.update(variable)
+		self.merged_variables = {}
+		for variable in list(self.variables.values()):
+			self.merged_variables.update(variable)
 
-		#add custom variables at runtime
-		self.variables.update(additional_variables)
-		print merged_variables
+		#add custom runtime variables
+		self.ref_updater = ref_updater
+		self.merged_variables.update(self.ref_updater())
 
 	def load_vars(self, filename):
 
 		#load json file
 		with open(filename) as conf_file:
-			menu_conf = json.load(conf_file)
+			try:
+				menu_conf = json.load(conf_file)
+			except ValueError:
+				raise ValueError("JSON loading error: " + filename)
+		json.dump(menu_conf, open(filename + ".new", "w"))
+
+		def add_key(key, dictionary, datatype):
+			if key not in dictionary:
+				dictionary[key] = datatype()
+
+		add_key("variables", menu_conf, dict)
 
 		#resolve imports
 		imports = {}

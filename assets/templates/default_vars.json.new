@@ -1,0 +1,1 @@
+{"variables": {"designs": {"box1": {"outline": "./assets/templates/nr1.design", "border_size": 6}, "box2": {"border_size": 6, "outline": "./assets/templates/nr1.design", "slider_knob": "./assets/sprites/knob1.tif"}}, "typefaces": {"typeface": "monospace"}, "colors": {"color": [255, 255, 10]}, "floats": {"qrt": 25, "half": 0.5, "ratio": 11.0, "size": 0.2}}}

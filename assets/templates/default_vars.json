@@ -1,15 +1,15 @@
 {
 	"variables": {
 		"designs": {
-			"box1": [
-				"../.././assets/templates/nr1.design",
-				6
-			],
-			"box2": [
-				"../.././assets/templates/nr1.design",
-				"../.././assets/sprites/knob1.tif",
-				6
-			]
+			"box1": {
+				"outline": "./assets/templates/nr1.design",
+				"border_size": 6
+			},
+			"box2": {
+				"outline": "./assets/templates/nr1.design",
+				"slider_knob": "./assets/sprites/knob1.tif",
+				"border_size": 6
+			}
 		},
 		"floats": {
 			"ratio": 11.0,

@@ -1,0 +1,153 @@
+{
+	"imports": [
+		"./assets/templates/default_vars.json"
+	],
+	"objects": {
+		"Images": [{
+			"name": "world1",
+			"label": "",
+			"klickable": true,
+			"image": "$image1",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%25",
+				"y_rel": "%25",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world2",
+			"label": "",
+			"klickable": true,
+			"image": "$image2",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%50",
+				"y_rel": "%25",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world3",
+			"label": "",
+			"klickable": true,
+			"image": "$image3",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%75",
+				"y_rel": "%25",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world4",
+			"label": "",
+			"klickable": true,
+			"image": "$image4",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%25",
+				"y_rel": "%50",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world5",
+			"label": "",
+			"klickable": true,
+			"image": "$image5",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%75",
+				"y_rel": "%50",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world6",
+			"label": "",
+			"klickable": true,
+			"image": "$image6",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%25",
+				"y_rel": "%75",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world7",
+			"label": "",
+			"klickable": true,
+			"image": "$image7",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%50",
+				"y_rel": "%75",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "world8",
+			"label": "",
+			"klickable": true,
+			"image": "$image8",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%75",
+				"y_rel": "%75",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}],
+		"Buttons": [{
+			"name": "warp",
+			"label": "Warp",
+			"size": "$size",
+			"width_to_hight_ratio": 8,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "$half",
+				"x_abs": 0,
+				"y_abs": -20
+			}
+		}, {
+			"name": "return",
+			"label": "Return",
+			"size": "$size",
+			"width_to_hight_ratio": 8,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "$half",
+				"x_abs": 0,
+				"y_abs": 20
+			}
+		}]
+	}
+}

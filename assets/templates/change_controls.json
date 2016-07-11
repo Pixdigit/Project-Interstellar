@@ -1,0 +1,321 @@
+{
+	"imports": [
+		"./assets/templates/default_vars.json"
+	],
+	"objects": {
+		"Titles": [{
+			"name": "controls",
+			"label": "Controls",
+			"size": 30,
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%10",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		},
+		{
+			"name": "up",
+			"label": "Up:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$qrt",
+				"y_rel": "%20",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		},
+		{
+			"name": "left",
+			"label": "Left:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "up",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 108
+			}
+		},
+		{
+			"name": "down",
+			"label": "Down:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "left",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 108
+			}
+		},
+		{
+			"name": "right",
+			"label": "Right:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "down",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 108
+			}
+		},
+		{
+			"name": "shoot",
+			"label": "Shoot:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "right",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 108
+			}
+		},
+		{
+			"name": "shoot2",
+			"label": "Shoot 2:",
+			"size": "$size",
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "shoot",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 108
+			}
+		}],
+		"Buttons": [{
+			"name": "up_key",
+			"label": "$up",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "up",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "left_key",
+			"label": "$left",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "left",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "down_key",
+			"label": "$down",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "down",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "right_key",
+			"label": "$right",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "right",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "fire_key",
+			"label": "$fire",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "shoot",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "fire2_key",
+			"label": "$fire2",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "shoot_2",
+				"relation_point": "TopLeft",
+				"x_rel": "%200",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "up_sec_key",
+			"label": "$up_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "up_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "left_sec_key",
+			"label": "$left_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "left_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "down_sec_key",
+			"label": "$down_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "down_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "right_sec_key",
+			"label": "$right_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "right_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "fire_sec_key",
+			"label": "$fire_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "fire_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "fire2_sec_key",
+			"label": "$fire2_sec",
+			"size": "$size",
+			"width_to_hight_ratio": 5,
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "fire2_key",
+				"relation_point": "TopRight",
+				"x_rel": "%105",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "return",
+			"label": "Return",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%90",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}]
+	}
+}

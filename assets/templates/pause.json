@@ -2,46 +2,30 @@
 	"imports": [
 		"./assets/templates/default_vars.json"
 	],
-	"variables": {
-		"lists": {
-			"sizes": [
-				"Very Small",
-				"Small",
-				"Medium",
-				"Big",
-				"Very Big"
-			]
-		}
-	},
 	"objects": {
 		"Titles": [{
-			"name": "settings",
-			"label": "Settings",
-			"size": 30,
+			"name": "pause",
+			"label": "Pause",
+			"size": 35,
 			"typeface": "$typeface",
 			"color": "$color",
 			"position": {
 				"pos_relation_obj": "master_screen",
 				"relation_point": "TopLeft",
 				"x_rel": "$half",
-				"y_rel": "$qrt",
+				"y_rel": "%12",
 				"x_abs": 0,
 				"y_abs": 0
 			}
 		}],
-		"Sliders": [{
-			"name": "volume",
-			"label": "Volume",
-			"selection_range": [
-				"Off",
-				"floats"
-			],
-			"preset_value": "$volume",
+		"Buttons": [{
+			"name": "continue",
+			"label": "Continue",
 			"size": "$size",
 			"width_to_hight_ratio": "$ratio",
 			"typeface": "$typeface",
 			"color": "$color",
-			"box": "$box2",
+			"box": "$box1",
 			"position": {
 				"pos_relation_obj": "master_screen",
 				"relation_point": "TopLeft",
@@ -51,19 +35,15 @@
 				"y_abs": 10
 			}
 		}, {
-			"name": "button_size",
-			"label": "Button Size",
-			"selection_range": [
-				"$sizes"
-			],
-			"preset_value": "$button_size",
+			"name": "save",
+			"label": "Save Game",
 			"size": "$size",
 			"width_to_hight_ratio": "$ratio",
 			"typeface": "$typeface",
 			"color": "$color",
-			"box": "$box2",
+			"box": "$box1",
 			"position": {
-				"pos_relation_obj": "volume",
+				"pos_relation_obj": "continue",
 				"relation_point": "BottomLeft",
 				"x_rel": 0,
 				"y_rel": 0,
@@ -71,37 +51,15 @@
 				"y_abs": 10
 			}
 		}, {
-			"name": "fullscreen",
-			"label": "Fullscreen",
-			"selection_range": [
-				"On",
-				"Off"
-			],
-			"preset_value": "$fullscreen",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box2",
-			"position": {
-				"pos_relation_obj": "button_size",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 10
-			}
-		}],
-		"Buttons": [{
-			"name": "controls",
-			"label": "Controls",
+			"name": "load",
+			"label": "Load Game",
 			"size": "$size",
 			"width_to_hight_ratio": "$ratio",
 			"typeface": "$typeface",
 			"color": "$color",
 			"box": "$box1",
 			"position": {
-				"pos_relation_obj": "fullscreen",
+				"pos_relation_obj": "save",
 				"relation_point": "BottomLeft",
 				"x_rel": 0,
 				"y_rel": 0,
@@ -109,20 +67,36 @@
 				"y_abs": 10
 			}
 		}, {
-			"name": "return",
-			"label": "Return",
+			"name": "settings",
+			"label": "Settings",
 			"size": "$size",
 			"width_to_hight_ratio": "$ratio",
 			"typeface": "$typeface",
 			"color": "$color",
 			"box": "$box1",
 			"position": {
-				"pos_relation_obj": "master_screen",
+				"pos_relation_obj": "load",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "exit",
+			"label": "Exit",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "settings",
 				"relation_point": "TopLeft",
 				"x_rel": 0,
-				"y_rel": "%90",
+				"y_rel": 0,
 				"x_abs": 0,
-				"y_abs": 0
+				"y_abs": 10
 			}
 		}]
 	}
