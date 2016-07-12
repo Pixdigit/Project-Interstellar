@@ -14,7 +14,7 @@
 		}
 	},
 	"objects": {
-		"Titles": [{
+		"titles": [{
 			"name": "settings",
 			"label": "Settings",
 			"size": 30,
@@ -29,7 +29,7 @@
 				"y_abs": 0
 			}
 		}],
-		"Sliders": [{
+		"sliders": [{
 			"name": "volume",
 			"label": "Volume",
 			"selection_range": [
@@ -92,7 +92,7 @@
 				"y_abs": 10
 			}
 		}],
-		"Buttons": [{
+		"buttons": [{
 			"name": "controls",
 			"label": "Controls",
 			"size": "$size",

@@ -3,7 +3,7 @@
 		"./assets/templates/default_vars.json"
 	],
 	"objects": {
-		"Images": [{
+		"images": [{
 			"name": "world1",
 			"label": "",
 			"klickable": true,
@@ -116,7 +116,7 @@
 				"y_abs": 0
 			}
 		}],
-		"Buttons": [{
+		"buttons": [{
 			"name": "warp",
 			"label": "Warp",
 			"size": "$size",

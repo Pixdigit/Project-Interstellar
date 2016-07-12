@@ -3,7 +3,7 @@
 		"./assets/templates/default_vars.json"
 	],
 	"objects": {
-		"Titles": [{
+		"titles": [{
 			"name": "controls",
 			"label": "Controls",
 			"size": 30,
@@ -108,7 +108,7 @@
 				"y_abs": 108
 			}
 		}],
-		"Buttons": [{
+		"buttons": [{
 			"name": "up_key",
 			"label": "$up",
 			"size": "$size",

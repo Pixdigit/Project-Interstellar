@@ -3,7 +3,7 @@
 		"./assets/templates/default_vars.json"
 	],
 	"objects": {
-		"Titles": [{
+		"titles": [{
 			"name": "title",
 			"label": "Project Interstellar",
 			"size": 40,
@@ -32,7 +32,7 @@
 				"y_abs": 0
 			}
 		}],
-		"Buttons": [{
+		"buttons": [{
 			"name": "start",
 			"label": "Start",
 			"size": "$size",

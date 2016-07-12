@@ -218,8 +218,9 @@ class input_field():
 
 class slider():
 
-	def __init__(self, name, default_value, size, ratio, typeface, color, box,
-		rel_x, x, rel_y, y, ref, options_list=False):
+	def __init__(self, name, default_value, options_list, size, ratio, typeface,
+		color, box,
+		rel_x, x, rel_y, y, ref):
 		"""Creates a new slider"""
 		self.value = default_value
 		self.box = create_outline(box[0])
@@ -252,7 +253,7 @@ class slider():
 		self.scale = 1.0 / self.pos.w
 
 	def center(self):
-		"""Centeres itself around its x and y position"""
+		"""Centeres itself around its topleft point"""
 		self.pos.center = self.pos.topleft
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
