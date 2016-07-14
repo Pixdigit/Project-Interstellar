@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import pygame
 import json
+import disp_elem
+from pprint import pprint
 
 
 def convert2list(string):
@@ -14,6 +16,13 @@ def convert2list(string):
 	return elements
 
 
+datatypes = ["strings",
+	"floats",
+	"lists",
+	"colors",
+	"box_designs"]
+
+
 #This loader returns filename when json loading failed
 def load_json(json_file):
 	with open(json_file) as conf_file:
@@ -24,15 +33,76 @@ def load_json(json_file):
 	return json_data
 
 
+def add_key(key, dictionary, datatype):
+	if key not in dictionary:
+		dictionary[key] = datatype()
+	return dictionary
+
+
+def merge(iter1, iter2):
+	"""Recursive merging of iter1 and iter2. Items in iter1 will be preserved"""
+
+	if type(iter1) != type(iter2):
+		raise ValueError("Cannot merge different iterables.")
+
+	if type(iter1) == list:
+		return list(set(iter1 + iter2))
+
+	if type(iter1) == dict:
+		for new_key in iter2:
+			new_value = iter2[new_key]
+
+			if type(new_value) not in [dict, list]:
+				if new_key not in iter1:
+					iter1[new_key] = new_value
+			else:
+				if new_key not in iter1:
+					iter1[new_key] = iter2[new_key]
+				else:
+					iter1[new_key] = merge(iter1[new_key], iter2[new_key])
+
+	return iter1
+
+
+def load_vars(filename, pre_imports=[]):
+
+	menu_data = load_json(filename)
+
+	#add keys if not existing
+	menu_data = add_key("variables", menu_data, dict)
+	menu_data = add_key("imports", menu_data, list)
+	variables = menu_data["variables"]
+	variables = add_key("lists", variables, dict)
+	variables = add_key("strings", variables, dict)
+	variables = add_key("floats", variables, dict)
+	variables = add_key("images", variables, dict)
+
+	#resolve imports
+	imports = {datatype: {} for datatype in datatypes}
+	pre_imports.append(filename)
+	for import_file in menu_data["imports"]:
+		#prevent looping imports
+		if import_file in pre_imports:
+			continue
+		else:
+			#merge new vairables
+			imports = merge(imports, load_vars(import_file, pre_imports=pre_imports))
+
+	variables = merge(variables, imports)
+
+	return variables
+
+
 class create_menu():
 
 	def __init__(self, filename, ref, ref_updater):
 
 		self.data_file = filename
 		self.reference = ref
+		self.menu_data = load_json(filename)
 
 		#load variables and dependencies
-		self.variables = self.load_vars(self.data_file)
+		self.variables = load_vars(self.data_file)
 
 		#merge all types into list
 		self.merged_variables = {}
@@ -45,103 +115,94 @@ class create_menu():
 
 		self.load_objects()
 
-	def load_vars(self, filename, imported_files=[]):
+	def load_objects(self):
 
-		def add_key(key, dictionary, datatype):
-			if key not in dictionary:
-				dictionary[key] = datatype()
-
-		self.menu_data = load_json(self.data_file)
-
-		add_key("variables", self.menu_data, dict)
-		add_key("lists", self.menu_data["variables"], dict)
-		add_key("strings", self.menu_data["variables"], dict)
-		add_key("floats", self.menu_data["variables"], dict)
-		add_key("images", self.menu_data["variables"], dict)
-		add_key("imports", self.menu_data, list)
 		add_key("objects", self.menu_data, dict)
 		add_key("sliders", self.menu_data["objects"], list)
 		add_key("buttons", self.menu_data["objects"], list)
 		add_key("titles", self.menu_data["objects"], list)
 		add_key("images", self.menu_data["objects"], list)
 
-		#resolve imports
-		imports = {}
-		imported_files.append(self.data_file)
-		for import_file in self.menu_data["imports"]:
-			#prevent looping imports
-			if import_file in imported_files:
-				continue
-			else:
-				imported_files.append(import_file)
-			#merge new vairables
-			imports.update(self.load_vars(import_file, imported_files=imported_files))
-		self.menu_data["variables"].update(imports)
-
-		exit()
-		return self.menu_data["variables"]
-
-	def load_objects(self):
 		self.object_data = self.menu_data["objects"]
 
-		def get_data(data_in, expect_type):
+		def get_data(data_dict, key_name, expect_type=None):
 
-			def type_mismatch():
+			def type_mismatch(expect_type):
+				if expect_type is None:
+					expect_type = "<type \"NoneType\">"
 				error = (self.data_file[self.data_file.rfind("/") + 1:]
 					+ ": "
-					#+ var_name
-					+ " is not a "
+					+ key_name
+					+ " should be an: "
 					+ str(expect_type)[7:-2]
-					+ "  | "
+					+ " | Got an: "
+					+ str(type(data_in))[7:-2]
+					+ " == "
 					+ str(data_in)
 					)
 				raise ValueError(error)
 
-			if type(data_in) in [str, unicode]:
+			try:
+				data_in = data_dict[key_name]
+			except KeyError:
+				if not "name" in data_dict:
+					data_dict["name"] = "NONAME"
+				error = (key_name
+					+ "is not a property of: "
+					+ data_dict["name"]
+					)
+				raise KeyError(error)
+
+			if (type(data_in) in [str, unicode]) and data_in[0] == "$":
+				try:
+					data_in = self.merged_variables[data_in[1:]]
+				except KeyError:
+					raise KeyError(data_in + " is not a variable.")
+				return data_in
+
+			if expect_type in [str, unicode]:
 				#variable definition
-				if data_in[0] == "$":
-					try:
-						data_in = self.merged_variables[data_in[1:]]
-					except KeyError:
-						raise KeyError(data_in + " is not a variable.")
-
-					if type(data_in) != expect_type:
-						type_mismatch()
-					return data_in
-
+				return str(data_in)
 			elif expect_type in [int, float]:
 				try:
-					warning = ("Depreceated value storage: "
-						#+ var_name
-						+ " = \""
-						+ data_in
-						+ "\"")
-					print(warning)
+					if type(data_in) in [str, unicode]:
+						if data_in[0] == "%":
+							try:
+								return float(data_in[1:]) / 100
+							except ValueError:
+								type_mismatch(float)
+						warning = ("Depreceated value storage: "
+							+ " = \""
+							+ str(data_in)
+							+ "\"")
+						print(warning)
 					return float(data_in)
 				except ValueError:
-					type_mismatch()
+					type_mismatch(expect_type)
 			elif type(data_in) == list:
-				return [get_data(x, None) for x in data_in]
+				new_list = [get_data(data_in, x, None) for x in range(len(data_in))]
+				return new_list
 			else:
-				if type(data_in) in [expect_type, None]:
+				if type(data_in) == expect_type or expect_type is None:
 					return data_in
 				else:
-					type_mismatch()
+					type_mismatch(expect_type)
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
-			name = get_data(slider_data["name"], str)
-			default_value = get_data(slider_data["preset_value"], float)
-			options_list = get_data(slider_data["selection_range"], list)
-			size = get_data(slider_data["size"], int)
-			ratio = get_data(slider_data["width_to_hight_ratio"], float)
-			typeface = get_data(slider_data["typeface"], str)
-			color = get_data(slider_data["color"], list)
-			box = get_data(slider_data["box"], list)
-			rel_x = get_data(slider_data["position"]["x_rel"], float)
-			rel_y = get_data(slider_data["position"]["y_rel"], float)
-			x = get_data(slider_data["position"]["x_abs"], float)
-			y = get_data(slider_data["position"]["y_abs"], float)
+			name = get_data(slider_data, "name", str)
+			default_value = get_data(slider_data, "preset_value", float)
+			options_list = get_data(slider_data, "selection_range", list)
+			size = get_data(slider_data, "size", int)
+			ratio = get_data(slider_data, "width_to_hight_ratio", float)
+			typeface = get_data(slider_data, "typeface", str)
+			color = get_data(slider_data, "color", list)
+			box = get_data(slider_data, "box", list)
+			rel_x = get_data(slider_data["position"], "x_rel", float)
+			rel_y = get_data(slider_data["position"], "y_rel", float)
+			x = get_data(slider_data["position"], "x_abs", float)
+			y = get_data(slider_data["position"], "y_abs", float)
+
 			disp_elem.slider(name, default_value, options_list, size, ratio, typeface,
 					color, box, rel_x, x, rel_y, y, self.reference)
 

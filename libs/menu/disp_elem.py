@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pygame
-from pygame.locals import MOUSEBUTTONUP, MOUSEBUTTONDOWN, USEREVENT, QUIT, KEYDOWN
+from pygame.locals import MOUSEBUTTONUP, MOUSEBUTTONDOWN,\
+		USEREVENT, QUIT, KEYDOWN
 import string
 
 
@@ -223,13 +224,13 @@ class slider():
 		rel_x, x, rel_y, y, ref):
 		"""Creates a new slider"""
 		self.value = default_value
-		self.box = create_outline(box[0])
+		self.box = create_outline(box["outline"], box["inner_color"])
 		self.dragged = False
 		self.typeface = pygame.font.SysFont(typeface, size)
 		self.color = color
 		self.options_list = options_list
 		self.name = name
-		self.borderoff = box[3]
+		self.borderoff = box["border_size"]
 		self.state = 1
 		self.ratio = ratio
 		self.knob_pos = pygame.Rect(0, 0, 0, 0)
@@ -245,7 +246,7 @@ class slider():
 		self.box.create_box(0, self.pos)
 		self.pos.size = self.box.box.get_size()
 		self.pos.topleft = (x, y)
-		self.knob = pygame.transform.scale(pygame.image.load(box[1]),
+		self.knob = pygame.transform.scale(pygame.image.load(box["slider_knob"]),
 					(self.pos.w / 15, self.pos.h))
 		self.knob_pos = self.knob.get_rect()
 		self.knob_pos.top = self.pos.top
@@ -283,26 +284,14 @@ class slider():
 		tmp = (self.value * (self.pos.w - self.knob_pos.w))
 		self.knob_pos.left = self.pos.left + tmp
 
-		if type(self.options_list) == bool:
-			# adding a "." to the end to ensure at least one is included
-			text = str(self.value * 100)[:3] + "."
-			# removes "." and everything behind it
-			text = text[:text.index(".")]
-			# Adds the description and the % at the end
-			text = self.name + ": " + text + "%"
-			# Turns text into a pygame.Surface
-			self.render_text = self.typeface.render(text, True, self.color)
-			self.is_defined_list = False
-		else:
-			steps = 1.0 / len(self.options_list)
-			for area in range(len(self.options_list)):
-				area += 1
-				if self.value <= steps * area and self.value >= steps * (area - 1):
-					break
-			text = self.name + ": " + self.options_list[area - 1]
-			self.state = area - 1
-			self.render_text = self.typeface.render(text, True, self.color)
-			self.is_defined_list = True
+		steps = 1.0 / len(self.options_list)
+		for area in range(len(self.options_list)):
+			area += 1
+			if self.value <= steps * area and self.value >= steps * (area - 1):
+				break
+		text = self.name + ": " + self.options_list[area - 1]
+		self.state = area - 1
+		self.render_text = self.typeface.render(text, True, self.color)
 
 	def blit(self, screen):
 		"""Blits the slider"""
@@ -315,34 +304,21 @@ class slider():
 
 class create_outline():
 
-	def __init__(self, template_file):
-		self.resources = {}
-		self.read_file(template_file)
+	def __init__(self, template_image, inner_color):
+		self.resources = {"design": template_image,
+				"inner_color": inner_color}
 		self.modes = {}
 		for a in range(3):
 			self.modes[a] = self.create_template(a)
 
-	def read_file(self, template_file):
-		def split(line, splitter):
-			rline = line[line.index(splitter) + 1:].strip()
-			lline = line[:line.index(splitter)].strip()
-			return lline, rline
-
-		with open(template_file) as conf_file:
-			for line in conf_file:
-				if line[0] != "#":
-					option, var = split(line, "=")
-					self.resources[option] = var
-
 	def create_template(self, pos):
-		from creator import convert2list
 		design = self.resources["design"]
 		design = pygame.image.load(design)
 		self.color = None
 
 		# gets selected background color
 		if "inner_color" in self.resources:
-			color = convert2list(self.resources["inner_color"])
+			color = self.resources["inner_color"]
 			if len(color) == 3:
 				self.color = (int(color[0]), int(color[1]), int(color[2]))
 			if len(color) == 4:

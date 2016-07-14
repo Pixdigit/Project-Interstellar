@@ -53,9 +53,7 @@
 		}, {
 			"name": "button_size",
 			"label": "Button Size",
-			"selection_range": [
-				"$sizes"
-			],
+			"selection_range": "$sizes",
 			"preset_value": "$button_size",
 			"size": "$size",
 			"width_to_hight_ratio": "$ratio",

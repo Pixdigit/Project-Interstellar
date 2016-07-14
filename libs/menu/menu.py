@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import creator
 import pygame
-import sys
-
-sys.setrecursionlimit(30)
 
 pygame.init()
 screen = pygame.display.set_mode((1, 1))
