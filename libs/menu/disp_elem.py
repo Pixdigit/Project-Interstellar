@@ -219,9 +219,8 @@ class input_field():
 
 class slider():
 
-	def __init__(self, name, default_value, options_list, size, ratio, typeface,
-		color, box,
-		rel_x, x, rel_y, y, ref):
+	def __init__(self, name, label, default_value, options_list, size, ratio,
+		typeface, color, box, pos_data):
 		"""Creates a new slider"""
 		self.value = default_value
 		self.box = create_outline(box["outline"], box["inner_color"])
@@ -230,6 +229,7 @@ class slider():
 		self.color = color
 		self.options_list = options_list
 		self.name = name
+		self.label = label
 		self.borderoff = box["border_size"]
 		self.state = 1
 		self.ratio = ratio
@@ -237,21 +237,50 @@ class slider():
 
 		self.pos = pygame.Rect(0, 0, 0, 0)
 		self.update([])
-		rel_x *= float(ref.w)
-		rel_y *= float(ref.h)
-		x += rel_x
-		y += rel_y
+		self.pos_data = pos_data
 		tmp_size = (self.render_text.get_size()[1])
 		self.pos.size = (self.ratio * tmp_size, tmp_size)
 		self.box.create_box(0, self.pos)
 		self.pos.size = self.box.box.get_size()
-		self.pos.topleft = (x, y)
 		self.knob = pygame.transform.scale(pygame.image.load(box["slider_knob"]),
 					(self.pos.w / 15, self.pos.h))
 		self.knob_pos = self.knob.get_rect()
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
 		self.scale = 1.0 / self.pos.w
+		self.checked = False
+		self.active_pos_search = False
+
+	def get_rel_pos(self, object_list):
+		#set status
+		self.checked = True
+		self.active_pos_search = True
+
+		if self.pos_data["pos_relation_obj"] == "master_screen":
+			rel_pos = object_list[0]
+		else:
+			#search and get relational points
+			for obj in object_list[1:]:
+				if obj.name == self.pos_data["pos_relation_obj"]:
+					if obj.checked:
+						if obj.active_pos_search:
+							raise RuntimeError("Relational position refers to itself.")
+						else:
+							rel_pos = obj.pos
+					else:
+						rel_pos = obj.get_rel_pos(object_list)
+		#get point from rect
+		rel_point = get_point(rel_pos, self.pos_data["relation_point"])
+
+		#update position
+		self.pos.x = int(self.pos_data["x_abs"]
+				+ (self.pos_data["x_rel"] * rel_point[0]))
+		self.pos.y = int(self.pos_data["y_abs"]
+				+ (self.pos_data["y_rel"] * rel_point[1]))
+
+		#reset status and return pos for recursion
+		self.active_pos_search = False
+		return self.pos
 
 	def center(self):
 		"""Centeres itself around its topleft point"""
@@ -289,7 +318,7 @@ class slider():
 			area += 1
 			if self.value <= steps * area and self.value >= steps * (area - 1):
 				break
-		text = self.name + ": " + self.options_list[area - 1]
+		text = self.label + ": " + self.options_list[area - 1]
 		self.state = area - 1
 		self.render_text = self.typeface.render(text, True, self.color)
 
@@ -386,3 +415,24 @@ class create_outline():
 		self.pos.x = posx - border
 		self.pos.y = posy - border
 		return (self.pos, self.box)
+
+
+def get_point(rect, point_name):
+	if point_name == "TopLeft":
+		return rect.topleft
+	if point_name == "TopCenter":
+		return rect.midtop
+	if point_name == "TopRight":
+		return rect.topright
+	if point_name == "CenterLeft":
+		return rect.midleft
+	if point_name in ["CenterCenter", "Center"]:
+		return rect.center
+	if point_name == "CenterRight":
+		return rect.midright
+	if point_name == "BottomLeft":
+		return rect.bottomleft
+	if point_name == "BottomCenter":
+		return rect.midbottom
+	if point_name == "BottomRight":
+		return rect.bottomright

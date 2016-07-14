@@ -63,8 +63,8 @@
 			"position": {
 				"pos_relation_obj": "volume",
 				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
+				"x_rel": 1,
+				"y_rel": 1,
 				"x_abs": 0,
 				"y_abs": 10
 			}
@@ -84,8 +84,8 @@
 			"position": {
 				"pos_relation_obj": "button_size",
 				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
+				"x_rel": 1,
+				"y_rel": 1,
 				"x_abs": 0,
 				"y_abs": 10
 			}

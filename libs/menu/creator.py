@@ -2,7 +2,6 @@
 import pygame
 import json
 import disp_elem
-from pprint import pprint
 
 
 def convert2list(string):
@@ -124,6 +123,7 @@ class create_menu():
 		add_key("images", self.menu_data["objects"], list)
 
 		self.object_data = self.menu_data["objects"]
+		self.objects = []
 
 		def get_data(data_dict, key_name, expect_type=None):
 
@@ -132,7 +132,7 @@ class create_menu():
 					expect_type = "<type \"NoneType\">"
 				error = (self.data_file[self.data_file.rfind("/") + 1:]
 					+ ": "
-					+ key_name
+					+ str(key_name)
 					+ " should be an: "
 					+ str(expect_type)[7:-2]
 					+ " | Got an: "
@@ -161,7 +161,6 @@ class create_menu():
 				return data_in
 
 			if expect_type in [str, unicode]:
-				#variable definition
 				return str(data_in)
 			elif expect_type in [int, float]:
 				try:
@@ -171,17 +170,24 @@ class create_menu():
 								return float(data_in[1:]) / 100
 							except ValueError:
 								type_mismatch(float)
-						warning = ("Depreceated value storage: "
-							+ " = \""
-							+ str(data_in)
-							+ "\"")
-						print(warning)
-					return float(data_in)
+						else:
+							return float(data_in)
 				except ValueError:
 					type_mismatch(expect_type)
 			elif type(data_in) == list:
-				new_list = [get_data(data_in, x, None) for x in range(len(data_in))]
-				return new_list
+				return [get_data(data_in, x, None) for x in range(len(data_in))]
+			elif type(data_in) == dict:
+				new_data = {}
+				for key in data_in:
+					new_data[key] = get_data(data_in, key)
+				return new_data
+			elif type(data_in) in [int, float]:
+				return float(data_in)
+			elif expect_type is None:
+				try:
+					return get_data(data_dict, key_name, float)
+				except ValueError:
+					return data_in
 			else:
 				if type(data_in) == expect_type or expect_type is None:
 					return data_in
@@ -191,6 +197,7 @@ class create_menu():
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
 			name = get_data(slider_data, "name", str)
+			label = get_data(slider_data, "label", str)
 			default_value = get_data(slider_data, "preset_value", float)
 			options_list = get_data(slider_data, "selection_range", list)
 			size = get_data(slider_data, "size", int)
@@ -198,13 +205,29 @@ class create_menu():
 			typeface = get_data(slider_data, "typeface", str)
 			color = get_data(slider_data, "color", list)
 			box = get_data(slider_data, "box", list)
-			rel_x = get_data(slider_data["position"], "x_rel", float)
-			rel_y = get_data(slider_data["position"], "y_rel", float)
-			x = get_data(slider_data["position"], "x_abs", float)
-			y = get_data(slider_data["position"], "y_abs", float)
+			pos_data = get_data(slider_data, "position", dict)
+			self.objects.append(disp_elem.slider(name, label, default_value,
+					options_list, size, ratio, typeface, color, box, pos_data))
 
-			disp_elem.slider(name, default_value, options_list, size, ratio, typeface,
-					color, box, rel_x, x, rel_y, y, self.reference)
+		#for button_data in self.object_data["buttons"]:
+			#name = get_data(button_data, "name", str)
+			#label = get_data(button_data, "label", str)
+			#size = get_data(button_data, "size", int)
+			#ratio = get_data(button_data, "width_to_hight_ratio", float)
+			#typeface = get_data(button_data, "typeface", str)
+			#color = get_data(button_data, "color", list)
+			#box = get_data(button_data, "box", list)
+			#rel_x = get_data(button_data["position"], "x_rel", float)
+			#rel_y = get_data(button_data["position"], "y_rel", float)
+			#x = get_data(button_data["position"], "x_abs", float)
+			#y = get_data(button_data["position"], "y_abs", float)
+
+			#disp_elem.slider(name, default_value, options_list, size, ratio, typeface,
+					#color, box, rel_x, x, rel_y, y, self.reference)
+
+		self.objects.insert(0, self.reference)
+		for obj in self.objects[1:]:
+			obj.get_rel_pos(self.objects)
 
 	def blit(self, screen, events):
 		try:

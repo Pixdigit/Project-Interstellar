@@ -14,5 +14,5 @@ def ref_updater():
 	return variables_dict
 
 menu_creator = creator.create_menu("./assets/templates/settings.json",
-			pygame.Rect((0, 0), (1920, 1080)),
+			pygame.Rect((1920, 1080), (1920, 1080)),
 			ref_updater)
