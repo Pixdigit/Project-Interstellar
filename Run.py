@@ -22,6 +22,7 @@ try:
 	if pygame.version.ver < "1.9.1":
 		raise SystemExit("Old Pygame version: " + pygame.version.ver)
 	version = sys.version.split(" ")[0].split(".")
+	version[-1] = version[-1].split("+")[0]
 	required = "2.7.6".split(".")
 	for index in range(len(required)):
 		if int(required[index]) < int(version[index]):

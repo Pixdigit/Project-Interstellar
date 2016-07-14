@@ -41,6 +41,7 @@ def init():
 	global item_bar_image  # The background for items in the itembar
 	global code  # used for custom user events
 	global events  # events
+	global buttonmap  # dict containing the mapping of the userinputs
 	global music  # the music playlist object
 	global color  # global color defenition
 	global skip  # unsused (currently)
@@ -113,6 +114,7 @@ def init():
 	isnear = "False"
 	code = ""
 	events = []
+	buttonmap = default_buttonmap()
 	color = (255, 255, 10)
 	skip = False
 	volume = 0.5
@@ -294,6 +296,28 @@ def quit():
 	"""Routine for exiting"""
 	from . import midi_in
 	midi_in.quit()
-	pygame.quit()
+	#pygame.quit()
 	shutil.rmtree('./assets/sprites/player')
 	sys.exit()
+
+
+def default_buttonmap():
+	"""generates the Default Buttonmap, when adding default Values
+	use your specified name as key and the corresponding pygame.event key(s)
+	in a list as value(s) to the buttons dict"""
+	buttons = {}
+
+	buttons["speedup"] = ["y"]
+	buttons["speeddown"] = ["x"]
+	buttons["up"] = ["w", "up"]
+	buttons["down"] = ["s", "down"]
+	buttons["left"] = ["a", "left"]
+	buttons["right"] = ["d", "right"]
+	buttons["pause"] = ["escape"]
+	buttons["debugscreen"] = ["f3"]
+	buttons["screenshot"] = ["f12"]
+	buttons["next_track"] = ["f6"]
+	buttons["fire"] = ["f", "space"]
+	buttons["fire2"] = ["c"]
+
+	return buttons

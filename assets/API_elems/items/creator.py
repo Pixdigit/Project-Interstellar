@@ -59,7 +59,7 @@ while not test_finished:
 
 
 dataset = {"name": name,
-	"icon": "./images/icon.png",
+	"icon_path": "./images/icon.png",
 	"caller": "player",
 	"script": "./item.py"}
 

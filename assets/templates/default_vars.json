@@ -1,0 +1,43 @@
+{
+	"variables": {
+		"box_designs": {
+			"box1": {
+				"outline": "./assets/sprites/design1.tif",
+				"inner_color": [
+						0,
+						0,
+						50,
+						20
+					],
+				"border_size": 6
+			},
+			"box2": {
+				"outline": "./assets/sprites/design1.tif",
+				"inner_color": [
+						0,
+						0,
+						50,
+						20
+					],
+				"slider_knob": "./assets/sprites/knob1.tif",
+				"border_size": 6
+			}
+		},
+		"floats": {
+			"ratio": 11.0,
+			"size": 20,
+			"half": 0.5,
+			"qrt": 25
+		},
+		"typefaces": {
+			"typeface": "monospace"
+		},
+		"colors": {
+			"color": [
+			255,
+			255,
+			10
+			]
+		}
+	}
+}

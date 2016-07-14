@@ -1,0 +1,117 @@
+{
+	"imports": [
+		"./assets/templates/default_vars.json"
+	],
+	"objects": {
+		"titles": [{
+			"name": "title",
+			"label": "Load Saved Game",
+			"size": 30,
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%10",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "save_name",
+			"label": "$savename",
+			"size": 20,
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%20",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}],
+		"buttons": [{
+			"name": "controls",
+			"label": "Controls",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%0",
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "return",
+			"label": "Return",
+			"size": "$size",
+			"width_to_hight_ratio": "5",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%80",
+				"y_rel": "%30",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "previous",
+			"label": "Previous",
+			"size": "$size",
+			"width_to_hight_ratio": "5",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%20",
+				"y_rel": "%90",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "load",
+			"label": "Load",
+			"size": "$size",
+			"width_to_hight_ratio": "5",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%50",
+				"y_rel": "%90",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "next",
+			"label": "Next",
+			"size": "$size",
+			"width_to_hight_ratio": "5",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "%80",
+				"y_rel": "%90",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}]
+	}
+}

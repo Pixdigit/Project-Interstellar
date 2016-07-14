@@ -9,7 +9,6 @@ class world():
 
 	def __init__(self, name):
 		self.name = name
-		pass
 
 	def generate(self, background, dstars, dtargets):
 		# initialize a new "world"

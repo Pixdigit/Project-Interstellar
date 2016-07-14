@@ -3,9 +3,6 @@ import pygame
 import math
 from libs.pyganim import pyganim
 from ConfigParser import SafeConfigParser
-from . import overlay_handler
-from . import items
-from . import objects
 
 
 class player():
@@ -29,22 +26,6 @@ class player():
 		self.speedboost = 1
 		self.explosion_anim = None
 		self.new_ship("Player1")
-		self.init_overlays()
-
-	def init_overlays(self):
-		self.overlay = overlay_handler.create_overlay()
-
-		overlay_elem_pos = (self.global_settings.screenx_current / 2,
-				self.global_settings.screeny_current)
-		overlay_obj = objects.item_bar("items", overlay_elem_pos, "midbottom")
-		tmp_item = items.new_item()
-		tmp_item.load_config_from_file("test")
-		overlay_obj.set_item(0, tmp_item)
-		overlay_obj.set_image(self.global_settings.item_bar_image)
-
-		self.overlay.add_overlay_element(overlay_obj)
-
-		self.overlay.activate()
 
 	def create_images(self, name):
 		"""creates new images from one image for the player"""
@@ -111,11 +92,9 @@ class player():
 
 	def move(self):
 		"""Handle the movement and collisions"""
-		#lint:disable
 		konstspeed = self.global_settings.konstspeed
 		windowwidth = self.global_settings.screenx_current
 		windowheight = self.global_settings.screeny_current
-		#lint:enable
 
 		if self.rotation > 360:
 			self.rotation -= 360
@@ -123,10 +102,8 @@ class player():
 			self.rotation += 360
 
 		#Turns player to according rotation
-		#lint:disable
 		self.select_angle(self.global_settings.up, self.global_settings.down,
 			self.global_settings.left, self.global_settings.right)
-		#lint:enable
 
 		# handles rotation and gives signal to update player image/surface
 		if self.rotation != self.rot_dest:
@@ -166,13 +143,11 @@ class player():
 			self.pos.top = int(self.rel_y * windowheight)
 			self.pos.left = int(self.rel_x * windowwidth)
 
-			#lint:disable
 			# Somehow a double check is needed…
 			if self.pos.bottom >= self.global_settings.screeny_current:
 				self.pos.bottom += self.global_settings.screeny_current - self.pos.bottom
 			if self.pos.right >= self.global_settings.screenx_current:
 				self.pos.right += self.global_settings.screenx_current - self.pos.right
-			#lint:enable
 
 		# updates player image if neccesary
 		if self.update:
@@ -236,7 +211,6 @@ class player():
 	def blit(self, screen):
 		if self.explosion_anim is None:
 			screen.blit(self.img, self.pos)
-			self.overlay.blit(screen)
 		else:
 			self.update = False
 			pos = self.pos.copy()

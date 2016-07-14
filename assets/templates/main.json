@@ -1,0 +1,117 @@
+{
+	"imports": [
+		"./assets/templates/default_vars.json"
+	],
+	"objects": {
+		"titles": [{
+			"name": "title",
+			"label": "Project Interstellar",
+			"size": 40,
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%10",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}, {
+			"name": "menu",
+			"label": "Main Menu",
+			"size": 30,
+			"typeface": "$typeface",
+			"color": "$color",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "$qrt",
+				"x_abs": 0,
+				"y_abs": 0
+			}
+		}],
+		"buttons": [{
+			"name": "start",
+			"label": "Start",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "master_screen",
+				"relation_point": "TopLeft",
+				"x_rel": "$half",
+				"y_rel": "%40",
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "load",
+			"label": "Load Game",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "start",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "settings",
+			"label": "Settings",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "load",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "credits",
+			"label": "Credits",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "settings",
+				"relation_point": "BottomLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}, {
+			"name": "exit",
+			"label": "Exit",
+			"size": "$size",
+			"width_to_hight_ratio": "$ratio",
+			"typeface": "$typeface",
+			"color": "$color",
+			"box": "$box1",
+			"position": {
+				"pos_relation_obj": "credits",
+				"relation_point": "TopLeft",
+				"x_rel": 0,
+				"y_rel": 0,
+				"x_abs": 0,
+				"y_abs": 10
+			}
+		}]
+	}
+}
