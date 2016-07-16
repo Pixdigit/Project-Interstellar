@@ -26,8 +26,8 @@
 		"floats": {
 			"ratio": 11.0,
 			"size": 20,
-			"half": 0.5,
-			"qrt": 25
+			"half": "%50",
+			"qrt": "%25"
 		},
 		"typefaces": {
 			"typeface": "monospace"

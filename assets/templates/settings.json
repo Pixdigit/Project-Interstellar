@@ -2,7 +2,38 @@
             "imports": [
                         "./assets/templates/default_vars.json"
             ],
+            "variables": {
+                        "lists": {
+                                    "sizes": [
+                                                "Very Small",
+                                                "Small",
+                                                "Medium",
+                                                "Big",
+                                                "Very Big"
+                                    ]
+                        }
+            },
             "objects": {
+                        "titles": [
+                                    {
+                                                "name": "settings",
+                                                "label": "Settings",
+                                                "typeface": "$typeface",
+                                                "size": 30,
+                                                "color": "$color",
+                                                "bold": false,
+                                                "italics": false,
+                                                "position": {
+                                                            "pos_rel_obj": "master_screen",
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
+                                                            "x_rel": "$half",
+                                                            "y_rel": "$qrt",
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    }
+                        ],
                         "buttons": [
                                     {
                                                 "box": "$box1",
@@ -101,42 +132,13 @@
                                                 },
                                                 "preset_value": "$fullscreen",
                                                 "selection_range": [
-                                                            "On",
-                                                            "Off"
+                                                            "Off",
+                                                            "On"
                                                 ],
                                                 "size": "$size",
                                                 "typeface": "$typeface",
                                                 "width_to_hight_ratio": "$ratio"
                                     }
-                        ],
-                        "titles": [
-                                    {
-                                                "color": "$color",
-                                                "label": "Settings",
-                                                "name": "settings",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "$half",
-                                                            "y_abs": 0,
-                                                            "y_rel": "$qrt"
-                                                },
-                                                "size": 30,
-                                                "typeface": "$typeface"
-                                    }
                         ]
-            },
-            "variables": {
-                        "lists": {
-                                    "sizes": [
-                                                "Very Small",
-                                                "Small",
-                                                "Medium",
-                                                "Big",
-                                                "Very Big"
-                                    ]
-                        }
             }
 }

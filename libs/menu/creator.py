@@ -65,7 +65,8 @@ def merge(iter1, iter2):
 
 def load_vars(filename, pre_imports=[]):
 
-	menu_data = load_json(filename)
+	with open(filename)as data_file:
+		menu_data = json.load(data_file)
 
 	#add keys if not existing
 	menu_data = add_key("variables", menu_data, dict)
@@ -98,14 +99,17 @@ class create_menu():
 
 		self.data_file = filename
 		self.reference = ref
-		self.menu_data = load_json(filename)
+		self.menu_data = load_json(self.data_file)
 
 		#load variables and dependencies
-		self.variables = load_vars(self.data_file)
+		#I dont know why the emtpy list. But it stops it from using the list
+			#from the menu before
+		self.variables = load_vars(self.data_file, [])
 
 		#merge all types into list
 		#and add std vars
-		number_corrector = lambda float_var: str(float_var * 100)[:str(float_var * 100).find(".")] + "%"
+		number_corrector = lambda float_var: (
+						str(float_var * 100)[:str(float_var * 100).find(".")] + "%")
 		floats_list = [number_corrector((x + 1) / 255.0) for x in range(255)]
 		self.merged_variables = {"floats": floats_list}
 		for variable in list(self.variables.values()):
@@ -151,15 +155,16 @@ class create_menu():
 				if not "name" in data_dict:
 					data_dict["name"] = "NONAME"
 				error = (str(key_name)
-					+ "is not a property of: "
+					+ " is not a property of: "
 					+ data_dict["name"]
 					)
 				raise KeyError(error)
 
 			if (type(data_in) in [str, unicode]) and data_in[0] == "$":
 				try:
-					data_in = self.merged_variables[data_in[1:]]
+						data_in = get_data(self.merged_variables, data_in[1:])
 				except KeyError:
+					print ""
 					raise KeyError(data_in + " is not a variable.")
 				return data_in
 
@@ -175,6 +180,11 @@ class create_menu():
 								type_mismatch(float)
 						else:
 							return float(data_in)
+					else:
+						try:
+							return float(data_in)
+						except TypeError:
+							type_mismatch()
 				except ValueError:
 					type_mismatch(expect_type)
 			elif type(data_in) == list:
@@ -204,34 +214,51 @@ class create_menu():
 					return data_in
 				else:
 					type_mismatch(expect_type)
+			raise RuntimeError("I have no idea how this happend! : "
+					+ str(data_in) + " | " + str(expect_type))
+
+		#create titles
+		for title_data in self.object_data["titles"]:
+			name = get_data(title_data, "name", str)
+			label = get_data(title_data, "label", str)
+			typeface = get_data(title_data, "typeface", str)
+			size = get_data(title_data, "size", int)
+			color = get_data(title_data, "color", list)
+			bold = get_data(title_data, "bold", bool)
+			italics = get_data(title_data, "italics", bool)
+			pos_data = get_data(title_data, "position", dict)
+
+			self.objects.append(disp_elem.text(name, label, typeface, size, color,
+					bold, italics, pos_data))
+
+		#create buttons
+		for button_data in self.object_data["buttons"]:
+			name = get_data(button_data, "name", str)
+			label = get_data(button_data, "label", str)
+			typeface = get_data(button_data, "typeface", str)
+			size = get_data(button_data, "size", int)
+			color = get_data(button_data, "color", list)
+			box = get_data(button_data, "box", list)
+			ratio = get_data(button_data, "width_to_hight_ratio", float)
+			pos_data = get_data(button_data, "position", dict)
+
+			self.objects.append(disp_elem.button(name, label, typeface, color, size,
+					ratio, box, pos_data))
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
 			name = get_data(slider_data, "name", str)
 			label = get_data(slider_data, "label", str)
-			default_value = get_data(slider_data, "preset_value", float)
-			options_list = get_data(slider_data, "selection_range", list)
-			size = get_data(slider_data, "size", int)
-			ratio = get_data(slider_data, "width_to_hight_ratio", float)
 			typeface = get_data(slider_data, "typeface", str)
+			size = get_data(slider_data, "size", int)
 			color = get_data(slider_data, "color", list)
+			options_list = get_data(slider_data, "selection_range", list)
+			default_value = get_data(slider_data, "preset_value", float)
 			box = get_data(slider_data, "box", list)
+			ratio = get_data(slider_data, "width_to_hight_ratio", float)
 			pos_data = get_data(slider_data, "position", dict)
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
 					ratio, options_list, default_value, box, pos_data))
-
-		for button_data in self.object_data["buttons"]:
-			name = get_data(button_data, "name", str)
-			label = get_data(button_data, "label", str)
-			size = get_data(button_data, "size", int)
-			ratio = get_data(button_data, "width_to_hight_ratio", float)
-			typeface = get_data(button_data, "typeface", str)
-			color = get_data(button_data, "color", list)
-			box = get_data(button_data, "box", list)
-			pos_data = get_data(button_data, "position", dict)
-
-			self.objects.append(disp_elem.button(name, label, typeface, color, size,
-					ratio, box, pos_data))
 
 		self.objects.insert(0, self.reference)
 		for obj in self.objects[1:]:

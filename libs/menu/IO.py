@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """A module for overwriting variabels."""
+import json
 
 
 def write(filename, variable, value):
+	return
 	with open(filename, "r+") as conf_file:
 		for line in conf_file:
 			last = line
@@ -26,10 +28,8 @@ def write(filename, variable, value):
 
 def read(filename, variable):
 	with open(filename, "r+") as conf_file:
-		for line in conf_file:
-			if line.strip():
-				if line.strip()[0] == "<":
-					ident = line.index("<")
-					varname = (line[ident + 2:line.index("=") - 1]).strip()
-					if varname == variable:
-						return line[line.index("=") + 1:].strip()
+		data = json.load(conf_file)
+	for data_type in data:
+		for var_name in data_type:
+			if var_name == variable:
+				return data_type[var_name]

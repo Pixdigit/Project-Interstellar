@@ -59,7 +59,7 @@ class menu_template():
 		# create menu
 		self.menu = menu.create_menu(
 					"./assets/templates/" + self.menu_name + ".json",
-					pygame.Rect((0, 0), (self.screenx, self.screeny)), lambda : variables)
+					pygame.Rect((0, 0), (self.screenx, self.screeny)), lambda: variables)
 
 		# create fade effect
 		fade = fade_screen(self.fade_step, self.fade_step2, self.fade_max,
@@ -99,6 +99,7 @@ class menu_template():
 	def run(self):
 
 		settings.upd("get_events")
+		self.screen.fill((0, 0, 0))
 		self.menu.blit(self.screen, settings.events)
 		sounds.music.update(False, False)
 
@@ -123,10 +124,7 @@ class menu_template():
 					events.append(elem.name)
 		for slider in self.menu.get_types("slider"):
 			if slider.dragged:
-				if slider.is_defined_list:
-					tmp_value = slider.state
-				else:
-					tmp_value = slider.value
+				tmp_value = slider.value
 				tmp_event = self.slider_post(slider.name, tmp_value)
 				events.append(tmp_event)
 		return(events)
@@ -299,7 +297,7 @@ def choose_world():
 				"image5": prewiev_images[4],
 				"image6": prewiev_images[5],
 				"image7": prewiev_images[6],
-				"image8": prewiev_images[7]}, {})
+				"image8": preview_images[7]}, {})
 
 	world_menu.menu.elems["surfs"]["background"] = [background,
 						pygame.Rect(0, 0, 0, 0)]
@@ -453,16 +451,18 @@ def savegames():
 def options():
 	"""The settings menu"""
 
-	button_size = menu.IO.read("./assets/templates/default.vars", "size")
+	#TODO WHAT IS BUTTON SIZE USED FOR?
+	#button_size = menu.IO.read("./assets/templates/default.vars", "size")
 	# a conversion method between selector
 	# and actual text size
 	# found by trial and error
-	button_size = int(float(button_size) - 10) / 5
+	button_size = 12.5
+	button_size = (button_size - 10) / 5.0
 
 	settings_menu = menu_template("settings", 0, 0, 255,
-			{"fullscreen": str(int(settings.fullscreen)),
-			"volume": str(settings.volume),
-			"button size": str(button_size)},
+			{"fullscreen": int(settings.fullscreen),
+			"volume": settings.volume,
+			"button_size": str(button_size)},
 			[])
 
 	sounds.music.play("pause")
@@ -474,23 +474,20 @@ def options():
 
 		events = settings_menu.run()
 		for event in events:
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				pygame.mixer.music.pause()
 				sounds.music.play("unpause")
 				run = False
-			if event == "Volume":
+			if event == "volume":
+				print(float(event))
 				sounds.music.volume = float(event)
 				settings.volume = float(event)
-			if event == "Fullscreen":
+			if event == "fullscreen":
 				settings.fullscreen = bool(event)
-			if event == "Button Size":
-				button_size = int(event)
-				# a conversion method between selector
-				# and actual text size
-				# found by trial and error
-				menu.IO.write("./assets/templates/default.vars", "size",
-						10 + (5 * button_size))
-			if event == "Controls":
+			if event == "button_Size":
+				button_size = float(event)
+
+			if event == "controls":
 				change_controlls()
 				settings_menu.update()
 
@@ -499,11 +496,15 @@ def options():
 
 	# explanation of the 10 + (5 * …) is written in
 	# the Button Size handler in events loop
-	menu.IO.write("./assets/templates/default.vars", "size",
-			10 + (5 * button_size))
-	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
+#	menu.IO.write("./assets/templates/default.vars", "size",
+#			10 + (5 * button_size))
+#	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
 	settings.upd("adjust_screen")
 	game_data.save_user_settings(	volume=settings.volume,
+				# a conversion method between selector
+				# and actual text size
+				# found by trial and error
+				size=10 + (5 * button_size),
 				buttonmap=settings.buttonmap)
 	pygame.mouse.set_visible(False)
 
@@ -535,7 +536,6 @@ def change_controlls():
 				run = False
 				break
 			for name in button_text:
-				pass
 				if button_text[str(name)] == event:
 					pressed = controls_menu.menu.get_elem(button_text[str(name)])
 					ratio = pressed.ratio
