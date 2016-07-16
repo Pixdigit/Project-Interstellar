@@ -104,7 +104,10 @@ class create_menu():
 		self.variables = load_vars(self.data_file)
 
 		#merge all types into list
-		self.merged_variables = {}
+		#and add std vars
+		number_corrector = lambda float_var: str(float_var * 100)[:str(float_var * 100).find(".")] + "%"
+		floats_list = [number_corrector((x + 1) / 255.0) for x in range(255)]
+		self.merged_variables = {"floats": floats_list}
 		for variable in list(self.variables.values()):
 			self.merged_variables.update(variable)
 
@@ -147,7 +150,7 @@ class create_menu():
 			except KeyError:
 				if not "name" in data_dict:
 					data_dict["name"] = "NONAME"
-				error = (key_name
+				error = (str(key_name)
 					+ "is not a property of: "
 					+ data_dict["name"]
 					)
@@ -175,7 +178,15 @@ class create_menu():
 				except ValueError:
 					type_mismatch(expect_type)
 			elif type(data_in) == list:
-				return [get_data(data_in, x, None) for x in range(len(data_in))]
+				new_list = []
+				for item in data_in:
+					#merge if element is list
+					if type(item) in [str, unicode] and item[0] == "$":
+						if type(self.merged_variables[item[1:]]) == list:
+							new_list = new_list + get_data(data_in, data_in.index(item), None)
+					else:
+						new_list.append(get_data(data_in, data_in.index(item), None))
+				return new_list
 			elif type(data_in) == dict:
 				new_data = {}
 				for key in data_in:
@@ -206,57 +217,48 @@ class create_menu():
 			color = get_data(slider_data, "color", list)
 			box = get_data(slider_data, "box", list)
 			pos_data = get_data(slider_data, "position", dict)
-			self.objects.append(disp_elem.slider(name, label, default_value,
-					options_list, size, ratio, typeface, color, box, pos_data))
+			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
+					ratio, options_list, default_value, box, pos_data))
 
-		#for button_data in self.object_data["buttons"]:
-			#name = get_data(button_data, "name", str)
-			#label = get_data(button_data, "label", str)
-			#size = get_data(button_data, "size", int)
-			#ratio = get_data(button_data, "width_to_hight_ratio", float)
-			#typeface = get_data(button_data, "typeface", str)
-			#color = get_data(button_data, "color", list)
-			#box = get_data(button_data, "box", list)
-			#rel_x = get_data(button_data["position"], "x_rel", float)
-			#rel_y = get_data(button_data["position"], "y_rel", float)
-			#x = get_data(button_data["position"], "x_abs", float)
-			#y = get_data(button_data["position"], "y_abs", float)
+		for button_data in self.object_data["buttons"]:
+			name = get_data(button_data, "name", str)
+			label = get_data(button_data, "label", str)
+			size = get_data(button_data, "size", int)
+			ratio = get_data(button_data, "width_to_hight_ratio", float)
+			typeface = get_data(button_data, "typeface", str)
+			color = get_data(button_data, "color", list)
+			box = get_data(button_data, "box", list)
+			pos_data = get_data(button_data, "position", dict)
 
-			#disp_elem.slider(name, default_value, options_list, size, ratio, typeface,
-					#color, box, rel_x, x, rel_y, y, self.reference)
+			self.objects.append(disp_elem.button(name, label, typeface, color, size,
+					ratio, box, pos_data))
 
 		self.objects.insert(0, self.reference)
 		for obj in self.objects[1:]:
 			obj.get_rel_pos(self.objects)
 
 	def blit(self, screen, events):
-		try:
-			screen.blit(self.elems["surfs"]["background"][0],
-				self.elems["surfs"]["background"][1])
-		except:
-			pass
-		try:
-			for external in self.elems["externals"]:
-				external.blit(screen)
-		except:
-			pass
-		for surf in self.elems["surfs"]:
-			if surf != "background":
-				screen.blit(self.elems["surfs"][surf][0], self.elems["surfs"][surf][1])
-		for elem in self.elems["buttons"] + self.elems["sliders"]:
-			elem.update(events)
-			elem.blit(screen)
+		#screen.blit(self.objects[0])
+		for obj in self.objects[1:]:
+			obj.update(events)
+			obj.blit(screen)
 
 	def get_klicked(self):
 		klicked = []
-		for elem in self.elems["buttons"]:
-			if elem.klicked:
-				klicked.append(elem)
+		for obj in self.objects[1:]:
+			if obj.type == "button":
+				if obj.klicked:
+					klicked.append(obj)
 		return klicked
 
-	def get_elem(self, name):
-		for key in self.elems:
-			for elem in self.elems[key]:
-				if type(elem) != pygame.Surface:
-					if elem.name == name:
-						return elem
+	def get_types(self, obj_type):
+		obj_list = []
+		for obj in self.objects[1:]:
+			if obj.type == obj_type:
+				obj_list.append(obj)
+		return obj_list
+
+	def get_obj(self, name):
+		for obj in self.objects[1:]:
+			if obj.name == name:
+				return obj

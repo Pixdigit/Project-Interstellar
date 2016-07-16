@@ -35,104 +35,127 @@ def getmaxsize(typeface, size, text, antialias, color, maxsize, borderoff):
 
 class button():
 
-	def __init__(self, name, rel_x, x, rel_y, y, ref, content_in, typeface,
-			size, ratio, color, button_designs):
+	def __init__(self, name, label, typeface, color, size,
+			ratio, button_design, pos_data):
 		"""Initalises with x and y as center point"""
 		# basic font and then everything should be clear
 		# three different instances of create_outline!
 		# this way three images can be generated
 
-		# This prepares button for either to contain text or an image
-		self.isimage = False
-		if content_in != name:  # True = Image
-			if type(content_in) == pygame.Surface:  # Surf already exists
-				content = content_in
-				contentpos = content.get_rect()
-				self.isimage = True
-			elif type(content_in) == str:  # Only string is provided image needs loading
-				content = pygame.image.load(content_in).convert_alpha()
-				contentpos = content.get_rect()
-				self.isimage = True
-		else:  # False = Font/Text
-			# Loads the font
-			self.font = pygame.font.SysFont(typeface, int(size))
-
-			# renders the text and creates a rect
-			content = self.font.render(name, True, color)
-			contentpos = content.get_rect()
-
-			# creating emtpy surface that is the size of the desired button
-			self.ratio = ratio
-			tmp_centertext_image = pygame.Surface((contentpos.h * ratio,
-						contentpos.h)).convert_alpha()
-			tmp_centertext_image.fill((0, 0, 0, 0))
-			tmp_center_pos = tmp_centertext_image.get_rect()
-
-			# bliting the text onto the surface
-			contentpos.center = tmp_center_pos.center
-			tmp_centertext_image.blit(content, contentpos)
-
-			# Adding image to interface
-			content = tmp_centertext_image
-			contentpos = content.get_rect()
-			# saving typeface for later use
-			self.typeface = typeface
-
-		# creating ouline templates
-		normal = create_outline(button_designs[0])
-		hover = create_outline(button_designs[0])
-		klick = create_outline(button_designs[0])
-		self.buttons = [normal, hover, klick]
-		self.state = 0
 		self.name = name
-		self.klicked = False
-		# calcualte absolute position
-		# and define rect
-		x = x + rel_x * float(ref.w)
-		y = y + rel_y * float(ref.h)
-		self.pos = pygame.Rect((x, y), contentpos.size)
-		self.move(x, y)
-		# move buttons and create images
-		# also adds content inside button
-		for num in range(len(self.buttons)):
-			self.buttons[num].create_box(num, self.pos)
-			# defines position in the middle of button
-			contentpos.centerx = self.buttons[num].pos.centerx - self.buttons[num].pos.x
-			contentpos.centery = self.buttons[num].pos.centery - self.buttons[num].pos.y
-			# blits content centered in button
-			self.buttons[num].box.blit(content, contentpos)
-		self.pos.size = self.buttons[0].pos.size
+		self.type = "button"
 
-	def center(self):
-		"""Moves position so that the position is now the center position"""
-		self.move(self.pos.x - self.pos.w / 2,
-			self.pos.y - self.pos.h / 2)
+		# Loads the font
+		self.font = pygame.font.SysFont(typeface, int(size))
 
-	def changetext(self, text, color, ratio):
-		"""Changes the text inside the button"""
 		# renders the text and creates a rect
-		content = self.font.render(text, True, color)
-		contentpos = content.get_rect()
+		self.label = label
+		text = self.font.render(self.label, True, color)
+		text_pos = text.get_rect()
 
 		# creating emtpy surface that is the size of the desired button
-		tmp_centertext_image = pygame.Surface((contentpos.h * ratio,
-					contentpos.h)).convert_alpha()
+		self.ratio = ratio
+		tmp_centertext_image = pygame.Surface((text_pos.h * ratio,
+						text_pos.h)).convert_alpha()
 		tmp_centertext_image.fill((0, 0, 0, 0))
 		tmp_center_pos = tmp_centertext_image.get_rect()
 
 		# bliting the text onto the surface
-		contentpos.center = tmp_center_pos.center
-		tmp_centertext_image.blit(content, contentpos)
-		content = tmp_centertext_image
-		for num in range(len(self.buttons)):
-			self.buttons[num].create_box(num, contentpos)
-			contentpos.center = self.buttons[num].pos.center
-			self.buttons[num].box.blit(content, contentpos)
+		text_pos.center = tmp_center_pos.center
+		tmp_centertext_image.blit(text, text_pos)
 
-	def move(self, x, y):
-		"""Moves the button to topleft = x, y"""
-		self.pos.topleft = (0, 0)
-		self.pos = self.pos.move(x, y)
+		# Adding image to interface
+		text = tmp_centertext_image
+		text_pos = text.get_rect()
+
+		# saving typeface for later use
+		self.typeface = typeface
+
+		#set temporary position
+		self.pos_data = pos_data
+		self.pos = pygame.Rect((0, 0), text_pos.size)
+
+		#create images and add text inside button
+		self.buttons = []
+		for num in range(3):
+			self.buttons.append(create_outline(button_design))
+			self.buttons[num].create_box(num, self.pos)
+
+			# defines position in the middle of button
+			text_pos.centerx = self.buttons[num].pos.centerx - self.buttons[num].pos.x
+
+			text_pos.centery = self.buttons[num].pos.centery - self.buttons[num].pos.y
+			# blits text centered in button
+			self.buttons[num].box.blit(text, text_pos)
+		self.pos.size = self.buttons[0].pos.size
+
+		#set status
+		self.state = 0
+		self.klicked = False
+
+		#set position status
+		self.checked = False
+		self.active_pos_search = False
+
+	def get_rel_pos(self, object_list):
+		#set status
+		self.checked = True
+		self.active_pos_search = True
+
+		if self.pos_data["pos_rel_obj"] == "master_screen":
+			rel_pos = object_list[0]
+			self.pos_data["relation_point"] = "BottomRight"
+		else:
+			#search and get relational points
+			for obj in object_list[1:]:
+				if obj.name == self.pos_data["pos_rel_obj"]:
+					if obj.checked:
+						if obj.active_pos_search:
+							raise RuntimeError("Relational position refers to itself.")
+						else:
+							rel_pos = obj.pos
+					else:
+						rel_pos = obj.get_rel_pos(object_list)
+		#get point from rect
+		rel_point = get_point(rel_pos, self.pos_data["from"])
+
+		#update position
+		self.pos.x = int(self.pos_data["x_abs"]
+				+ (self.pos_data["x_rel"] * rel_point[0]))
+		self.pos.y = int(self.pos_data["y_abs"]
+				+ (self.pos_data["y_rel"] * rel_point[1]))
+
+		#set "to" pos to "from" pos
+		dest_point = self.pos.topleft
+		org_point = get_point(self.pos, self.pos_data["to"])
+		self.pos.x += dest_point[0] - org_point[0]
+		self.pos.y += dest_point[1] - org_point[1]
+
+		#reset status and return pos for recursion
+		self.active_pos_search = False
+		return self.pos
+
+	def changetext(self, text, color):
+		"""Changes the text inside the button"""
+		# renders the text and creates a rect
+		text = self.font.render(text, True, color)
+		text_pos = text.get_rect()
+
+		# creating emtpy surface that is the size of the desired button
+		tmp_centertext_image = pygame.Surface((text_pos.h * self.ratio,
+					text_pos.h)).convert_alpha()
+		tmp_centertext_image.fill((0, 0, 0, 0))
+		tmp_center_pos = tmp_centertext_image.get_rect()
+
+		# bliting the text onto the surface
+		text_pos.center = tmp_center_pos.center
+		tmp_centertext_image.blit(text, text_pos)
+		text = tmp_centertext_image
+
+		for num in range(len(self.buttons)):
+			self.buttons[num].create_box(num, text_pos)
+			text_pos.center = self.buttons[num].pos.center
+			self.buttons[num].box.blit(text, text_pos)
 
 	def update(self, events):
 		# changes image when hovered over or being clicked
@@ -142,7 +165,11 @@ class button():
 			for event in events:
 				if event.type == MOUSEBUTTONDOWN and event.button == 1:
 					menue = pygame.event.Event(USEREVENT, code="MENU")
-					pygame.fastevent.post(menue)
+					#use fastevent else fallback to normal events
+					try:
+						pygame.fastevent.post(menue)
+					except:
+						pygame.event.post(menue)
 					self.klicked = True
 					self.state = 2
 		elif not self.klicked:
@@ -219,11 +246,12 @@ class input_field():
 
 class slider():
 
-	def __init__(self, name, label, default_value, options_list, size, ratio,
-		typeface, color, box, pos_data):
+	def __init__(self, name, label, typeface, color, size, ratio,
+		options_list, default_value, box, pos_data):
 		"""Creates a new slider"""
+		self.type = "slider"
 		self.value = default_value
-		self.box = create_outline(box["outline"], box["inner_color"])
+		self.box = create_outline(box)
 		self.dragged = False
 		self.typeface = pygame.font.SysFont(typeface, size)
 		self.color = color
@@ -256,12 +284,13 @@ class slider():
 		self.checked = True
 		self.active_pos_search = True
 
-		if self.pos_data["pos_relation_obj"] == "master_screen":
+		if self.pos_data["pos_rel_obj"] == "master_screen":
 			rel_pos = object_list[0]
+			self.pos_data["from"] = "BottomRight"
 		else:
 			#search and get relational points
 			for obj in object_list[1:]:
-				if obj.name == self.pos_data["pos_relation_obj"]:
+				if obj.name == self.pos_data["pos_rel_obj"]:
 					if obj.checked:
 						if obj.active_pos_search:
 							raise RuntimeError("Relational position refers to itself.")
@@ -270,13 +299,23 @@ class slider():
 					else:
 						rel_pos = obj.get_rel_pos(object_list)
 		#get point from rect
-		rel_point = get_point(rel_pos, self.pos_data["relation_point"])
+		rel_point = get_point(rel_pos, self.pos_data["from"])
 
 		#update position
 		self.pos.x = int(self.pos_data["x_abs"]
 				+ (self.pos_data["x_rel"] * rel_point[0]))
 		self.pos.y = int(self.pos_data["y_abs"]
 				+ (self.pos_data["y_rel"] * rel_point[1]))
+
+		#set "to" pos to "from" pos
+		dest_point = self.pos.topleft
+		org_point = get_point(self.pos, self.pos_data["to"])
+		self.pos.x += dest_point[0] - org_point[0]
+		self.pos.y += dest_point[1] - org_point[1]
+
+		#update knob position
+		self.knob_pos.top = self.pos.top
+		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
@@ -333,15 +372,12 @@ class slider():
 
 class create_outline():
 
-	def __init__(self, template_image, inner_color):
-		self.resources = {"design": template_image,
-				"inner_color": inner_color}
-		self.modes = {}
-		for a in range(3):
-			self.modes[a] = self.create_template(a)
+	def __init__(self, button_design):
+		self.resources = button_design
+		self.modes = [self.create_template(a) for a in range(3)]
 
-	def create_template(self, pos):
-		design = self.resources["design"]
+	def create_template(self, x_pos):
+		design = self.resources["outline"]
 		design = pygame.image.load(design)
 		self.color = None
 
@@ -359,7 +395,7 @@ class create_outline():
 		size = design_rect.h
 		# extract the selected collum
 		line_string = pygame.Surface((1, size))
-		line_string.blit(design, (0, 0), pygame.Rect(pos, 0, 1, size))
+		line_string.blit(design, (0, 0), pygame.Rect(x_pos, 0, 1, size))
 		design = line_string
 		design_rect = design.get_rect()
 		self.pixels = {}
@@ -386,23 +422,30 @@ class create_outline():
 		width += border * 2
 		height += border * 2
 		self.top = pygame.Surface((width, border))
+
 		# creating top frame line
 		for pos in range(width):
 			self.top.blit(self.modes[mode][0], pygame.Rect(pos, 0, 0, 0))
+
 		# blit left top corner
 		self.top.blit(self.modes[mode][1], pygame.Rect(0, 0, 0, 0))
+
 		# blit right top corner
 		self.top.blit(pygame.transform.flip(self.modes[mode][1], True, False),
 					pygame.Rect(width - border, 0, 0, 0))
+
 		# create bottom line
 		self.bottom = pygame.transform.flip(self.top, False, True)
+
 		# create left frame line
 		self.left = pygame.Surface((border, height))
 		tmp_line = pygame.transform.rotate(self.modes[mode][0], 90)
 		for pos in range(height):
 			self.left.blit(tmp_line, pygame.Rect(0, pos, 0, 0))
+
 		# create right frame line
 		self.right = pygame.transform.flip(self.left, True, False)
+
 		# Merge all together
 		final = pygame.Surface((width, height), pygame.SRCALPHA)
 		final.fill(self.color)
@@ -410,29 +453,35 @@ class create_outline():
 		final.blit(self.right, pygame.Rect(width - border, 0, 0, 0))
 		final.blit(self.top, pygame.Rect(0, 0, 0, 0))
 		final.blit(self.bottom, pygame.Rect(0, height - border, 0, 0))
+
 		self.box = final
 		self.pos = self.box.get_rect()
 		self.pos.x = posx - border
 		self.pos.y = posy - border
+
 		return (self.pos, self.box)
 
 
 def get_point(rect, point_name):
-	if point_name == "TopLeft":
+	point_name = point_name.lower()
+	if point_name == "topleft":
 		return rect.topleft
-	if point_name == "TopCenter":
+	if point_name in ["topcenter", "topmid"]:
 		return rect.midtop
-	if point_name == "TopRight":
+	if point_name == "topright":
 		return rect.topright
-	if point_name == "CenterLeft":
+	if point_name == "centerleft":
 		return rect.midleft
-	if point_name in ["CenterCenter", "Center"]:
+	if point_name in ["centercenter", "center", "midmid", "mid"]:
 		return rect.center
-	if point_name == "CenterRight":
+	if point_name == "centerright":
 		return rect.midright
-	if point_name == "BottomLeft":
+	if point_name == "bottomleft":
 		return rect.bottomleft
-	if point_name == "BottomCenter":
+	if point_name in ["bottomcenter", "bottommid"]:
 		return rect.midbottom
-	if point_name == "BottomRight":
+	if point_name == "bottomright":
 		return rect.bottomright
+
+	#did not match
+	raise ValueError(point_name + " is not a valid point.")

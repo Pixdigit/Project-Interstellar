@@ -2,8 +2,12 @@
 import creator
 import pygame
 
+
+x = int(1920 * 0.5)
+res = [x, int(x * 9 / 16.0)]
+
 pygame.init()
-screen = pygame.display.set_mode((1, 1))
+screen = pygame.display.set_mode(res)
 
 
 def ref_updater():
@@ -13,6 +17,12 @@ def ref_updater():
 	variables_dict["button_size"] = 0.5
 	return variables_dict
 
-menu_creator = creator.create_menu("./assets/templates/settings.json",
-			pygame.Rect((1920, 1080), (1920, 1080)),
+menu = creator.create_menu("./assets/templates/settings.json",
+			pygame.Rect((0, 0), res),
 			ref_updater)
+
+for a in range(2000):
+	screen.fill((0, 0, 0))
+	events = pygame.event.get()
+	menu.blit(screen, events)
+	pygame.display.flip()

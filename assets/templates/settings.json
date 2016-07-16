@@ -1,127 +1,142 @@
 {
-	"imports": [
-		"./assets/templates/default_vars.json"
-	],
-	"variables": {
-		"lists": {
-			"sizes": [
-				"Very Small",
-				"Small",
-				"Medium",
-				"Big",
-				"Very Big"
-			]
-		}
-	},
-	"objects": {
-		"titles": [{
-			"name": "settings",
-			"label": "Settings",
-			"size": 30,
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "$qrt",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}],
-		"sliders": [{
-			"name": "volume",
-			"label": "Volume",
-			"selection_range": [
-				"Off",
-				"floats"
-			],
-			"preset_value": "$volume",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box2",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "%40",
-				"x_abs": 0,
-				"y_abs": 10
-			}
-		}, {
-			"name": "button_size",
-			"label": "Button Size",
-			"selection_range": "$sizes",
-			"preset_value": "$button_size",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box2",
-			"position": {
-				"pos_relation_obj": "volume",
-				"relation_point": "BottomLeft",
-				"x_rel": 1,
-				"y_rel": 1,
-				"x_abs": 0,
-				"y_abs": 10
-			}
-		}, {
-			"name": "fullscreen",
-			"label": "Fullscreen",
-			"selection_range": [
-				"On",
-				"Off"
-			],
-			"preset_value": "$fullscreen",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box2",
-			"position": {
-				"pos_relation_obj": "button_size",
-				"relation_point": "BottomLeft",
-				"x_rel": 1,
-				"y_rel": 1,
-				"x_abs": 0,
-				"y_abs": 10
-			}
-		}],
-		"buttons": [{
-			"name": "controls",
-			"label": "Controls",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "fullscreen",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 10
-			}
-		}, {
-			"name": "return",
-			"label": "Return",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": 0,
-				"y_rel": "%90",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}]
-	}
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ],
+            "objects": {
+                        "buttons": [
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "label": "Controls",
+                                                "name": "controls",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "fullscreen",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "label": "Return",
+                                                "name": "return",
+                                                "position": {
+                                                            "from": "BottomRight",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%90"
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    }
+                        ],
+                        "sliders": [
+                                    {
+                                                "box": "$box2",
+                                                "color": "$color",
+                                                "label": "Volume",
+                                                "name": "volume",
+                                                "position": {
+                                                            "from": "BottomRight",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 10,
+                                                            "y_rel": "%40"
+                                                },
+                                                "preset_value": "$volume",
+                                                "selection_range": [
+                                                            "Off",
+                                                            "$floats"
+                                                ],
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box2",
+                                                "color": "$color",
+                                                "label": "Button Size",
+                                                "name": "button_size",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "volume",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1
+                                                },
+                                                "preset_value": "$button_size",
+                                                "selection_range": "$sizes",
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box2",
+                                                "color": "$color",
+                                                "label": "Fullscreen",
+                                                "name": "fullscreen",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "button_size",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1
+                                                },
+                                                "preset_value": "$fullscreen",
+                                                "selection_range": [
+                                                            "On",
+                                                            "Off"
+                                                ],
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    }
+                        ],
+                        "titles": [
+                                    {
+                                                "color": "$color",
+                                                "label": "Settings",
+                                                "name": "settings",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 0,
+                                                            "y_rel": "$qrt"
+                                                },
+                                                "size": 30,
+                                                "typeface": "$typeface"
+                                    }
+                        ]
+            },
+            "variables": {
+                        "lists": {
+                                    "sizes": [
+                                                "Very Small",
+                                                "Small",
+                                                "Medium",
+                                                "Big",
+                                                "Very Big"
+                                    ]
+                        }
+            }
 }

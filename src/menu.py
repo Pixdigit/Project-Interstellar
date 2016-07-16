@@ -59,15 +59,15 @@ class menu_template():
 		# create menu
 		self.menu = menu.create_menu(
 					"./assets/templates/" + self.menu_name + ".json",
-					self.variables, pygame.Rect((0, 0), (self.screenx, self.screeny)))
+					pygame.Rect((0, 0), (self.screenx, self.screeny)), lambda : variables)
 
 		# create fade effect
 		fade = fade_screen(self.fade_step, self.fade_step2, self.fade_max,
 				self.screenx, self.screeny)
-		self.menu.elems["externals"] = [fade]
+#		self.menu.elems["externals"] = [fade]
 
-		for elem in self.externals:
-			self.menu.elems["externals"].insert(0, elem)
+#		for elem in self.externals:
+#			self.menu.elems["externals"].insert(0, elem)
 
 	class slider_post():
 		"""A class for posting sliders and including their value
@@ -121,7 +121,7 @@ class menu_template():
 				for elem in klicked:
 					elem.klicked = False
 					events.append(elem.name)
-		for slider in self.menu.elems["sliders"]:
+		for slider in self.menu.get_types("slider"):
 			if slider.dragged:
 				if slider.is_defined_list:
 					tmp_value = slider.state
@@ -199,11 +199,11 @@ def main():
 		for event in events:
 			if event == "event.CONTINUE":
 				run = False
-			if event == "Start":
+			if event == "start":
 				settings.reset()
 				sounds.music.play("next")
 				run = False
-			if event == "Load Game":
+			if event == "load":
 				savegame = savegames()
 				if savegame is not None:
 					game_data.load(savegame)
@@ -214,12 +214,12 @@ def main():
 					run = False
 				else:
 					pygame.mouse.set_visible(True)
-			if event == "Settings":
+			if event == "settings":
 				options()
 				main_menu.update()
-			if event == "Credits":
+			if event == "credits":
 				namings.run()
-			if event in ["Exit", "event.EXIT", "event.QUIT"]:
+			if event in ["exit", "event.EXIT", "event.QUIT"]:
 				settings.quit()
 		pygame.display.flip()
 	sounds.music.play("next", 0)

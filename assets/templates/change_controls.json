@@ -1,321 +1,357 @@
 {
-	"imports": [
-		"./assets/templates/default_vars.json"
-	],
-	"objects": {
-		"titles": [{
-			"name": "controls",
-			"label": "Controls",
-			"size": 30,
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "%10",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		},
-		{
-			"name": "up",
-			"label": "Up:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$qrt",
-				"y_rel": "%20",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		},
-		{
-			"name": "left",
-			"label": "Left:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "up",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 108
-			}
-		},
-		{
-			"name": "down",
-			"label": "Down:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "left",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 108
-			}
-		},
-		{
-			"name": "right",
-			"label": "Right:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "down",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 108
-			}
-		},
-		{
-			"name": "shoot",
-			"label": "Shoot:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "right",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 108
-			}
-		},
-		{
-			"name": "shoot2",
-			"label": "Shoot 2:",
-			"size": "$size",
-			"typeface": "$typeface",
-			"color": "$color",
-			"position": {
-				"pos_relation_obj": "shoot",
-				"relation_point": "BottomLeft",
-				"x_rel": 0,
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 108
-			}
-		}],
-		"buttons": [{
-			"name": "up_key",
-			"label": "$up",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "up",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "left_key",
-			"label": "$left",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "left",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "down_key",
-			"label": "$down",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "down",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "right_key",
-			"label": "$right",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "right",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "fire_key",
-			"label": "$fire",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "shoot",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "fire2_key",
-			"label": "$fire2",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "shoot_2",
-				"relation_point": "TopLeft",
-				"x_rel": "%200",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "up_sec_key",
-			"label": "$up_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "up_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "left_sec_key",
-			"label": "$left_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "left_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "down_sec_key",
-			"label": "$down_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "down_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "right_sec_key",
-			"label": "$right_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "right_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "fire_sec_key",
-			"label": "$fire_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "fire_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "fire2_sec_key",
-			"label": "$fire2_sec",
-			"size": "$size",
-			"width_to_hight_ratio": 5,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "fire2_key",
-				"relation_point": "TopRight",
-				"x_rel": "%105",
-				"y_rel": 0,
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "return",
-			"label": "Return",
-			"size": "$size",
-			"width_to_hight_ratio": "$ratio",
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "%90",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}]
-	}
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ], 
+            "objects": {
+                        "buttons": [
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$up", 
+                                                "name": "up_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "up", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$left", 
+                                                "name": "left_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "left", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$down", 
+                                                "name": "down_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "down", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$right", 
+                                                "name": "right_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "right", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$fire", 
+                                                "name": "fire_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "shoot", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$fire2", 
+                                                "name": "fire2_key", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "shoot_2", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%200", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$up_sec", 
+                                                "name": "up_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "up_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$left_sec", 
+                                                "name": "left_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "left_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$down_sec", 
+                                                "name": "down_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "down_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$right_sec", 
+                                                "name": "right_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "right_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$fire_sec", 
+                                                "name": "fire_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "fire_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "$fire2_sec", 
+                                                "name": "fire2_sec_key", 
+                                                "position": {
+                                                            "from": "TopRight", 
+                                                            "pos_rel_obj": "fire2_key", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "%105", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": 5
+                                    }, 
+                                    {
+                                                "box": "$box1", 
+                                                "color": "$color", 
+                                                "label": "Return", 
+                                                "name": "return", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "master_screen", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "$half", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": "%90"
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface", 
+                                                "width_to_hight_ratio": "$ratio"
+                                    }
+                        ], 
+                        "titles": [
+                                    {
+                                                "color": "$color", 
+                                                "label": "Controls", 
+                                                "name": "controls", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "master_screen", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "$half", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": "%10"
+                                                }, 
+                                                "size": 30, 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Up:", 
+                                                "name": "up", 
+                                                "position": {
+                                                            "from": "TopLeft", 
+                                                            "pos_rel_obj": "master_screen", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": "$qrt", 
+                                                            "y_abs": 0, 
+                                                            "y_rel": "%20"
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Left:", 
+                                                "name": "left", 
+                                                "position": {
+                                                            "from": "BottomLeft", 
+                                                            "pos_rel_obj": "up", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": 1, 
+                                                            "y_abs": 108, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Down:", 
+                                                "name": "down", 
+                                                "position": {
+                                                            "from": "BottomLeft", 
+                                                            "pos_rel_obj": "left", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": 1, 
+                                                            "y_abs": 108, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Right:", 
+                                                "name": "right", 
+                                                "position": {
+                                                            "from": "BottomLeft", 
+                                                            "pos_rel_obj": "down", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": 1, 
+                                                            "y_abs": 108, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Shoot:", 
+                                                "name": "shoot", 
+                                                "position": {
+                                                            "from": "BottomLeft", 
+                                                            "pos_rel_obj": "right", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": 1, 
+                                                            "y_abs": 108, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }, 
+                                    {
+                                                "color": "$color", 
+                                                "label": "Shoot 2:", 
+                                                "name": "shoot2", 
+                                                "position": {
+                                                            "from": "BottomLeft", 
+                                                            "pos_rel_obj": "shoot", 
+                                                            "to": "TopLeft", 
+                                                            "x_abs": 0, 
+                                                            "x_rel": 1, 
+                                                            "y_abs": 108, 
+                                                            "y_rel": 1
+                                                }, 
+                                                "size": "$size", 
+                                                "typeface": "$typeface"
+                                    }
+                        ]
+            }
 }
