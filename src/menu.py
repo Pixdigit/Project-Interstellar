@@ -62,8 +62,8 @@ class menu_template():
 					pygame.Rect((0, 0), (self.screenx, self.screeny)), lambda: variables)
 
 		# create fade effect
-		fade = fade_screen(self.fade_step, self.fade_step2, self.fade_max,
-				self.screenx, self.screeny)
+		#fade = fade_screen(self.fade_step, self.fade_step2, self.fade_max,
+		#		self.screenx, self.screeny)
 #		self.menu.elems["externals"] = [fade]
 
 #		for elem in self.externals:
@@ -277,7 +277,7 @@ def choose_world():
 	pygame.mouse.set_visible(True)
 
 	background = settings.screen.copy()
-	prewiev_images = []
+	preview_images = []
 	tmpfont = pygame.font.SysFont("monospace", 13)
 	for tmp in range(8):
 		prewiev_size = (int(settings.screenx_current / 5.0),
@@ -288,15 +288,15 @@ def choose_world():
 		tmprect = text.get_rect()
 		tmprect.center = surf.get_rect().center
 		surf.blit(text, tmprect)
-		prewiev_images.append(surf)
+		preview_images.append(surf)
 	world_menu = menu_template("world", 5, 5, 150, {
-				"image1": prewiev_images[0],
-				"image2": prewiev_images[1],
-				"image3": prewiev_images[2],
-				"image4": prewiev_images[3],
-				"image5": prewiev_images[4],
-				"image6": prewiev_images[5],
-				"image7": prewiev_images[6],
+				"image1": preview_images[0],
+				"image2": preview_images[1],
+				"image3": preview_images[2],
+				"image4": preview_images[3],
+				"image5": preview_images[4],
+				"image6": preview_images[5],
+				"image7": preview_images[6],
 				"image8": preview_images[7]}, {})
 
 	world_menu.menu.elems["surfs"]["background"] = [background,
@@ -479,7 +479,6 @@ def options():
 				sounds.music.play("unpause")
 				run = False
 			if event == "volume":
-				print(float(event))
 				sounds.music.volume = float(event)
 				settings.volume = float(event)
 			if event == "fullscreen":
@@ -512,41 +511,33 @@ def options():
 def change_controlls():
 
 	run = True
-	button_text = {}
-	curr_button_color = menu.IO.read("./assets/templates/default.vars", "color")
-	#Transfer "tuple" string to list type
-	curr_button_color = list(map(lambda x: int(x),
-				curr_button_color[1:-1].split(",")))
+	curr_button_color = menu.IO.read("./assets/templates/default_vars.json",
+				"color")
 
-	for i in list(settings.buttonmap):
-		button_text[i] = settings.buttonmap[i][0]
-		if len(settings.buttonmap[i]) < 2:
-			#TODO change it so that the buttons can be identified
-			button_text[i + "_sec"] = "not_set"
-		else:
-			button_text[i + "_sec"] = settings.buttonmap[i][1]
+	keymap = {}
+	for key in settings.buttonmap:
+		keymap[key] = settings.buttonmap[key][0]
+		try:
+			keymap[key[:key.find("_")] + "_sec_key"] = settings.buttonmap[key][1]
+		except IndexError:
+			keymap[key[:key.rfind("_")] + "_sec_key"] = "not set"
 
-	controls_menu = menu_template("change_controls", 5, 5, 150, button_text, [])
+	controls_menu = menu_template("change_controls", 5, 5, 150,
+				keymap, [])
 
 	while run:
 		events = controls_menu.run()
-
 		for event in events:
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				run = False
 				break
-			for name in button_text:
-				if button_text[str(name)] == event:
-					pressed = controls_menu.menu.get_elem(button_text[str(name)])
-					ratio = pressed.ratio
-					pressed.changetext("Press to change", curr_button_color, ratio)
+			if event in keymap:
+					pressed = controls_menu.menu.get_obj(event)
+					pressed.changetext("Press to change", curr_button_color, 7)
 					controls_menu.run()
 					pygame.display.flip()
-					choose_button(button_text, name)
-					#pressed.changetext(button_text[i], curr_button_color, 3)
-					#TODO fix alpha
-					controls_menu = menu_template("change_controls", 0, 25, 150, button_text, [])
-					controls_menu.run()
+					choose_button(keymap, str(event))
+					pressed.changetext(keymap[event], curr_button_color)
 
 		pygame.display.flip()
 

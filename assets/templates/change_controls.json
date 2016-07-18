@@ -5,366 +5,366 @@
             "objects": {
                         "buttons": [
                                     {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$up",
                                                 "name": "up_key",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "up",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
+                                                "label": "$up_key",
                                                 "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$left",
-                                                "name": "left_key",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "left",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
                                                 "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
                                                 "color": "$color",
-                                                "label": "$down",
-                                                "name": "down_key",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "down",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
                                                 "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$right",
-                                                "name": "right_key",
+                                                "width_to_hight_ratio": 5,
                                                 "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "right",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$fire",
-                                                "name": "fire_key",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "shoot",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$fire2",
-                                                "name": "fire2_key",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "shoot_2",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%200",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$up_sec",
-                                                "name": "up_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "up_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$left_sec",
-                                                "name": "left_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "left_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$down_sec",
-                                                "name": "down_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "down_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$right_sec",
-                                                "name": "right_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "right_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$fire_sec",
-                                                "name": "fire_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "fire_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "$fire2_sec",
-                                                "name": "fire2_sec_key",
-                                                "position": {
-                                                            "from": "TopRight",
-                                                            "pos_rel_obj": "fire2_key",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%105",
-                                                            "y_abs": 0,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": 5
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "Return",
-                                                "name": "return",
-                                                "position": {
-                                                            "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_rel": "$half",
-                                                            "y_abs": 0,
-                                                            "y_rel": "%90"
-                                                },
-                                                "size": "$size",
+                                                            "y_rel": "%30",
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "left_key",
+                                                "label": "$left_key",
                                                 "typeface": "$typeface",
-                                                "width_to_hight_ratio": "$ratio"
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "up_key",
+                                                            "from": "BottomLeft",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10
+                                                }
+                                    },
+                                    {
+                                                "name": "down_key",
+                                                "label": "$down_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "left_key",
+                                                            "from": "BottomLeft",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10
+                                                }
+                                    },
+                                    {
+                                                "name": "right_key",
+                                                "label": "$right_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "down_key",
+                                                            "from": "BottomLeft",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10
+                                                }
+                                    },
+                                    {
+                                                "name": "fire_key",
+                                                "label": "$fire_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "right_key",
+                                                            "from": "BottomLeft",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10
+                                                }
+                                    },
+                                    {
+                                                "name": "fire_circle_key",
+                                                "label": "$fire_circle_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "fire_key",
+                                                            "from": "BottomLeft",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10
+                                                }
+                                    },
+                                    {
+                                                "name": "up_sec_key",
+                                                "label": "$up_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "up_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "left_sec_key",
+                                                "label": "$left_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "left_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "down_sec_key",
+                                                "label": "$down_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "down_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "right_sec_key",
+                                                "label": "$right_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "right_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "fire_sec_key",
+                                                "label": "$fire_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "fire_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "fire_circle_sec_key",
+                                                "label": "$fire_circle_sec_key",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": 5,
+                                                "position": {
+                                                            "pos_rel_obj": "fire_circle_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopRight",
+                                                            "x_rel": "%135",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
+                                                "name": "return",
+                                                "label": "Return",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "pos_rel_obj": "master_screen",
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
+                                                            "x_rel": "$half",
+                                                            "y_rel": "%90",
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
                                     }
                         ],
                         "titles": [
                                     {
-                                                "color": "$color",
-                                                "label": "Controls",
                                                 "name": "controls",
-                                                "bold": false,
-                                                "italics": false,
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "$half",
-                                                            "y_abs": 0,
-                                                            "y_rel": "%10"
-                                                },
+                                                "label": "Controls",
+                                                "typeface": "$typeface",
                                                 "size": 30,
-                                                "typeface": "$typeface"
-                                    },
-                                    {
                                                 "color": "$color",
-                                                "label": "Up:",
-                                                "name": "up",
-                                                 "bold": false,
+                                                "bold": false,
                                                 "italics": false,
-                                               "position": {
-                                                            "from": "TopLeft",
+                                                "position": {
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
+                                                            "x_rel": "$half",
+                                                            "y_rel": "%10",
                                                             "x_abs": 0,
-                                                            "x_rel": "$qrt",
-                                                            "y_abs": 0,
-                                                            "y_rel": "%20"
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     },
                                     {
+                                                "name": "up",
+                                                "label": "Up:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
                                                 "color": "$color",
-                                                "label": "Left:",
+                                                "bold": false,
+                                                "italics": false,
+                                                "position": {
+                                                            "pos_rel_obj": "up_key",
+                                                            "from": "TopMid",
+                                                            "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 0
+                                                }
+                                    },
+                                    {
                                                 "name": "left",
+                                                "label": "Left:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
                                                 "bold": false,
                                                 "italics": false,
                                                 "position": {
-                                                            "from": "BottomLeft",
-                                                            "pos_rel_obj": "up",
+                                                            "pos_rel_obj": "left_key",
+                                                            "from": "TopMid",
                                                             "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "x_rel": 1,
-                                                            "y_abs": 108,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     },
                                     {
-                                                "color": "$color",
-                                                "label": "Down:",
                                                 "name": "down",
+                                                "label": "Down:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
                                                 "bold": false,
                                                 "italics": false,
                                                 "position": {
-                                                            "from": "BottomLeft",
-                                                            "pos_rel_obj": "left",
+                                                            "pos_rel_obj": "down_key",
+                                                            "from": "TopMid",
                                                             "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "x_rel": 1,
-                                                            "y_abs": 108,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     },
                                     {
-                                                "color": "$color",
-                                                "label": "Right:",
                                                 "name": "right",
+                                                "label": "Right:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
                                                 "bold": false,
                                                 "italics": false,
                                                 "position": {
-                                                            "from": "BottomLeft",
-                                                            "pos_rel_obj": "down",
+                                                            "pos_rel_obj": "right_key",
+                                                            "from": "TopMid",
                                                             "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "x_rel": 1,
-                                                            "y_abs": 108,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     },
                                     {
-                                                "color": "$color",
-                                                "label": "Shoot:",
                                                 "name": "shoot",
+                                                "label": "Shoot:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
                                                 "bold": false,
                                                 "italics": false,
                                                 "position": {
-                                                            "from": "BottomLeft",
-                                                            "pos_rel_obj": "right",
+                                                            "pos_rel_obj": "fire_key",
+                                                            "from": "TopMid",
                                                             "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "x_rel": 1,
-                                                            "y_abs": 108,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     },
                                     {
+                                                "name": "shoot_circle",
+                                                "label": "Shoot Circle:",
+                                                "typeface": "$typeface",
+                                                "size": "$size",
                                                 "color": "$color",
-                                                "label": "Shoot 2:",
-                                                "name": "shoot2",
                                                 "bold": false,
                                                 "italics": false,
                                                 "position": {
-                                                            "from": "BottomLeft",
-                                                            "pos_rel_obj": "shoot",
+                                                            "pos_rel_obj": "fire_circle_key",
+                                                            "from": "TopMid",
                                                             "to": "TopLeft",
+                                                            "x_rel": "%65",
+                                                            "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "x_rel": 1,
-                                                            "y_abs": 108,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface"
+                                                            "y_abs": 0
+                                                }
                                     }
                         ]
             }

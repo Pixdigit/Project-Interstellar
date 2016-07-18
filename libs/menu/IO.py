@@ -29,7 +29,12 @@ def write(filename, variable, value):
 def read(filename, variable):
 	with open(filename, "r+") as conf_file:
 		data = json.load(conf_file)
-	for data_type in data:
-		for var_name in data_type:
+
+	if "variables" not in data:
+		data["variables"] = []
+
+	for data_type in data["variables"]:
+		for var_name in data["variables"][data_type]:
 			if var_name == variable:
-				return data_type[var_name]
+				return data["variables"][data_type][var_name]
+	raise KeyError("Could not find \"" + variable + "\" in " + filename)

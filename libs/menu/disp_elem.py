@@ -44,36 +44,22 @@ class button():
 
 		self.name = name
 		self.type = "button"
+		self.ratio = ratio
 
 		# Loads the font
 		self.font = pygame.font.SysFont(typeface, int(size))
 
 		# renders the text and creates a rect
-		self.label = label
-		text = self.font.render(self.label, True, color)
-		text_pos = text.get_rect()
-
-		# creating emtpy surface that is the size of the desired button
-		self.ratio = ratio
-		tmp_centertext_image = pygame.Surface((text_pos.h * ratio,
-						text_pos.h)).convert_alpha()
-		tmp_centertext_image.fill((0, 0, 0, 0))
-		tmp_center_pos = tmp_centertext_image.get_rect()
-
-		# bliting the text onto the surface
-		text_pos.center = tmp_center_pos.center
-		tmp_centertext_image.blit(text, text_pos)
-
-		# Adding image to interface
-		text = tmp_centertext_image
-		text_pos = text.get_rect()
+		self.label = self.font.render(label, True, color)
+		self.label_pos = self.label.get_rect()
 
 		# saving typeface for later use
 		self.typeface = typeface
 
 		#set temporary position
 		self.pos_data = pos_data
-		self.pos = pygame.Rect((0, 0), text_pos.size)
+		self.pos = pygame.Rect((0, 0),
+				(self.label_pos.h * self.ratio, self.label_pos.h))
 
 		#create images and add text inside button
 		self.buttons = []
@@ -81,12 +67,6 @@ class button():
 			self.buttons.append(create_outline(button_design))
 			self.buttons[num].create_box(num, self.pos)
 
-			# defines position in the middle of button
-			text_pos.centerx = self.buttons[num].pos.centerx - self.buttons[num].pos.x
-
-			text_pos.centery = self.buttons[num].pos.centery - self.buttons[num].pos.y
-			# blits text centered in button
-			self.buttons[num].box.blit(text, text_pos)
 		self.pos.size = self.buttons[0].pos.size
 
 		#set status
@@ -130,32 +110,30 @@ class button():
 		org_point = get_point(self.pos, self.pos_data["to"])
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
+		self.label_pos.center = self.pos.center
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
 		return self.pos
 
-	def changetext(self, text, color):
+	def changetext(self, text, color, ratio=None):
 		"""Changes the text inside the button"""
 		# renders the text and creates a rect
-		text = self.font.render(text, True, color)
-		text_pos = text.get_rect()
+		self.label = self.font.render(text, True, color)
+		self.label_pos = self.label.get_rect()
 
-		# creating emtpy surface that is the size of the desired button
-		tmp_centertext_image = pygame.Surface((text_pos.h * self.ratio,
-					text_pos.h)).convert_alpha()
-		tmp_centertext_image.fill((0, 0, 0, 0))
-		tmp_center_pos = tmp_centertext_image.get_rect()
 
-		# bliting the text onto the surface
-		text_pos.center = tmp_center_pos.center
-		tmp_centertext_image.blit(text, text_pos)
-		text = tmp_centertext_image
+		#TODO:		FIND OUT WHY MISSALIGNMENT TEXT
 
-		for num in range(len(self.buttons)):
-			self.buttons[num].create_box(num, text_pos)
-			text_pos.center = self.buttons[num].pos.center
-			self.buttons[num].box.blit(text, text_pos)
+		if ratio is None:
+			ratio = self.ratio
+
+		for box in self.buttons:
+			mode = self.buttons.index(box)
+			new_size = pygame.Rect(0, 0, self.label_pos.h * ratio, self.label_pos.h)
+			self.pos.size = new_size.size
+			box.create_box(mode, new_size)
+		self.label_pos.center = self.pos.center
 
 	def update(self, events):
 		# changes image when hovered over or being clicked
@@ -180,6 +158,7 @@ class button():
 	def blit(self, screen):
 		"""Blits the button"""
 		screen.blit(self.buttons[self.state].box, self.pos)
+		screen.blit(self.label, self.label_pos)
 
 
 class input_field():

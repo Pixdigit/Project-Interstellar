@@ -307,17 +307,17 @@ def default_buttonmap():
 	in a list as value(s) to the buttons dict"""
 	buttons = {}
 
-	buttons["speedup"] = ["y"]
-	buttons["speeddown"] = ["x"]
-	buttons["up"] = ["w", "up"]
-	buttons["down"] = ["s", "down"]
-	buttons["left"] = ["a", "left"]
-	buttons["right"] = ["d", "right"]
-	buttons["pause"] = ["escape"]
-	buttons["debugscreen"] = ["f3"]
-	buttons["screenshot"] = ["f12"]
-	buttons["next_track"] = ["f6"]
-	buttons["fire"] = ["f", "space"]
-	buttons["fire2"] = ["c"]
+	buttons["speedup_key"] = ["y"]
+	buttons["speeddown_key"] = ["x"]
+	buttons["up_key"] = ["w", "up"]
+	buttons["down_key"] = ["s", "down"]
+	buttons["left_key"] = ["a", "left"]
+	buttons["right_key"] = ["d", "right"]
+	buttons["pause_key"] = ["escape"]
+	buttons["debugscreen_key"] = ["f3"]
+	buttons["screenshot_key"] = ["f12"]
+	buttons["next_track_key"] = ["f6"]
+	buttons["fire_key"] = ["f", "space"]
+	buttons["fire_circle_key"] = ["c"]
 
 	return buttons
