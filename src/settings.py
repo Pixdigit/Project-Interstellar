@@ -296,7 +296,7 @@ def quit():
 	"""Routine for exiting"""
 	from . import midi_in
 	midi_in.quit()
-	#pygame.quit()
+	pygame.quit()
 	shutil.rmtree('./assets/sprites/player')
 	sys.exit()
 
@@ -307,17 +307,17 @@ def default_buttonmap():
 	in a list as value(s) to the buttons dict"""
 	buttons = {}
 
-	buttons["speedup_key"] = ["y"]
-	buttons["speeddown_key"] = ["x"]
+	buttons["speedup_key"] = ["y", "not_set"]
+	buttons["speeddown_key"] = ["x", "not_set"]
 	buttons["up_key"] = ["w", "up"]
 	buttons["down_key"] = ["s", "down"]
 	buttons["left_key"] = ["a", "left"]
 	buttons["right_key"] = ["d", "right"]
-	buttons["pause_key"] = ["escape"]
-	buttons["debugscreen_key"] = ["f3"]
-	buttons["screenshot_key"] = ["f12"]
-	buttons["next_track_key"] = ["f6"]
+	buttons["pause_key"] = ["escape", "not_set"]
+	buttons["debugscreen_key"] = ["f3", "not_set"]
+	buttons["screenshot_key"] = ["f12", "not_set"]
+	buttons["next_track_key"] = ["f6", "not_set"]
 	buttons["fire_key"] = ["f", "space"]
-	buttons["fire_circle_key"] = ["c"]
+	buttons["fire_circle_key"] = ["c", "not_set"]
 
 	return buttons

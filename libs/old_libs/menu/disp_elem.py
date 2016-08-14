@@ -46,13 +46,11 @@ class button():
 		self.type = "button"
 		self.ratio = ratio
 
-		self.design = button_design
-
 		# Loads the font
 		self.font = pygame.font.SysFont(typeface, int(size))
 
 		# renders the text and creates a rect
-		self.label = self.font.render(str(label), True, color)
+		self.label = self.font.render(label, True, color)
 		self.label_pos = self.label.get_rect()
 
 		# saving typeface for later use
@@ -63,15 +61,13 @@ class button():
 		self.pos = pygame.Rect((0, 0),
 				(self.label_pos.h * self.ratio, self.label_pos.h))
 
-		self.box_creator = lambda mode: create_outline(self.design,
-						mode, self.pos)
+		#create images and add text inside button
+		self.buttons = []
+		for num in range(3):
+			self.buttons.append(create_outline(button_design))
+			self.buttons[num].create_box(num, self.pos)
 
-		#create images
-		self.buttons = [self.box_creator(mode)[0] for mode in range(3)]
-
-		self.pos.size = create_outline(button_design,
-					mode,
-					self.pos)[1].size
+		self.pos.size = self.buttons[0].pos.size
 
 		#set status
 		self.state = 0
@@ -115,7 +111,6 @@ class button():
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
 		self.label_pos.center = self.pos.center
-		self.const_pos_center = self.pos.center
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
@@ -130,14 +125,14 @@ class button():
 		if ratio is None:
 			ratio = self.ratio
 
-		for mode in range(len(self.buttons)):
-			new_size = pygame.Rect(self.pos.topleft,
-					(self.label_pos.h * ratio, self.label_pos.h))
+		for box in self.buttons:
+			mode = self.buttons.index(box)
+			new_size = pygame.Rect(0, 0, self.label_pos.h * ratio, self.label_pos.h)
 			self.pos.size = new_size.size
-			self.buttons[mode] = self.box_creator(mode)[0]
-			self.pos = self.box_creator(mode)[1]
-		self.pos.center = self.const_pos_center
-		self.label_pos.center = self.const_pos_center
+			box.create_box(mode, new_size)
+		print self.label_pos
+		self.label_pos.topleft = self.pos.center
+		print self.label_pos
 
 	def update(self, events):
 		# changes image when hovered over or being clicked
@@ -161,7 +156,7 @@ class button():
 
 	def blit(self, screen):
 		"""Blits the button"""
-		screen.blit(self.buttons[self.state], self.pos)
+		screen.blit(self.buttons[self.state].box, self.pos)
 		screen.blit(self.label, self.label_pos)
 
 
@@ -230,16 +225,18 @@ class input_field():
 class slider():
 
 	def __init__(self, name, label, typeface, color, size, ratio,
-		options_list, default_value, design, pos_data):
+		options_list, default_value, box, pos_data):
 		"""Creates a new slider"""
 		self.type = "slider"
 		self.value = default_value
+		self.box = create_outline(box)
 		self.dragged = False
 		self.typeface = pygame.font.SysFont(typeface, int(size))
 		self.color = color
 		self.options_list = options_list
 		self.name = name
 		self.label = label
+		self.borderoff = box["border_size"]
 		self.ratio = ratio
 		self.knob_pos = pygame.Rect(0, 0, 0, 0)
 
@@ -248,9 +245,9 @@ class slider():
 		self.pos_data = pos_data
 		tmp_size = (self.render_text.get_size()[1])
 		self.pos.size = (self.ratio * tmp_size, tmp_size)
-		self.box = create_outline(design, 0, self.pos)
-		self.pos.size = self.box[1].size
-		self.knob = pygame.transform.scale(pygame.image.load(design["slider_knob"]),
+		self.box.create_box(0, self.pos)
+		self.pos.size = self.box.box.get_size()
+		self.knob = pygame.transform.scale(pygame.image.load(box["slider_knob"]),
 					(self.pos.w / 15, self.pos.h))
 		self.knob_pos = self.knob.get_rect()
 		self.knob_pos.top = self.pos.top
@@ -292,7 +289,6 @@ class slider():
 		org_point = get_point(self.pos, self.pos_data["to"])
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
-		self.box[1].center = self.pos.center
 
 		#update knob position
 		self.knob_pos.top = self.pos.top
@@ -345,7 +341,7 @@ class slider():
 		"""Blits the slider"""
 		self.textpos = self.render_text.get_rect()
 		self.textpos.center = self.pos.center
-		screen.blit(self.box[0], self.box[1])
+		screen.blit(self.box.box, self.pos)
 		screen.blit(self.knob, self.knob_pos)
 		screen.blit(self.render_text, self.textpos)
 
@@ -413,81 +409,96 @@ class text():
 		screen.blit(self.text_img, self.pos)
 
 
-def create_outline(button_design, mode, rect):
+class create_outline():
 
-	design = pygame.image.load(button_design["outline"])
-	color = None
+	def __init__(self, button_design):
+		self.resources = button_design
+		self.modes = [self.create_template(a) for a in range(3)]
 
-	# gets selected background color
-	if "inner_color" in button_design:
-		design_color = button_design["inner_color"]
-		color = tuple([int(design_color[i]) for i in range(len(design_color))])
-	else:
-		color = (0, 0, 0, 0)
+	def create_template(self, x_pos):
+		design = self.resources["outline"]
+		design = pygame.image.load(design)
+		self.color = None
 
-	#prepare outline
-	design_rect = design.get_rect()
-	design_size = design_rect.h
-	# extract the selected collum
-	line_string = pygame.Surface((1, design_size))
-	line_string.blit(design, (0, 0), pygame.Rect(mode, 0, 1, design_size))
-	design = line_string
-	design_rect = design.get_rect()
-	# pixels for the straight lines
-	pattern = pygame.Surface((1, design_size))
-	# set the pixel colors for the pattern
-	for a in range(design_size):
-		pattern.set_at((0, a), design.get_at((0, a)))
-	#transforms linear pattern into a corner
-	corner = pygame.Surface((design_size, design_size))
-	for a in range(design_size):
-		for x in range(design_size):
-			for y in range(design_size):
-				if x >= a and y >= a:
-					corner.set_at((x, y), pattern.get_at((0, a)))
-	width = rect.w
-	height = rect.h
-	border_size = design_size
-	width += border_size * 2
-	height += border_size * 2
+		# gets selected background color
+		if "inner_color" in self.resources:
+			color = self.resources["inner_color"]
+			if len(color) == 3:
+				self.color = (int(color[0]), int(color[1]), int(color[2]))
+			if len(color) == 4:
+				self.color = (int(color[0]), int(color[1]), int(color[2]), int(color[3]))
+		else:
+			self.color = (0, 0, 0, 0)
 
-	# creating top frame line
-	top = pygame.Surface((width, border_size))
-	for pos in range(width):
-		top.blit(pattern, pygame.Rect(pos, 0, 0, 0))
+		design_rect = design.get_rect()
+		size = design_rect.h
+		# extract the selected collum
+		line_string = pygame.Surface((1, size))
+		line_string.blit(design, (0, 0), pygame.Rect(x_pos, 0, 1, size))
+		design = line_string
+		design_rect = design.get_rect()
+		self.pixels = {}
+		# create the final surface to blit pattern to
+		self.pattern = pygame.Surface((1, size))
+		# set the pixel colors for the pattern
+		for a in range(size):
+			self.pattern.set_at((0, a), design.get_at((0, a)))
+		# transforms linear pattern into a corner
+		corner = pygame.Surface((size, size))
+		for a in range(size):
+			for x in range(size):
+				for y in range(size):
+					if x >= a and y >= a:
+						corner.set_at((x, y), self.pattern.get_at((0, a)))
+		return [self.pattern, corner]
 
-	# blit left top corner
-	top.blit(corner, pygame.Rect(0, 0, 0, 0))
+	def create_box(self, mode, rect):
+		posx = rect.x
+		posy = rect.y
+		width = rect.w
+		height = rect.height
+		border = self.modes[mode][0].get_height()
+		width += border * 2
+		height += border * 2
+		self.top = pygame.Surface((width, border))
 
-	# blit right top corner
-	top.blit(pygame.transform.flip(corner, True, False),
-				pygame.Rect(width - border_size, 0, 0, 0))
+		# creating top frame line
+		for pos in range(width):
+			self.top.blit(self.modes[mode][0], pygame.Rect(pos, 0, 0, 0))
 
-	# create bottom line
-	bottom = pygame.transform.flip(top, False, True)
+		# blit left top corner
+		self.top.blit(self.modes[mode][1], pygame.Rect(0, 0, 0, 0))
 
-	# create left frame line
-	left = pygame.Surface((border_size, height))
-	tmp_pattern = pygame.transform.rotate(pattern, 90)
-	for pos in range(height):
-		left.blit(tmp_pattern, pygame.Rect(0, pos, 0, 0))
+		# blit right top corner
+		self.top.blit(pygame.transform.flip(self.modes[mode][1], True, False),
+					pygame.Rect(width - border, 0, 0, 0))
 
-	# create right frame line
-	right = pygame.transform.flip(left, True, False)
+		# create bottom line
+		self.bottom = pygame.transform.flip(self.top, False, True)
 
-	# Merge all together
-	final = pygame.Surface((width, height), pygame.SRCALPHA)
-	final.fill(color)
-	final.blit(left, pygame.Rect(0, 0, 0, 0))
-	final.blit(right, pygame.Rect(width - border_size, 0, 0, 0))
-	final.blit(top, pygame.Rect(0, 0, 0, 0))
-	final.blit(bottom, pygame.Rect(0, height - border_size, 0, 0))
+		# create left frame line
+		self.left = pygame.Surface((border, height))
+		tmp_line = pygame.transform.rotate(self.modes[mode][0], 90)
+		for pos in range(height):
+			self.left.blit(tmp_line, pygame.Rect(0, pos, 0, 0))
 
-	pos = final.get_rect()
-	pos.x = rect.x - border_size
-	pos.y = rect.y - border_size
+		# create right frame line
+		self.right = pygame.transform.flip(self.left, True, False)
 
-	return final, pos
+		# Merge all together
+		final = pygame.Surface((width, height), pygame.SRCALPHA)
+		final.fill(self.color)
+		final.blit(self.left, pygame.Rect(0, 0, 0, 0))
+		final.blit(self.right, pygame.Rect(width - border, 0, 0, 0))
+		final.blit(self.top, pygame.Rect(0, 0, 0, 0))
+		final.blit(self.bottom, pygame.Rect(0, height - border, 0, 0))
+
+		self.box = final
+		self.pos = self.box.get_rect()
+		self.pos.x = posx - border
+		self.pos.y = posy - border
+
+		return (self.pos, self.box)
 
 
 def get_point(rect, point_name):

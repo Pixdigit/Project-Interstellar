@@ -517,10 +517,7 @@ def change_controlls():
 	keymap = {}
 	for key in settings.buttonmap:
 		keymap[key] = settings.buttonmap[key][0]
-		try:
-			keymap[key[:key.find("_")] + "_sec_key"] = settings.buttonmap[key][1]
-		except IndexError:
-			keymap[key[:key.rfind("_")] + "_sec_key"] = "not set"
+		keymap[key[:-4] + "_sec_key"] = settings.buttonmap[key][1]
 
 	controls_menu = menu_template("change_controls", 5, 5, 150,
 				keymap, [])
@@ -536,27 +533,37 @@ def change_controlls():
 					pressed.changetext("Press to change", curr_button_color, 7)
 					controls_menu.run()
 					pygame.display.flip()
-					choose_button(keymap, str(event))
-					pressed.changetext(keymap[event], curr_button_color)
+					new_label = choose_button(keymap, str(event))
+					pressed.changetext(new_label, curr_button_color)
 
 		pygame.display.flip()
 
 
-def choose_button(button_text, key):
+def choose_button(key_map, key_name):
 	choose = True
 	while choose:
 		settings.upd("get_events")
 		for event in settings.events:
 			if event.type == QUIT:
-				quit()  # temporarily
+				return
 			if event.type == KEYDOWN:
-				pressed_key = pygame.key.name(event.key)
-				button_text[key] = None
-				if pressed_key in list(button_text.values()):
-					raise ValueError("Can't assign a key multible times")
-				choose = False
-				if key[-4:] == "_sec":
-					settings.buttonmap[key[:-4]][1] = pressed_key
+
+				old_key = key_map[key_name]
+				new_key = pygame.key.name(event.key)
+				if new_key == " ":
+					new_key = "space"
+
+				if "_sec_" in key_name:
+					map_key = key_name.replace("_sec_", "_")
+					index = 1
 				else:
-					settings.buttonmap[key][0] = pressed_key
-				button_text[key] = pressed_key
+					map_key = key_name
+					index = 0
+
+				if new_key in list(key_map.values()):
+					new_key = old_key
+					print("Can't assign a key multible times")
+				settings.buttonmap[map_key][index] = new_key
+
+				choose = False
+	return new_key
