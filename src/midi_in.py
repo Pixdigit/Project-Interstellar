@@ -19,10 +19,10 @@ def init():
 		device = pygame.midi.Input(device_id)
 		get_input()
 		connected = True
+		print("Keyboard Connected!")
+
 	except TypeError:
 		connected = False
-		if settings.debugmode:
-			print("No valid keyboard connected!")
 
 
 def get_device():
