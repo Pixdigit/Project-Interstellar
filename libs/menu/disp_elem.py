@@ -413,6 +413,62 @@ class text():
 		screen.blit(self.text_img, self.pos)
 
 
+class image():
+
+	def __init__(self, name, path, pos_data):
+		self.image = pygame.image.load(path)
+		self.pos_data = pos_data
+		self.type = "image"
+		self.name = name
+		self.pos = pygame.Rect(0, 0, 0, 0)
+		self.checked = False
+		self.active_pos_search = False
+
+	def update(self, events):
+		pass
+
+	def get_rel_pos(self, object_list):
+		#set status
+		self.checked = True
+		self.active_pos_search = True
+
+		if self.pos_data["pos_rel_obj"] == "master_screen":
+			rel_pos = object_list[0]
+			self.pos_data["from"] = "BottomRight"
+		else:
+			#search and get relational points
+			for obj in object_list[1:]:
+				if obj.name == self.pos_data["pos_rel_obj"]:
+					if obj.checked:
+						if obj.active_pos_search:
+							raise RuntimeError("Relational position refers to itself.")
+						else:
+							rel_pos = obj.pos
+					else:
+						rel_pos = obj.get_rel_pos(object_list)
+		#get point from rect
+		rel_point = get_point(rel_pos, self.pos_data["from"])
+
+		#update position
+		self.pos.x = int(self.pos_data["x_abs"]
+				+ (self.pos_data["x_rel"] * rel_point[0]))
+		self.pos.y = int(self.pos_data["y_abs"]
+				+ (self.pos_data["y_rel"] * rel_point[1]))
+
+		#set "to" pos to "from" pos
+		dest_point = self.pos.topleft
+		org_point = get_point(self.pos, self.pos_data["to"])
+		self.pos.x += dest_point[0] - org_point[0]
+		self.pos.y += dest_point[1] - org_point[1]
+
+		#reset status and return pos for recursion
+		self.active_pos_search = False
+		return self.pos
+
+	def blit(self, screen):
+		screen.blit(self.image, self.pos)
+
+
 def create_outline(button_design, mode, rect):
 
 	design = pygame.image.load(button_design["outline"])

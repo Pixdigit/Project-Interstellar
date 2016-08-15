@@ -41,6 +41,21 @@
                                                             }
                                                 }
                          ],
+                         "images": [
+                                                {
+                                                            "name": "background",
+                                                            "image": "./assets/sprites/Background1.tif",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopLeft",
+                                                                        "x_rel": 0,
+                                                                        "y_rel": 0,
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0
+                                                            }
+                                                }
+                         ],
                         "buttons": [
                                     {
                                                 "name": "start",

@@ -271,6 +271,15 @@ class create_menu():
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
 					ratio, options_list, default_value, box, pos_data))
 
+		for image_data in self.object_data["images"]:
+			img = disp_elem.image(
+					get_data(image_data, "name", str),
+					get_data(image_data, "image", str),
+					get_data(image_data, "position", dict)
+					)
+
+			self.objects.append(img)
+
 		for obj in self.objects:
 			obj.get_rel_pos([self.reference] + self.objects)
 
@@ -279,6 +288,7 @@ class create_menu():
 			obj.update(events)
 
 	def blit(self, screen):
+		#TODO TODOTODOTODOTODOTODOTODO Add layer data to position to avoid overlapping
 		#screen.blit(self.objects[0])
 		for obj in self.objects:
 			obj.blit(screen)
