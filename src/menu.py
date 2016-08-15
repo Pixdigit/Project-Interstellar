@@ -100,7 +100,8 @@ class menu_template():
 
 		settings.upd("get_events")
 		self.screen.fill((0, 0, 0))
-		self.menu.blit(self.screen, settings.events)
+		self.menu.blit(self.screen)
+		self.menu.update(settings.events)
 		sounds.music.update(events=settings.events)
 
 		events = []

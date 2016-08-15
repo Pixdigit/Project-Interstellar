@@ -278,7 +278,7 @@ class create_menu():
 		for obj in self.objects:
 			obj.update(events)
 
-	def blit(self, screen, events):
+	def blit(self, screen):
 		#screen.blit(self.objects[0])
 		for obj in self.objects:
 			obj.blit(screen)
