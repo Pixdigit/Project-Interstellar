@@ -1,6 +1,0 @@
-design =
-#loads a design image
-#	consisting of stripes with the pattern
-inner_color = (0,0,50,20)
-#inner_color sets the color inside the button
-#	default is trancparency

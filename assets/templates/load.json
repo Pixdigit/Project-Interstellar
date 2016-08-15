@@ -12,7 +12,7 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopRight",
                                                             "x_abs": 0,
                                                             "x_rel": "%80",
                                                             "y_abs": 0,
@@ -48,7 +48,7 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%50",
                                                             "y_abs": 0,
@@ -66,7 +66,7 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopRight",
                                                             "x_abs": 0,
                                                             "x_rel": "%80",
                                                             "y_abs": 0,
@@ -75,24 +75,6 @@
                                                 "size": "$size",
                                                 "typeface": "$typeface",
                                                 "width_to_hight_ratio": "5"
-                                    },
-                                    {
-                                                "box": "$box1",
-                                                "color": "$color",
-                                                "label": "Controls",
-                                                "name": "controls",
-                                                "position": {
-                                                            "from": "TopLeft",
-                                                            "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
-                                                            "x_abs": 0,
-                                                            "x_rel": "%50",
-                                                            "y_abs": 10,
-                                                            "y_rel": 1
-                                                },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
-                                                "width_to_hight_ratio": "$ratio"
                                     }
                         ],
                         "titles": [
@@ -105,7 +87,7 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 0,
@@ -123,7 +105,7 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 0,

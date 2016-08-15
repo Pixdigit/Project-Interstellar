@@ -271,19 +271,21 @@ class create_menu():
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
 					ratio, options_list, default_value, box, pos_data))
 
-		self.objects.insert(0, self.reference)
-		for obj in self.objects[1:]:
-			obj.get_rel_pos(self.objects)
+		for obj in self.objects:
+			obj.get_rel_pos([self.reference] + self.objects)
+
+	def update(self, events):
+		for obj in self.objects:
+			obj.update(events)
 
 	def blit(self, screen, events):
 		#screen.blit(self.objects[0])
-		for obj in self.objects[1:]:
-			obj.update(events)
+		for obj in self.objects:
 			obj.blit(screen)
 
 	def get_klicked(self):
 		klicked = []
-		for obj in self.objects[1:]:
+		for obj in self.objects:
 			if obj.type == "button":
 				if obj.klicked:
 					klicked.append(obj)
@@ -291,12 +293,12 @@ class create_menu():
 
 	def get_types(self, obj_type):
 		obj_list = []
-		for obj in self.objects[1:]:
+		for obj in self.objects:
 			if obj.type == obj_type:
 				obj_list.append(obj)
 		return obj_list
 
 	def get_obj(self, name):
-		for obj in self.objects[1:]:
+		for obj in self.objects:
 			if obj.name == name:
 				return obj

@@ -72,7 +72,7 @@ class menu_template():
 	class slider_post():
 		"""A class for posting sliders and including their value
 		as a float representative of the class. When the Class is compared
-		it will compare the sliders name and reuturn the result."""
+		it will compare the sliders name and return the result."""
 		def __init__(self, name, value):
 			self.name = name
 			self.value = value
@@ -413,14 +413,14 @@ def savegames():
 		events = settings_menu.run()
 		for event in events:
 			# Exits savegame menu
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				run = False
 				return None
 			# Sets the current selected savegame to load
-			if event == "Load":
+			if event == "load":
 				return list_of_saves[currently_selected]
 			# Shows next savegame
-			if event == "Next":
+			if event == "next":
 				# Points to an later save
 				currently_selected += 1
 				# Wraps to the beginning to create a not ending loop
@@ -432,7 +432,7 @@ def savegames():
 				# Lets the button last longer in klicked mode
 				pygame.time.delay(50)
 			# Shows previous savegame
-			if event == "Previous":
+			if event == "previous":
 				# Points to an earlier save
 				currently_selected -= 1
 				# Wraps to the end to create a not ending loop
