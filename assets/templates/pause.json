@@ -12,11 +12,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 10,
-                                                            "y_rel": "%40"
+                                                            "y_rel": "%40",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -34,7 +35,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": 1,
                                                             "y_abs": 10,
-                                                            "y_rel": 1
+                                                            "y_rel": 1,
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -52,7 +54,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": 1,
                                                             "y_abs": 10,
-                                                            "y_rel": 1
+                                                            "y_rel": 1,
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -70,7 +73,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": 1,
                                                             "y_abs": 10,
-                                                            "y_rel": 1
+                                                            "y_rel": 1,
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -82,13 +86,14 @@
                                                 "label": "Exit",
                                                 "name": "exit",
                                                 "position": {
-                                                            "from": "TopLeft",
+                                                            "from": "BottomLeft",
                                                             "pos_rel_obj": "settings",
                                                             "to": "TopLeft",
                                                             "x_abs": 0,
                                                             "x_rel": 1,
                                                             "y_abs": 10,
-                                                            "y_rel": 1
+                                                            "y_rel": 1,
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -105,11 +110,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 0,
-                                                            "y_rel": "%12"
+                                                            "y_rel": "%12",
+                                                            "layer": 1
                                                 },
                                                 "size": 35,
                                                 "typeface": "$typeface"

@@ -15,6 +15,7 @@ def convert2list(string):
 	return elements
 
 
+#TODO move this appropriatly
 datatypes = ["strings",
 	"floats",
 	"lists",
@@ -22,8 +23,8 @@ datatypes = ["strings",
 	"box_designs"]
 
 
-#This loader returns filename when json loading failed
 def load_json(json_file):
+	"""This loader returns filename when json loading failed"""
 	with open(json_file) as conf_file:
 		try:
 			json_data = json.load(conf_file)
@@ -169,6 +170,7 @@ class create_menu():
 						data_in = get_data(self.merged_variables, data_in[1:])
 				except KeyError:
 					print ""
+					print self.merged_variables
 					raise KeyError(data_in + " is not a variable.")
 				return data_in
 
@@ -190,7 +192,7 @@ class create_menu():
 						try:
 							return float(data_in)
 						except TypeError:
-							type_mismatch()
+							type_mismatch(float)
 				except ValueError:
 					type_mismatch(expect_type)
 			#If we got a list recursively resolve
@@ -238,9 +240,10 @@ class create_menu():
 			bold = get_data(title_data, "bold", bool)
 			italics = get_data(title_data, "italics", bool)
 			pos_data = get_data(title_data, "position", dict)
+			layer = pos_data["layer"]
 
 			self.objects.append(disp_elem.text(name, label, typeface, size, color,
-					bold, italics, pos_data))
+					bold, italics, pos_data, layer=layer))
 
 		#create buttons
 		for button_data in self.object_data["buttons"]:
@@ -252,9 +255,10 @@ class create_menu():
 			box = get_data(button_data, "box", list)
 			ratio = get_data(button_data, "width_to_hight_ratio", float)
 			pos_data = get_data(button_data, "position", dict)
+			layer = pos_data["layer"]
 
 			self.objects.append(disp_elem.button(name, label, typeface, color, size,
-					ratio, box, pos_data))
+					ratio, box, pos_data, layer=layer))
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
@@ -268,14 +272,17 @@ class create_menu():
 			box = get_data(slider_data, "box", list)
 			ratio = get_data(slider_data, "width_to_hight_ratio", float)
 			pos_data = get_data(slider_data, "position", dict)
+			layer = pos_data["layer"]
+
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
-					ratio, options_list, default_value, box, pos_data))
+					ratio, options_list, default_value, box, pos_data, layer=layer))
 
 		for image_data in self.object_data["images"]:
 			img = disp_elem.image(
 					get_data(image_data, "name", str),
 					get_data(image_data, "image", str),
-					get_data(image_data, "position", dict)
+					get_data(image_data, "position", dict),
+					layer=get_data(image_data, "position", dict)["layer"]
 					)
 
 			self.objects.append(img)
@@ -288,8 +295,7 @@ class create_menu():
 			obj.update(events)
 
 	def blit(self, screen):
-		#TODO TODOTODOTODOTODOTODOTODO Add layer data to position to avoid overlapping
-		#screen.blit(self.objects[0])
+		self.objects.sort(key=lambda obj: obj.layer)
 		for obj in self.objects:
 			obj.blit(screen)
 

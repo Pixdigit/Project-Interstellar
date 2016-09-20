@@ -16,7 +16,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": -20,
-                                                            "y_rel": "$half"
+                                                            "y_rel": "$half",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -34,7 +35,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 20,
-                                                            "y_rel": "$half"
+                                                            "y_rel": "$half",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -51,11 +53,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%25",
                                                             "y_abs": 0,
-                                                            "y_rel": "%25"
+                                                            "y_rel": "%25",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -67,11 +70,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%50",
                                                             "y_abs": 0,
-                                                            "y_rel": "%25"
+                                                            "y_rel": "%25",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -83,11 +87,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%75",
                                                             "y_abs": 0,
-                                                            "y_rel": "%25"
+                                                            "y_rel": "%25",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -99,11 +104,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%25",
                                                             "y_abs": 0,
-                                                            "y_rel": "%50"
+                                                            "y_rel": "%50",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -115,11 +121,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%75",
                                                             "y_abs": 0,
-                                                            "y_rel": "%50"
+                                                            "y_rel": "%50",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -131,11 +138,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%25",
                                                             "y_abs": 0,
-                                                            "y_rel": "%75"
+                                                            "y_rel": "%75",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -147,11 +155,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%50",
                                                             "y_abs": 0,
-                                                            "y_rel": "%75"
+                                                            "y_rel": "%75",
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -163,11 +172,12 @@
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "MidMid",
                                                             "x_abs": 0,
                                                             "x_rel": "%75",
                                                             "y_abs": 0,
-                                                            "y_rel": "%75"
+                                                            "y_rel": "%75",
+                                                            "layer": 1
                                                 }
                                     }
                         ]

@@ -240,17 +240,17 @@ def pause():
 
 		events = pause_menu.run()
 		for event in events:
-			if event in ["event.CONTINUE", "Continue"]:
+			if event in ["event.CONTINUE", "continue"]:
 				sounds.music.play("unpause")
 				run = False
-			if event == "Save Game":
+			if event == "save":
 				savename = inputpopup(settings.screenx_current / 2,
 						settings.screeny_current / 2,
 						"Save Game")
 				if savename != "Exit":
 					game_data.save(savename)
 				settings.upd("get_saves")
-			if event == "Load Game":
+			if event == "load":
 				savegame = savegames()
 				if savegame is not None:
 					game_data.load(savegame)
@@ -260,10 +260,10 @@ def pause():
 					run = False
 				else:
 					pygame.mouse.set_visible(True)
-			if event == "Settings":
+			if event == "settings":
 				options()
 				pause_menu.update()
-			if event in ["Exit", "event.EXIT", "event.QUIT"]:
+			if event in ["exit", "event.EXIT", "event.QUIT"]:
 				main()
 				run = False
 		pygame.display.flip()
@@ -277,14 +277,13 @@ def choose_world():
 	sounds.music.play("pause")
 	pygame.mouse.set_visible(True)
 
-	background = settings.screen.copy()
 	preview_images = []
 	tmpfont = pygame.font.SysFont("monospace", 13)
 	for tmp in range(8):
-		prewiev_size = (int(settings.screenx_current / 5.0),
+		preview_size = (int(settings.screenx_current / 5.0),
 				int(settings.screeny_current / 5.0))
 		surf = settings.localmap[str(tmp + 1)].background
-		surf = pygame.transform.smoothscale(surf, prewiev_size)
+		surf = pygame.transform.smoothscale(surf, preview_size)
 		text = tmpfont.render("world" + str(tmp + 1), True, settings.color)
 		tmprect = text.get_rect()
 		tmprect.center = surf.get_rect().center
@@ -300,8 +299,18 @@ def choose_world():
 				"image7": preview_images[6],
 				"image8": preview_images[7]}, {})
 
-	world_menu.menu.elems["surfs"]["background"] = [background,
-						pygame.Rect(0, 0, 0, 0)]
+	pos_data = {
+		"pos_rel_obj": "master_screen",
+		"from": "TopLeft",
+		"to": "TopLeft",
+		"x_abs": 0,
+		"x_rel": 0,
+		"y_abs": 0,
+		"y_rel": 0
+		}
+	background = menu.creator.disp_elem.image("background", settings.screen.copy(),
+					pos_data, layer=0)
+	world_menu.menu.objects.append(background)
 	selected = -1
 
 	run = True
@@ -312,7 +321,7 @@ def choose_world():
 			if event in ["event.CONTINUE", "Warp"]:
 				sounds.music.play("unpause")
 				run = False
-			if event in ["Return", "event.QUIT"]:
+			if event in ["return", "event.QUIT"]:
 				selected = -1
 				run = False
 			if event in ["event.EXIT"]:
@@ -338,10 +347,6 @@ def choose_world():
 					elif selected == 9:
 						selected = 3
 					selected = str(selected)
-		for elem in world_menu.menu.elems["buttons"]:
-			if elem.name == "world" + str(selected):
-				elem.state = 2
-				elem.blit(settings.screen)
 		pygame.display.flip()
 
 	pygame.mouse.set_visible(False)

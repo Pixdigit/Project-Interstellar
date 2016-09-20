@@ -19,7 +19,8 @@
                                                             "x_rel": "$half",
                                                             "y_rel": "%30",
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -37,7 +38,8 @@
                                                             "x_rel": 1,
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 10
+                                                            "y_abs": 10,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -55,7 +57,8 @@
                                                             "x_rel": 1,
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 10
+                                                            "y_abs": 10,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -73,7 +76,8 @@
                                                             "x_rel": 1,
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 10
+                                                            "y_abs": 10,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -91,7 +95,8 @@
                                                             "x_rel": 1,
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 10
+                                                            "y_abs": 10,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -109,7 +114,8 @@
                                                             "x_rel": 1,
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 10
+                                                            "y_abs": 10,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -127,7 +133,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -145,7 +152,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -163,7 +171,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -181,7 +190,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -199,7 +209,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -217,7 +228,8 @@
                                                             "x_rel": "%135",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -235,7 +247,8 @@
                                                             "x_rel": "$half",
                                                             "y_rel": "%90",
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     }
                         ],
@@ -255,7 +268,8 @@
                                                             "x_rel": "$half",
                                                             "y_rel": "%10",
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -273,7 +287,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -291,7 +306,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -309,7 +325,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -327,7 +344,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -345,7 +363,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     },
                                     {
@@ -363,7 +382,8 @@
                                                             "x_rel": "%65",
                                                             "y_rel": 1,
                                                             "x_abs": 0,
-                                                            "y_abs": 0
+                                                            "y_abs": 0,
+                                                            "layer": 1
                                                 }
                                     }
                         ]

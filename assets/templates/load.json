@@ -16,7 +16,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "%80",
                                                             "y_abs": 0,
-                                                            "y_rel": "%30"
+                                                            "y_rel": "%30",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -34,7 +35,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "%20",
                                                             "y_abs": 0,
-                                                            "y_rel": "%90"
+                                                            "y_rel": "%90",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -52,7 +54,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "%50",
                                                             "y_abs": 0,
-                                                            "y_rel": "%90"
+                                                            "y_rel": "%90",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -70,7 +73,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "%80",
                                                             "y_abs": 0,
-                                                            "y_rel": "%90"
+                                                            "y_rel": "%90",
+                                                            "layer": 1
                                                 },
                                                 "size": "$size",
                                                 "typeface": "$typeface",
@@ -91,7 +95,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 0,
-                                                            "y_rel": "%10"
+                                                            "y_rel": "%10",
+                                                            "layer": 1
                                                 },
                                                 "size": 30,
                                                 "typeface": "$typeface"
@@ -109,7 +114,8 @@
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 0,
-                                                            "y_rel": "%20"
+                                                            "y_rel": "%20",
+                                                            "layer": 1
                                                 },
                                                 "size": 20,
                                                 "typeface": "$typeface"

@@ -36,7 +36,7 @@ def getmaxsize(typeface, size, text, antialias, color, maxsize, borderoff):
 class button():
 
 	def __init__(self, name, label, typeface, color, size,
-			ratio, button_design, pos_data):
+			ratio, button_design, pos_data, layer=1):
 		"""Initalises with x and y as center point"""
 		# basic font and then everything should be clear
 		# three different instances of create_outline!
@@ -45,6 +45,7 @@ class button():
 		self.name = name
 		self.type = "button"
 		self.ratio = ratio
+		self.layer = layer
 
 		self.design = button_design
 
@@ -167,7 +168,7 @@ class button():
 
 class input_field():
 
-	def __init__(self, x, y, text, typeface, color, box):
+	def __init__(self, x, y, text, typeface, color, box, layer=1):
 		"""Creates a new inputfield"""
 		self.name = text
 		self.typeface = typeface
@@ -175,6 +176,7 @@ class input_field():
 		self.font = pygame.font.SysFont(self.typeface, 30)
 		self.header = text
 		self.img = box
+		self.layer = layer
 		self.pos = self.img.get_rect()
 		self.pos = self.pos.move(x - (self.pos.w / 2.0), y - (self.pos.h / 2.0))
 		self.text = ""
@@ -230,7 +232,7 @@ class input_field():
 class slider():
 
 	def __init__(self, name, label, typeface, color, size, ratio,
-		options_list, default_value, design, pos_data):
+		options_list, default_value, design, pos_data, layer=1):
 		"""Creates a new slider"""
 		self.type = "slider"
 		self.value = default_value
@@ -241,6 +243,7 @@ class slider():
 		self.name = name
 		self.label = label
 		self.ratio = ratio
+		self.layer = layer
 		self.knob_pos = pygame.Rect(0, 0, 0, 0)
 
 		self.pos = pygame.Rect(0, 0, 0, 0)
@@ -353,11 +356,12 @@ class slider():
 class text():
 
 	def __init__(self, name, label, typeface, size, color, bold, italics,
-			pos_data):
+			pos_data, layer=1):
 		self.name = name
 		self.label = label
 		self.size = int(size)
 		self.color = color
+		self.layer = layer
 		self.typeface = pygame.font.SysFont(typeface, self.size, bold, italics)
 		self.text_img = self.typeface.render(self.label, True, self.color)
 		self.pos_data = pos_data
@@ -415,9 +419,13 @@ class text():
 
 class image():
 
-	def __init__(self, name, path, pos_data):
-		self.image = pygame.image.load(path)
+	def __init__(self, name, image, pos_data, layer=1):
+		if type(image) in [str, file]:
+			self.image = pygame.image.load(image)
+		elif type(image) == pygame.Surface:
+			self.image = image
 		self.pos_data = pos_data
+		self.layer = layer
 		self.type = "image"
 		self.name = name
 		self.pos = pygame.Rect(0, 0, 0, 0)
