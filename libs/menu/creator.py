@@ -133,7 +133,7 @@ class create_menu():
 		self.object_data = self.menu_data["objects"]
 		self.objects = []
 
-		def get_data(data_dict, key_name, expect_type=None):
+		def get_data(data_dict, key_name, expect_type=None, default=None):
 
 			def type_mismatch(expect_type):
 				if expect_type is None:
@@ -154,7 +154,10 @@ class create_menu():
 			try:
 				data_in = data_dict[key_name]
 			except KeyError:
-				#Not in dict -> Raise error
+				#Not in dict -> Raise error or return default
+				if default is not None and key_name not in data_dict:
+					return default
+
 				if not "name" in data_dict:
 					data_dict["name"] = "NONAME"
 				error = (str(key_name)
@@ -230,16 +233,26 @@ class create_menu():
 			raise RuntimeError("I have no idea how this happend! : "
 					+ str(data_in) + " | " + str(expect_type))
 
+		default_pos = {
+				"pos_rel_obj": "master_screen",
+				"from": "TopLeft",
+				"to": "TopLeft",
+				"x_rel": 1,
+				"y_rel": 1,
+				"x_abs": 0,
+				"y_abs": 0,
+				"layer": 1}
+
 		#create titles
 		for title_data in self.object_data["titles"]:
 			name = get_data(title_data, "name", str)
-			label = get_data(title_data, "label", str)
-			typeface = get_data(title_data, "typeface", str)
+			label = get_data(title_data, "label", str, default="")
+			typeface = get_data(title_data, "typeface", str, default="monospace")
 			size = get_data(title_data, "size", int)
-			color = get_data(title_data, "color", list)
-			bold = get_data(title_data, "bold", bool)
-			italics = get_data(title_data, "italics", bool)
-			pos_data = get_data(title_data, "position", dict)
+			color = get_data(title_data, "color", list, default=(255, 255, 255))
+			bold = get_data(title_data, "bold", bool, default=False)
+			italics = get_data(title_data, "italics", bool, default=False)
+			pos_data = get_data(title_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
 			self.objects.append(disp_elem.text(name, label, typeface, size, color,
@@ -248,13 +261,13 @@ class create_menu():
 		#create buttons
 		for button_data in self.object_data["buttons"]:
 			name = get_data(button_data, "name", str)
-			label = get_data(button_data, "label", str)
-			typeface = get_data(button_data, "typeface", str)
+			label = get_data(button_data, "label", str, default="")
+			typeface = get_data(button_data, "typeface", str, default="monospace")
 			size = get_data(button_data, "size", int)
-			color = get_data(button_data, "color", list)
+			color = get_data(button_data, "color", list, default=(255, 255, 255))
 			box = get_data(button_data, "box", list)
 			ratio = get_data(button_data, "width_to_hight_ratio", float)
-			pos_data = get_data(button_data, "position", dict)
+			pos_data = get_data(button_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
 			self.objects.append(disp_elem.button(name, label, typeface, color, size,
@@ -263,15 +276,15 @@ class create_menu():
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
 			name = get_data(slider_data, "name", str)
-			label = get_data(slider_data, "label", str)
-			typeface = get_data(slider_data, "typeface", str)
+			label = get_data(slider_data, "label", str, default="")
+			typeface = get_data(slider_data, "typeface", str, default="monospace")
 			size = get_data(slider_data, "size", int)
-			color = get_data(slider_data, "color", list)
+			color = get_data(slider_data, "color", list, default=(255, 255, 255))
 			options_list = get_data(slider_data, "selection_range", list)
 			default_value = get_data(slider_data, "preset_value", float)
 			box = get_data(slider_data, "box", list)
 			ratio = get_data(slider_data, "width_to_hight_ratio", float)
-			pos_data = get_data(slider_data, "position", dict)
+			pos_data = get_data(slider_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
@@ -281,9 +294,9 @@ class create_menu():
 			img = disp_elem.image(
 					get_data(image_data, "name", str),
 					get_data(image_data, "image", str),
-					get_data(image_data, "position", dict),
-					layer=get_data(image_data, "position", dict)["layer"]
-					)
+					get_data(image_data, "position", dict, default=default_pos),
+					klickable=get_data(image_data, "klickable", bool, default=False),
+					layer=get_data(image_data, "position", dict, default=default_pos)["layer"])
 
 			self.objects.append(img)
 

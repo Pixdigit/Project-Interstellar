@@ -419,7 +419,7 @@ class text():
 
 class image():
 
-	def __init__(self, name, image, pos_data, layer=1):
+	def __init__(self, name, image, pos_data, klickable=False, layer=1):
 		if type(image) in [str, file]:
 			self.image = pygame.image.load(image)
 		elif type(image) == pygame.Surface:

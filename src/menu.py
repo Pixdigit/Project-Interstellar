@@ -193,6 +193,13 @@ def main():
 	# Menu loop
 	while run:
 
+		#TODO: Remove this
+		clock = settings.clock
+		clock.tick()
+		fps = clock.get_fps()
+		pygame.display.set_caption("FPS: " + str(fps))
+
+
 		# Calling events and checking through events
 		events = main_menu.run()
 		for event in events:
