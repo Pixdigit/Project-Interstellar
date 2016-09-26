@@ -20,6 +20,7 @@ datatypes = ["strings",
 	"floats",
 	"lists",
 	"colors",
+	"fonts",
 	"box_designs"]
 
 
@@ -73,10 +74,8 @@ def load_vars(filename, pre_imports=[]):
 	menu_data = add_key("variables", menu_data, dict)
 	menu_data = add_key("imports", menu_data, list)
 	variables = menu_data["variables"]
-	variables = add_key("lists", variables, dict)
-	variables = add_key("strings", variables, dict)
-	variables = add_key("floats", variables, dict)
-	variables = add_key("images", variables, dict)
+	for data_type in datatypes:
+		variables = add_key(data_type, variables, dict)
 
 	#resolve imports
 	imports = {datatype: {} for datatype in datatypes}
@@ -96,7 +95,7 @@ def load_vars(filename, pre_imports=[]):
 
 class create_menu():
 
-	def __init__(self, filename, ref, ref_updater):
+	def __init__(self, filename, ref, ref_updater, static=True):
 
 		self.data_file = filename
 		self.reference = ref
@@ -121,6 +120,9 @@ class create_menu():
 		self.merged_variables.update(self.ref_updater())
 
 		self.load_objects()
+
+		if static:
+			self.merge_static()
 
 	def load_objects(self):
 
@@ -218,6 +220,9 @@ class create_menu():
 			#If input is int there is not much else to return
 			elif type(data_in) in [int, float]:
 				return float(data_in)
+			#If input is bool return bool
+			elif type(data_in) == bool:
+				return data_in
 			#If no expection is given try float first then usual value
 			elif expect_type is None:
 				try:
@@ -243,20 +248,30 @@ class create_menu():
 				"y_abs": 0,
 				"layer": 1}
 
+		default_font = {
+			"color": [0, 0, 0],
+			"font": "monospace",
+			"size": 20,
+			"bold": False,
+			"italics": False,
+			"underline": False,
+			"anitalias": True}
+
 		#create titles
 		for title_data in self.object_data["titles"]:
 			name = get_data(title_data, "name", str)
 			label = get_data(title_data, "label", str, default="")
-			typeface = get_data(title_data, "typeface", str, default="monospace")
-			size = get_data(title_data, "size", int)
-			color = get_data(title_data, "color", list, default=(255, 255, 255))
-			bold = get_data(title_data, "bold", bool, default=False)
-			italics = get_data(title_data, "italics", bool, default=False)
+			font_conf = get_data(title_data, "font_conf", str, default="monospace")
 			pos_data = get_data(title_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
-			self.objects.append(disp_elem.text(name, label, typeface, size, color,
-					bold, italics, pos_data, layer=layer))
+			for attr in ["color", "font", "size",
+				"bold", "italics", "underline", "antialias"]:
+				if attr in title_data:
+					font_conf[attr] = get_data(title_data, attr)
+
+			self.objects.append(disp_elem.text(name, label, font_conf,
+						pos_data, layer=layer))
 
 		#create buttons
 		for button_data in self.object_data["buttons"]:
@@ -290,6 +305,7 @@ class create_menu():
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
 					ratio, options_list, default_value, box, pos_data, layer=layer))
 
+		#create images
 		for image_data in self.object_data["images"]:
 			img = disp_elem.image(
 					get_data(image_data, "name", str),
@@ -302,6 +318,16 @@ class create_menu():
 
 		for obj in self.objects:
 			obj.get_rel_pos([self.reference] + self.objects)
+
+	def merge_static(self):
+
+		merge_elems = {}
+
+		for elem in self.objects:
+			if elem.type == "text":
+				merge_elems[elem.text_img] = elem.layer
+			if elem.type == "image":
+				merge_elems[elem.image] = elem.layer
 
 	def update(self, events):
 		for obj in self.objects:

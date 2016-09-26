@@ -344,10 +344,11 @@ class slider():
 		text = self.label + ": " + self.options_list[area - 1]
 		self.render_text = self.typeface.render(text, True, self.color)
 
-	def blit(self, screen):
-		"""Blits the slider"""
 		self.textpos = self.render_text.get_rect()
 		self.textpos.center = self.pos.center
+
+	def blit(self, screen):
+		"""Blits the slider"""
 		screen.blit(self.box[0], self.box[1])
 		screen.blit(self.knob, self.knob_pos)
 		screen.blit(self.render_text, self.textpos)
@@ -355,19 +356,34 @@ class slider():
 
 class text():
 
-	def __init__(self, name, label, typeface, size, color, bold, italics,
-			pos_data, layer=1):
+	default_conf = {
+		"color": [0, 0, 0],
+		"font": "monospace",
+		"size": 20,
+		"bold": False,
+		"italics": False,
+		"underline": False,
+		"anitalias": True}
+
+	def __init__(self, name, label, font_config, pos_data, layer=1):
+		self.type = "text"
 		self.name = name
 		self.label = label
-		self.size = int(size)
-		self.color = color
+		self.conf = font_config
+		for attr in ["color", "font", "size",
+				"bold", "italics", "underline", "antialias"]:
+			if attr not in self.conf:
+				self.conf[attr] = text.default_conf[attr]
+
+		self.conf["size"] = int(self.conf["size"])
+
 		self.layer = layer
-		self.typeface = pygame.font.SysFont(typeface, self.size, bold, italics)
-		self.text_img = self.typeface.render(self.label, True, self.color)
+		self.renderer = pygame.font.SysFont(self.conf["font"], self.conf["size"],
+					bold=self.conf["bold"], italic=self.conf["italics"])
+		self.renderer.set_underline(self.conf["underline"])
+		self.text_img = self.render()
 		self.pos_data = pos_data
-		text_size = self.typeface.size(self.label)
-		self.pos = pygame.Rect((0, 0), text_size)
-		self.type = "title"
+		self.pos = pygame.Rect((0, 0), self.text_img.get_size())
 
 		self.checked = False
 		self.active_pos_search = False
@@ -410,6 +426,11 @@ class text():
 		self.active_pos_search = False
 		return self.pos
 
+	def render(self):
+		self.text_img = self.renderer.render(self.label,
+						self.conf["antialias"], self.conf["color"])
+		return self.text_img
+
 	def update(self, events):
 		pass
 
@@ -426,7 +447,10 @@ class image():
 			self.image = image
 		self.pos_data = pos_data
 		self.layer = layer
-		self.type = "image"
+		if klickable:
+			self.type = "klickable_image"
+		else:
+			self.type = "image"
 		self.name = name
 		self.pos = pygame.Rect(0, 0, 0, 0)
 		self.checked = False

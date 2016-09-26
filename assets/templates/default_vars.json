@@ -27,16 +27,24 @@
 			"ratio": 11.0,
 			"size": 20,
 			"half": "%50",
-			"qrt": "%25"
+			"qrt": "%25",
 		},
-		"typefaces": {
+		"fonts": {
 			"typeface": "monospace"
+			"standard_font": {
+					"font": "monospace",
+					"size": 20,
+					"color": [255, 255, 10],
+					"bold": false,
+					"italics": false,
+					"underline": false,
+					"antialias": true}
 		},
 		"colors": {
 			"color": [
-			255,
-			255,
-			10
+				  255,
+				  255,
+				  10
 			]
 		}
 	}
