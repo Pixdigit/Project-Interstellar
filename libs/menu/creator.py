@@ -2,6 +2,9 @@
 import pygame
 import json
 import disp_elem
+import os
+#TODO REMOVE
+import sys
 
 
 def convert2list(string):
@@ -261,7 +264,7 @@ class create_menu():
 		for title_data in self.object_data["titles"]:
 			name = get_data(title_data, "name", str)
 			label = get_data(title_data, "label", str, default="")
-			font_conf = get_data(title_data, "font_conf", str, default="monospace")
+			font_conf = get_data(title_data, "font_conf", dict, default=default_font)
 			pos_data = get_data(title_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
@@ -276,17 +279,29 @@ class create_menu():
 		#create buttons
 		for button_data in self.object_data["buttons"]:
 			name = get_data(button_data, "name", str)
-			label = get_data(button_data, "label", str, default="")
-			typeface = get_data(button_data, "typeface", str, default="monospace")
-			size = get_data(button_data, "size", int)
-			color = get_data(button_data, "color", list, default=(255, 255, 255))
+			content = get_data(button_data, "content", str, default="")
 			box = get_data(button_data, "box", list)
 			ratio = get_data(button_data, "width_to_hight_ratio", float)
 			pos_data = get_data(button_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
-			self.objects.append(disp_elem.button(name, label, typeface, color, size,
-					ratio, box, pos_data, layer=layer))
+			if os.path.isfile(content):
+				try:
+					content = pygame.image.load(content).convert()
+				except pygame.error:
+					print(("Could not load image file: " + content))
+					print(("Using filename as text.\n"))
+			else:
+				font_conf = get_data(button_data, "font_conf", default=default_font)
+
+				for attr in ["color", "font", "size",
+					"bold", "italics", "underline", "antialias"]:
+					if attr in button_data:
+						font_conf[attr] = get_data(button_data, attr)
+				content = disp_elem.text("NONE42", content, font_conf,
+						default_pos, layer=0).render()
+
+			self.objects.append(disp_elem.button(name, content, ratio, box, pos_data, layer=layer))
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:

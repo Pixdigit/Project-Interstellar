@@ -27,10 +27,10 @@
 			"ratio": 11.0,
 			"size": 20,
 			"half": "%50",
-			"qrt": "%25",
+			"qrt": "%25"
 		},
 		"fonts": {
-			"typeface": "monospace"
+			"typeface": "monospace",
 			"standard_font": {
 					"font": "monospace",
 					"size": 20,

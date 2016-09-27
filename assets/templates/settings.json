@@ -39,7 +39,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Controls",
+                                                "content": "Controls",
                                                 "name": "controls",
                                                 "position": {
                                                             "from": "BottomLeft",
@@ -58,7 +58,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Return",
+                                                "content": "Return",
                                                 "name": "return",
                                                 "position": {
                                                             "from": "BottomRight",

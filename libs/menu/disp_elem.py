@@ -35,8 +35,7 @@ def getmaxsize(typeface, size, text, antialias, color, maxsize, borderoff):
 
 class button():
 
-	def __init__(self, name, label, typeface, color, size,
-			ratio, button_design, pos_data, layer=1):
+	def __init__(self, name, content, ratio, button_design, pos_data, layer=1):
 		"""Initalises with x and y as center point"""
 		# basic font and then everything should be clear
 		# three different instances of create_outline!
@@ -46,26 +45,18 @@ class button():
 		self.type = "button"
 		self.ratio = ratio
 		self.layer = layer
+		self.content = content
 
-		self.design = button_design
+		size = list(content.get_size())
+		if size[0] / float(size[1]) < ratio:
+			size[0] = size[1] * ratio
 
-		# Loads the font
-		self.font = pygame.font.SysFont(typeface, int(size))
-
-		# renders the text and creates a rect
-		self.label = self.font.render(str(label), True, color)
-		self.label_pos = self.label.get_rect()
-
-		# saving typeface for later use
-		self.typeface = typeface
-
-		#set temporary position
+		#set sizes
 		self.pos_data = pos_data
-		self.pos = pygame.Rect((0, 0),
-				(self.label_pos.h * self.ratio, self.label_pos.h))
+		self.pos = pygame.Rect((0, 0), size)
+		self.content_pos = pygame.Rect((0, 0), content.get_size())
 
-		self.box_creator = lambda mode: create_outline(self.design,
-						mode, self.pos)
+		self.box_creator = lambda mode: create_outline(button_design, mode, self.pos)
 
 		#create images
 		self.buttons = [self.box_creator(mode)[0] for mode in range(3)]
@@ -73,7 +64,6 @@ class button():
 		self.pos.size = create_outline(button_design,
 					mode,
 					self.pos)[1].size
-
 		#set status
 		self.state = 0
 		self.klicked = False
@@ -115,30 +105,12 @@ class button():
 		org_point = get_point(self.pos, self.pos_data["to"])
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
-		self.label_pos.center = self.pos.center
+		self.content_pos.center = self.pos.center
 		self.const_pos_center = self.pos.center
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
 		return self.pos
-
-	def changetext(self, text, color, ratio=None):
-		"""Changes the text inside the button"""
-		# renders the text and creates a rect
-		self.label = self.font.render(text, True, color)
-		self.label_pos = self.label.get_rect()
-
-		if ratio is None:
-			ratio = self.ratio
-
-		for mode in range(len(self.buttons)):
-			new_size = pygame.Rect(self.pos.topleft,
-					(self.label_pos.h * ratio, self.label_pos.h))
-			self.pos.size = new_size.size
-			self.buttons[mode] = self.box_creator(mode)[0]
-			self.pos = self.box_creator(mode)[1]
-		self.pos.center = self.const_pos_center
-		self.label_pos.center = self.const_pos_center
 
 	def update(self, events):
 		# changes image when hovered over or being clicked
@@ -163,7 +135,7 @@ class button():
 	def blit(self, screen):
 		"""Blits the button"""
 		screen.blit(self.buttons[self.state], self.pos)
-		screen.blit(self.label, self.label_pos)
+		screen.blit(self.content, self.content_pos)
 
 
 class input_field():
@@ -371,7 +343,7 @@ class text():
 		self.label = label
 		self.conf = font_config
 		for attr in ["color", "font", "size",
-				"bold", "italics", "underline", "antialias"]:
+				"bold", "italics", "underline", "anitalias"]:
 			if attr not in self.conf:
 				self.conf[attr] = text.default_conf[attr]
 
@@ -428,7 +400,7 @@ class text():
 
 	def render(self):
 		self.text_img = self.renderer.render(self.label,
-						self.conf["antialias"], self.conf["color"])
+						self.conf["anitalias"], self.conf["color"])
 		return self.text_img
 
 	def update(self, events):
