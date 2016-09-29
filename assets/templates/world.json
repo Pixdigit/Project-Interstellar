@@ -7,48 +7,42 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Warp",
+                                                "content": "Warp",
+                                                "font_conf": "$standard_font",
                                                 "name": "warp",
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": -20,
                                                             "y_rel": "$half",
                                                             "layer": 1
                                                 },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
                                                 "width_to_hight_ratio": 8
                                     },
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Return",
+                                                "content": "Return",
+                                                "font_conf": "$standard_font",
                                                 "name": "return",
                                                 "position": {
                                                             "from": "TopLeft",
                                                             "pos_rel_obj": "master_screen",
-                                                            "to": "TopLeft",
+                                                            "to": "TopMid",
                                                             "x_abs": 0,
                                                             "x_rel": "$half",
                                                             "y_abs": 20,
                                                             "y_rel": "$half",
                                                             "layer": 1
                                                 },
-                                                "size": "$size",
-                                                "typeface": "$typeface",
                                                 "width_to_hight_ratio": 8
-                                    }
-                        ],
-                        "images": [
+                                    },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image1",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image1",
                                                 "name": "world1",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -63,9 +57,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image2",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image2",
                                                 "name": "world2",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -80,9 +72,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image3",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image3",
                                                 "name": "world3",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -97,9 +87,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image4",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image4",
                                                 "name": "world4",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -114,9 +102,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image5",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image5",
                                                 "name": "world5",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -131,9 +117,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image6",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image6",
                                                 "name": "world6",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -148,9 +132,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image7",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image7",
                                                 "name": "world7",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -165,9 +147,7 @@
                                     },
                                     {
                                                 "box": "$box1",
-                                                "image": "$image8",
-                                                "klickable": true,
-                                                "label": "",
+                                                "content": "$image8",
                                                 "name": "world8",
                                                 "position": {
                                                             "from": "TopLeft",

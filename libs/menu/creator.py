@@ -281,16 +281,18 @@ class create_menu():
 			name = get_data(button_data, "name", str)
 			content = get_data(button_data, "content", str, default="")
 			box = get_data(button_data, "box", list)
-			ratio = get_data(button_data, "width_to_hight_ratio", float)
+			ratio = get_data(button_data, "width_to_hight_ratio", float, default=1)
 			pos_data = get_data(button_data, "position", dict, default=default_pos)
 			layer = pos_data["layer"]
 
-			if os.path.isfile(content):
+			if type(content) in [str, unicode] and os.path.isfile(content):
 				try:
 					content = pygame.image.load(content).convert()
 				except pygame.error:
 					print(("Could not load image file: " + content))
 					print(("Using filename as text.\n"))
+			elif type(content) == pygame.Surface:
+				content = content.convert()
 			else:
 				font_conf = get_data(button_data, "font_conf", default=default_font)
 

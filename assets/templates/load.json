@@ -7,7 +7,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Return",
+                                                "content": "Return",
                                                 "name": "return",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -26,7 +26,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Previous",
+                                                "content": "Previous",
                                                 "name": "previous",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -45,7 +45,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Load",
+                                                "content": "Load",
                                                 "name": "load",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -64,7 +64,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Next",
+                                                "content": "Next",
                                                 "name": "next",
                                                 "position": {
                                                             "from": "TopLeft",

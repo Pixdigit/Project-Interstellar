@@ -7,7 +7,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Continue",
+                                                "content": "Continue",
                                                 "name": "continue",
                                                 "position": {
                                                             "from": "TopLeft",
@@ -26,7 +26,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Save Game",
+                                                "content": "Save Game",
                                                 "name": "save",
                                                 "position": {
                                                             "from": "BottomLeft",
@@ -45,7 +45,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Load Game",
+                                                "content": "Load Game",
                                                 "name": "load",
                                                 "position": {
                                                             "from": "BottomLeft",
@@ -64,7 +64,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Settings",
+                                                "content": "Settings",
                                                 "name": "settings",
                                                 "position": {
                                                             "from": "BottomLeft",
@@ -83,7 +83,7 @@
                                     {
                                                 "box": "$box1",
                                                 "color": "$color",
-                                                "label": "Exit",
+                                                "content": "Exit",
                                                 "name": "exit",
                                                 "position": {
                                                             "from": "BottomLeft",
