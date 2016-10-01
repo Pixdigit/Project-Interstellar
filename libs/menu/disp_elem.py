@@ -6,12 +6,14 @@ import string
 
 
 def modrender(typeface, size, text, antialias, color, maxsize, borderoff):
+	#renders with maximum size
 	# local typeface!
 	nofit = True
 	while nofit:
 		tmpfont = pygame.font.SysFont(typeface, size)
-		bool1 = tmpfont.size(text)[0] < maxsize[0] - (2 * borderoff)
-		nofit = not (bool1 and tmpfont.size(text)[1] < maxsize[1] - (2 * borderoff))
+		height_fits = tmpfont.size(text)[0] < maxsize[0] - (2 * borderoff)
+		nofit = not (height_fits
+			and tmpfont.size(text)[1] < maxsize[1] - (2 * borderoff))
 		if size <= 5:
 			nofit = False
 		else:
@@ -19,23 +21,9 @@ def modrender(typeface, size, text, antialias, color, maxsize, borderoff):
 	return tmpfont.render(text, antialias, color)
 
 
-def getmaxsize(typeface, size, text, antialias, color, maxsize, borderoff):
-	# local typeface!
-	nofit = True
-	while nofit:
-		tmpfont = pygame.font.SysFont(typeface, size)
-		bool1 = tmpfont.size(text)[0] < maxsize[0] - (2 * borderoff)
-		nofit = not (bool1 and tmpfont.size(text)[1] < maxsize[1] - (2 * borderoff))
-		if size <= 5:
-			nofit = False
-		else:
-			size -= 1
-	return size
-
-
 class button():
 
-	def __init__(self, name, content, ratio, button_design, pos_data, layer=1):
+	def __init__(self, name, content_obj, ratio, button_design, pos_data, layer=1):
 		"""Initalises with x and y as center point"""
 		# basic font and then everything should be clear
 		# three different instances of create_outline!
@@ -45,25 +33,24 @@ class button():
 		self.type = "button"
 		self.ratio = ratio
 		self.layer = layer
-		self.content = content
+		self.content = content_obj
 
-		size = list(content.get_size())
+		#set size to ratio
+		size = list(self.content.get_size())
 		if size[0] / float(size[1]) < ratio:
-			size[0] = size[1] * ratio
+			size[0] = int(size[1] * ratio)
 
-		#set sizes
 		self.pos_data = pos_data
 		self.pos = pygame.Rect((0, 0), size)
-		self.content_pos = pygame.Rect((0, 0), content.get_size())
 
-		self.box_creator = lambda mode: create_outline(button_design, mode, self.pos)
+		self.buttons = []
+		for i in range(3):
+			image = create_outline(button_design, i, self.pos)[0]
+			self.content.pos.center = (image.get_size()[0] / 2, image.get_size()[1] / 2)
+			self.content.blit(image)
+			self.buttons.append(image)
+		self.pos.size = image.get_size()
 
-		#create images
-		self.buttons = [self.box_creator(mode)[0] for mode in range(3)]
-
-		self.pos.size = create_outline(button_design,
-					mode,
-					self.pos)[1].size
 		#set status
 		self.state = 0
 		self.klicked = False
@@ -105,8 +92,6 @@ class button():
 		org_point = get_point(self.pos, self.pos_data["to"])
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
-		self.content_pos.center = self.pos.center
-		self.const_pos_center = self.pos.center
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
@@ -135,7 +120,6 @@ class button():
 	def blit(self, screen):
 		"""Blits the button"""
 		screen.blit(self.buttons[self.state], self.pos)
-		screen.blit(self.content, self.content_pos)
 
 
 class input_field():
@@ -398,6 +382,13 @@ class text():
 		self.active_pos_search = False
 		return self.pos
 
+	def get_size(self):
+		return self.renderer.size(self.label)
+
+	def change_text(self, new_text):
+		self.label = new_text
+		self.render()
+
 	def render(self):
 		self.text_img = self.renderer.render(self.label,
 						self.conf["anitalias"], self.conf["color"])
@@ -412,24 +403,24 @@ class text():
 
 class image():
 
-	def __init__(self, name, image, pos_data, klickable=False, layer=1):
+	def __init__(self, name, image, pos_data, layer=1):
 		if type(image) in [str, file]:
 			self.image = pygame.image.load(image)
 		elif type(image) == pygame.Surface:
 			self.image = image
 		self.pos_data = pos_data
 		self.layer = layer
-		if klickable:
-			self.type = "klickable_image"
-		else:
-			self.type = "image"
+		self.type = "image"
 		self.name = name
-		self.pos = pygame.Rect(0, 0, 0, 0)
+		self.pos = pygame.Rect((0, 0), self.image.get_size())
 		self.checked = False
 		self.active_pos_search = False
 
 	def update(self, events):
 		pass
+
+	def get_size(self):
+		return self.pos.size
 
 	def get_rel_pos(self, object_list):
 		#set status
@@ -543,9 +534,8 @@ def create_outline(button_design, mode, rect):
 	final.blit(top, pygame.Rect(0, 0, 0, 0))
 	final.blit(bottom, pygame.Rect(0, height - border_size, 0, 0))
 
-	pos = final.get_rect()
-	pos.x = rect.x - border_size
-	pos.y = rect.y - border_size
+	pos = pygame.Rect((rect.x - border_size, rect.y - border_size),
+			final.get_size())
 
 	return final, pos
 

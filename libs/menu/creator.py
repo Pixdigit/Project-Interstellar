@@ -3,8 +3,6 @@ import pygame
 import json
 import disp_elem
 import os
-#TODO REMOVE
-import sys
 
 
 def convert2list(string):
@@ -287,12 +285,13 @@ class create_menu():
 
 			if type(content) in [str, unicode] and os.path.isfile(content):
 				try:
-					content = pygame.image.load(content).convert()
+					content = pygame.image.load(content)
 				except pygame.error:
 					print(("Could not load image file: " + content))
 					print(("Using filename as text.\n"))
 			elif type(content) == pygame.Surface:
-				content = content.convert()
+				image = content.convert()
+				content = disp_elem.image("NONAME", image, {"NOPOSDATA": True})
 			else:
 				font_conf = get_data(button_data, "font_conf", default=default_font)
 
@@ -301,7 +300,7 @@ class create_menu():
 					if attr in button_data:
 						font_conf[attr] = get_data(button_data, attr)
 				content = disp_elem.text("NONE42", content, font_conf,
-						default_pos, layer=0).render()
+						default_pos, layer=0)
 
 			self.objects.append(disp_elem.button(name, content, ratio, box, pos_data, layer=layer))
 
@@ -328,7 +327,6 @@ class create_menu():
 					get_data(image_data, "name", str),
 					get_data(image_data, "image", str),
 					get_data(image_data, "position", dict, default=default_pos),
-					klickable=get_data(image_data, "klickable", bool, default=False),
 					layer=get_data(image_data, "position", dict, default=default_pos)["layer"])
 
 			self.objects.append(img)
