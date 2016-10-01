@@ -302,7 +302,8 @@ class create_menu():
 				content = disp_elem.text("NONE42", content, font_conf,
 						default_pos, layer=0)
 
-			self.objects.append(disp_elem.button(name, content, ratio, box, pos_data, layer=layer))
+			self.objects.append(
+					disp_elem.button(name, content, ratio, box, pos_data, layer=layer))
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:

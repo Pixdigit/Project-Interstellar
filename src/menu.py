@@ -324,7 +324,7 @@ def choose_world():
 	while run:
 		events = world_menu.run()
 		for event in events:
-			if event in ["event.CONTINUE", "Warp"]:
+			if event in ["event.CONTINUE", "warp"]:
 				sounds.music.play("unpause")
 				run = False
 			if event in ["return", "event.QUIT"]:
@@ -333,26 +333,8 @@ def choose_world():
 			if event in ["event.EXIT"]:
 				settings.quit()
 			if event[0:5] == "world":
-				selected = event[5]
-			if len(event) > 1:
-				if event[1] in ["1", "2", "3", "4", "6", "7", "8", "9"]:
-					#maps keys to worlds
-					selected = int(event[1])
-					if selected == 1:
-						selected = 6
-					elif selected == 2:
-						selected = 7
-					elif selected == 3:
-						selected = 8
-					elif selected == 6:
-						selected = 5
-					elif selected == 7:
-						selected = 1
-					elif selected == 8:
-						selected = 2
-					elif selected == 9:
-						selected = 3
-					selected = str(selected)
+				selected = event[-1]
+
 		pygame.display.flip()
 
 	pygame.mouse.set_visible(False)
