@@ -14,5 +14,5 @@ The testsound.mp3 (NOT .ogg!) was generated with http://www.fromtexttospeech.com
 
 The artworks in ./assets/sprites/explosions are made by Chabull and are released under a Creative Commons Attribution License [ http://opengameart.org/users/chabull , http://creativecommons.org/licenses/by/3.0/ ]
 
-!!!THIS PROJECT IS COPYRIGHTED BUT WILL BE CREATIVE COMMONS IN THE NEXT VERSION (0.3.3)!!!
+!!!THIS PROJECT IS COPYRIGHTED!!!
 !!!HOWEVER, FEEL FREE TO ASK FOR PERSMISSION VIA EMAIL FOR VERSIONS BELOW 0.3.3!!!
