@@ -210,7 +210,7 @@ class slider():
 		self.box = create_outline(design, 0, self.pos)
 		self.pos.size = self.box[1].size
 		self.knob = pygame.transform.scale(pygame.image.load(design["slider_knob"]),
-					(self.pos.w / 15, self.pos.h))
+					(self.pos.w / 15, self.pos.h)).convert()
 		self.knob_pos = self.knob.get_rect()
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
@@ -405,7 +405,7 @@ class image():
 
 	def __init__(self, name, image, pos_data, layer=1):
 		if type(image) in [str, file]:
-			self.image = pygame.image.load(image)
+			self.image = pygame.image.load(image).convert()
 		elif type(image) == pygame.Surface:
 			self.image = image
 		self.pos_data = pos_data
@@ -533,6 +533,7 @@ def create_outline(button_design, mode, rect):
 	final.blit(right, pygame.Rect(width - border_size, 0, 0, 0))
 	final.blit(top, pygame.Rect(0, 0, 0, 0))
 	final.blit(bottom, pygame.Rect(0, height - border_size, 0, 0))
+	final.convert()
 
 	pos = pygame.Rect((rect.x - border_size, rect.y - border_size),
 			final.get_size())
