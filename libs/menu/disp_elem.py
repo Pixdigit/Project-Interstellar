@@ -34,6 +34,7 @@ class button():
 		self.ratio = ratio
 		self.layer = layer
 		self.content = content_obj
+		self.button_design = button_design
 
 		#set size to ratio
 		size = list(self.content.get_size())
@@ -42,6 +43,7 @@ class button():
 
 		self.pos_data = pos_data
 		self.pos = pygame.Rect((0, 0), size)
+		self.ever_center = self.pos.center
 
 		self.buttons = []
 		for i in range(3):
@@ -92,10 +94,29 @@ class button():
 		org_point = get_point(self.pos, self.pos_data["to"])
 		self.pos.x += dest_point[0] - org_point[0]
 		self.pos.y += dest_point[1] - org_point[1]
+		self.ever_center = self.pos.center
 
 		#reset status and return pos for recursion
 		self.active_pos_search = False
 		return self.pos
+
+	def change_text(self, new_text):
+		assert self.content.type == "text"  # Tried to change text of image
+
+		self.content.change_text(new_text)
+
+		size = list(self.content.get_size())
+		if size[0] / float(size[1]) < self.ratio:
+			size[0] = int(size[1] * self.ratio)
+
+		self.buttons = []
+		for i in range(3):
+			image = create_outline(self.button_design, i, pygame.Rect((0, 0), size))[0]
+			self.content.pos.center = (image.get_size()[0] / 2, image.get_size()[1] / 2)
+			self.content.blit(image)
+			self.buttons.append(image)
+		self.pos.size = image.get_size()
+		self.pos.center = self.ever_center
 
 	def update(self, events):
 		# changes image when hovered over or being clicked
@@ -394,6 +415,7 @@ class text():
 	def change_text(self, new_text):
 		self.label = new_text
 		self.render()
+		self.pos.size = self.text_img.get_size()
 
 	def render(self):
 		self.text_img = self.renderer.render(self.label,

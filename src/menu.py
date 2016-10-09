@@ -427,7 +427,7 @@ def options():
 
 	old_button_size = menu.IO.read("./assets/templates/default_vars.json", "size")
 	#to set value of slider 10 + (size * 5) is reversed
-	#    and half a category is added to center the knob
+	#    and half a category size is added to center the knob
 	old_button_size = (old_button_size - 10) / 25.0 + 1 / 10.0
 	#the centering is reversed and the value is converted into category index if
 	#    size is not changed so this is used
@@ -479,8 +479,6 @@ def options():
 def change_controls():
 
 	run = True
-	curr_button_color = menu.IO.read("./assets/templates/default_vars.json",
-				"color")
 
 	keymap = {}
 	for key in settings.buttonmap:
@@ -497,12 +495,12 @@ def change_controls():
 				run = False
 				break
 			if event in keymap:
-					pressed = controls_menu.menu.get_obj(event)
-					pressed.changetext("Press to change", curr_button_color, 7)
-					controls_menu.run()
-					pygame.display.flip()
-					new_label = choose_button(keymap, str(event))
-					pressed.changetext(new_label, curr_button_color)
+				pressed = controls_menu.menu.get_obj(event)
+				pressed.change_text("Press to change")
+				controls_menu.run()
+				pygame.display.flip()
+				new_label = choose_button(keymap, str(event))
+				pressed.change_text(new_label)
 
 		pygame.display.flip()
 
@@ -532,6 +530,7 @@ def choose_button(key_map, key_name):
 					new_key = old_key
 					print("Can't assign a key multible times")
 				settings.buttonmap[map_key][index] = new_key
+				key_map[key_name] = new_key
 
 				choose = False
 	return new_key

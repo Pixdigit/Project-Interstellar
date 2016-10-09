@@ -317,7 +317,7 @@ def default_buttonmap():
 	buttons["debugscreen_key"] = ["f3", "not_set"]
 	buttons["screenshot_key"] = ["f12", "not_set"]
 	buttons["next_track_key"] = ["f6", "not_set"]
-	buttons["fire_key"] = ["f", "space"]
-	buttons["fire_circle_key"] = ["c", "not_set"]
+	buttons["fire_key"] = ["space", "f"]
+	buttons["fire_circle_key"] = ["left shift", "c"]
 
 	return buttons
