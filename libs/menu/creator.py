@@ -75,11 +75,9 @@ def load_vars(filename, pre_imports=[]):
 	menu_data = add_key("variables", menu_data, dict)
 	menu_data = add_key("imports", menu_data, list)
 	variables = menu_data["variables"]
-	for data_type in datatypes:
-		variables = add_key(data_type, variables, dict)
 
 	#resolve imports
-	imports = {datatype: {} for datatype in datatypes}
+	imports = {}
 	pre_imports.append(filename)
 	for import_file in menu_data["imports"]:
 		#prevent looping imports
@@ -113,8 +111,7 @@ class create_menu():
 						str(float_var * 100)[:str(float_var * 100).find(".")] + "%")
 		floats_list = [number_corrector((x + 1) / 255.0) for x in range(255)]
 		self.merged_variables = {"floats": floats_list}
-		for variable in list(self.variables.values()):
-			self.merged_variables.update(variable)
+		self.merged_variables.update(self.variables)
 
 		#add custom runtime variables
 		self.ref_updater = ref_updater
@@ -209,6 +206,8 @@ class create_menu():
 					if type(item) in [str, unicode] and item[0] == "$":
 						if type(self.merged_variables[item[1:]]) == list:
 							new_list = new_list + get_data(data_in, data_in.index(item), None)
+						else:
+							new_list.append(str(self.merged_variables[item[1:]]))
 					else:
 						new_list.append(get_data(data_in, data_in.index(item), None))
 				return new_list

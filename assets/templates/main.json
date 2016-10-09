@@ -68,7 +68,7 @@
                                                             "from": "TopLeft",
                                                             "to": "TopMid",
                                                             "x_rel": "$half",
-                                                            "y_rel": "%40",
+                                                            "y_rel": 0.4,
                                                             "x_abs": 0,
                                                             "y_abs": 10,
                                                             "layer": 1

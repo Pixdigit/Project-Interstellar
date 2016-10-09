@@ -267,6 +267,17 @@ class slider():
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
 
+	def get_selection_index(self):
+		steps = 1.0 / len(self.options_list)
+		for area in range(len(self.options_list)):
+			area += 1
+			if self.value <= steps * area and self.value >= steps * (area - 1):
+				break
+		return area - 1
+
+	def get_selection_name(self):
+		return self.options_list[self.get_selection_index()]
+
 	def update(self, events):
 		"""Modifies the slider (e.g. pos)"""
 		for event in events:
@@ -292,12 +303,7 @@ class slider():
 		tmp = (self.value * (self.pos.w - self.knob_pos.w))
 		self.knob_pos.left = self.pos.left + tmp
 
-		steps = 1.0 / len(self.options_list)
-		for area in range(len(self.options_list)):
-			area += 1
-			if self.value <= steps * area and self.value >= steps * (area - 1):
-				break
-		text = self.label + ": " + self.options_list[area - 1]
+		text = self.label + ": " + self.get_selection_name()
 		self.render_text = self.typeface.render(text, True, self.color)
 
 		self.textpos = self.render_text.get_rect()

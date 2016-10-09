@@ -59,7 +59,7 @@ def save(name):
 
 def save_user_settings(**args):
 	path = "./userdata/user_settings.json"
-	settings_file = open(path, "w+")
+	settings_file = open(path, "w")
 	json.dump(args, settings_file, indent=12)
 	settings_file.close()
 

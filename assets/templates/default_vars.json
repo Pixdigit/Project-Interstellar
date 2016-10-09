@@ -1,51 +1,48 @@
 {
-	"variables": {
-		"box_designs": {
-			"box1": {
-				"outline": "./assets/sprites/design1.tif",
-				"inner_color": [
-						0,
-						0,
-						50,
-						20
-					],
-				"border_size": 6
-			},
-			"box2": {
-				"outline": "./assets/sprites/design1.tif",
-				"inner_color": [
-						0,
-						0,
-						50,
-						20
-					],
-				"slider_knob": "./assets/sprites/knob1.tif",
-				"border_size": 6
-			}
-		},
-		"floats": {
-			"ratio": 11.0,
-			"size": 20,
-			"half": "%50",
-			"qrt": "%25"
-		},
-		"fonts": {
-			"typeface": "monospace",
-			"standard_font": {
-					"font": "monospace",
-					"size": 20,
-					"color": [255, 255, 10],
-					"bold": false,
-					"italics": false,
-					"underline": false,
-					"antialias": true}
-		},
-		"colors": {
-			"color": [
-				  255,
-				  255,
-				  10
-			]
-		}
-	}
+            "variables": {
+                        "box1": {
+                                    "border_size": 6, 
+                                    "inner_color": [
+                                                0, 
+                                                0, 
+                                                50, 
+                                                20
+                                    ], 
+                                    "outline": "./assets/sprites/design1.tif"
+                        }, 
+                        "box2": {
+                                    "border_size": 6, 
+                                    "inner_color": [
+                                                0, 
+                                                0, 
+                                                50, 
+                                                20
+                                    ], 
+                                    "outline": "./assets/sprites/design1.tif", 
+                                    "slider_knob": "./assets/sprites/knob1.tif"
+                        }, 
+                        "color": [
+                                    255, 
+                                    255, 
+                                    10
+                        ], 
+                        "half": "%50", 
+                        "qrt": "%25", 
+                        "ratio": 11.0, 
+                        "size": 20, 
+                        "standard_font": {
+                                    "antialias": true, 
+                                    "bold": false, 
+                                    "color": [
+                                                255, 
+                                                255, 
+                                                10
+                                    ], 
+                                    "font": "monospace", 
+                                    "italics": false, 
+                                    "size": 20, 
+                                    "underline": false
+                        }, 
+                        "typeface": "monospace"
+            }
 }

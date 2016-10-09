@@ -3,15 +3,13 @@
                         "./assets/templates/default_vars.json"
             ],
             "variables": {
-                        "lists": {
-                                    "sizes": [
-                                                "Very Small",
-                                                "Small",
-                                                "Medium",
-                                                "Big",
-                                                "Very Big"
-                                    ]
-                        }
+                        "sizes": [
+                                    "Very Small",
+                                    "Small",
+                                    "Medium",
+                                    "Big",
+                                    "Very Big"
+                         ]
             },
             "objects": {
                         "titles": [

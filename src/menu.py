@@ -73,31 +73,16 @@ class menu_template():
 		"""A class for posting sliders and including their value
 		as a float representative of the class. When the Class is compared
 		it will compare the sliders name and return the result."""
-		def __init__(self, name, value):
+		def __init__(self, name, value, index, text):
 			self.name = name
 			self.value = value
+			self.index = index
+			self.text = text
 
 		def __eq__(self, other):
 			return self.name == other
 
-		def __float__(self):
-			return float(self.value)
-
-		def __int__(self):
-			return int(self.value)
-
-		def __nonzero__(self):
-			try:
-				return bool(int(self.value))
-			except:
-				raise ValueError(
-					"Could not convert {0} to bool: {1}".format(type(self.value), self.value))
-
-		def __bool__(self):
-			return self.__nonzero__()
-
 	def run(self):
-
 		settings.upd("get_events")
 		self.screen.fill((0, 0, 0))
 		self.menu.blit(self.screen)
@@ -125,8 +110,10 @@ class menu_template():
 					events.append(elem.name)
 		for slider in self.menu.get_types("slider"):
 			if slider.dragged:
-				tmp_value = slider.value
-				tmp_event = self.slider_post(slider.name, tmp_value)
+				value = slider.value
+				index = slider.get_selection_index()
+				text = slider.get_selection_name()
+				tmp_event = self.slider_post(slider.name, value, index, text)
 				events.append(tmp_event)
 		return(events)
 
@@ -192,13 +179,6 @@ def main():
 
 	# Menu loop
 	while run:
-
-		#TODO: Remove this
-		clock = settings.clock
-		clock.tick()
-		fps = clock.get_fps()
-		pygame.display.set_caption("FPS: " + str(fps))
-
 		# Calling events and checking through events
 		events = main_menu.run()
 		for event in events:
@@ -445,18 +425,18 @@ def savegames():
 def options():
 	"""The settings menu"""
 
-	#TODO WHAT IS BUTTON SIZE USED FOR?
-	#button_size = menu.IO.read("./assets/templates/default.vars", "size")
-	# a conversion method between selector
-	# and actual text size
-	# found by trial and error
-	button_size = 12.5
-	button_size = (button_size - 10) / 5.0
+	old_button_size = menu.IO.read("./assets/templates/default_vars.json", "size")
+	#to set value of slider 10 + (size * 5) is reversed
+	#    and half a category is added to center the knob
+	old_button_size = (old_button_size - 10) / 25.0 + 1 / 10.0
+	#the centering is reversed and the value is converted into category index if
+	#    size is not changed so this is used
+	button_size = int(old_button_size * 5)
 
 	settings_menu = menu_template("settings", 0, 0, 255,
 			{"fullscreen": int(settings.fullscreen),
 			"volume": settings.volume,
-			"button_size": str(button_size)},
+			"button_size": old_button_size},
 			[])
 
 	sounds.music.play("pause")
@@ -473,36 +453,30 @@ def options():
 				sounds.music.play("unpause")
 				run = False
 			if event == "volume":
-				sounds.music.volume = float(event)
-				settings.volume = float(event)
+				sounds.music.volume = event.value
+				settings.volume = event.value
 			if event == "fullscreen":
-				settings.fullscreen = bool(event)
-			if event == "button_Size":
-				button_size = float(event)
-
+				settings.fullscreen = bool(event.index)
+			if event == "button_size":
+				button_size = float(event.index)
 			if event == "controls":
-				change_controlls()
+				change_controls()
 				settings_menu.update()
 
 		sounds.music.update(False, False)
 		pygame.display.flip()
 
-	# explanation of the 10 + (5 * …) is written in
-	# the Button Size handler in events loop
-#	menu.IO.write("./assets/templates/default.vars", "size",
-#			10 + (5 * button_size))
-#	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
+	# 10 + (5 * button_size) is found by trial an error
+	menu.IO.write("./assets/templates/default_vars.json", "size",
+			10 + (5 * button_size))
 	settings.upd("adjust_screen")
 	game_data.save_user_settings(	volume=settings.volume,
-				# a conversion method between selector
-				# and actual text size
-				# found by trial and error
 				size=10 + (5 * button_size),
 				buttonmap=settings.buttonmap)
 	pygame.mouse.set_visible(False)
 
 
-def change_controlls():
+def change_controls():
 
 	run = True
 	curr_button_color = menu.IO.read("./assets/templates/default_vars.json",
