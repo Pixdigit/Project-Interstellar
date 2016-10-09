@@ -314,6 +314,10 @@ def choose_world():
 				settings.quit()
 			if event[0:5] == "world":
 				selected = event[-1]
+		for obj in world_menu.menu.objects:
+			if obj.name == "world" + str(selected):
+				obj.state = 2
+				obj.blit(settings.screen)
 
 		pygame.display.flip()
 
