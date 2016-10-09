@@ -5,7 +5,7 @@ c-michi
 
 
 Art:
-Art director : Me
+Art Director : Me
 Assistant Design Creator : My art teacher
 
 
@@ -19,11 +19,11 @@ Sweetwaveaudio : Free Ambient Loop
 
 Special thanks to:
 @miezebieze (github)
+@leftees (github & codeclimate)
 
 
 "Dont eat yellow snow"
 -
-Thanks to:
 Chaos advanced, Captain Kirby, Schnewittchen(Snow White)
 
 
