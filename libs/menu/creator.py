@@ -5,26 +5,6 @@ import disp_elem
 import os
 
 
-def convert2list(string):
-	num_of_elem = string.count(",") + 1
-	elements = []
-	string = string[1:]
-	for a in range(num_of_elem - 1):
-		elements.append(string[:string.index(",")].strip())
-		string = string[string.index(",") + 1:].strip()
-	elements.append(string[:-1])
-	return elements
-
-
-#TODO move this appropriatly
-datatypes = ["strings",
-	"floats",
-	"lists",
-	"colors",
-	"fonts",
-	"box_designs"]
-
-
 def load_json(json_file):
 	"""This loader returns filename when json loading failed"""
 	with open(json_file) as conf_file:
@@ -335,6 +315,8 @@ class create_menu():
 			obj.get_rel_pos([self.reference] + self.objects)
 
 	def merge_static(self):
+
+		#TODO: Finish merging all mergable types
 
 		merge_elems = {}
 
