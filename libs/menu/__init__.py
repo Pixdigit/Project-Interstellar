@@ -1,19 +1,4 @@
-from IO import write
-from IO import read
-from creator import load_json
-from creator import add_key
-from creator import merge
-from creator import load_vars
-from creator import create_menu
-from disp_elem import modrender
-from disp_elem import button
-from disp_elem import input_field
-from disp_elem import slider
-from disp_elem import text
-from disp_elem import image
-from disp_elem import create_outline
-from disp_elem import get_point
-from templates import element_template
-from templates import complete_template
-from templates import slider_post
-from templates import event_converter
+import IO
+import templates
+import creator
+import disp_elem

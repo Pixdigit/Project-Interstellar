@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import MOUSEBUTTONUP, MOUSEBUTTONDOWN,\
 		USEREVENT, QUIT, KEYDOWN
 import string
+import templates
 
 
 def modrender(typeface, size, text, antialias, color, maxsize, borderoff):
@@ -21,7 +22,7 @@ def modrender(typeface, size, text, antialias, color, maxsize, borderoff):
 	return tmpfont.render(text, antialias, color)
 
 
-class button():
+class button(templates.element_template):
 
 	def __init__(self, name, content_obj, ratio, button_design, pos_data, layer=1):
 		"""Initalises with x and y as center point"""
@@ -61,45 +62,6 @@ class button():
 		self.checked = False
 		self.active_pos_search = False
 
-	def get_rel_pos(self, object_list):
-		#set status
-		self.checked = True
-		self.active_pos_search = True
-
-		if self.pos_data["pos_rel_obj"] == "master_screen":
-			rel_pos = object_list[0]
-			self.pos_data["from"] = "BottomRight"
-		else:
-			#search and get relational points
-			for obj in object_list[1:]:
-				if obj.name == self.pos_data["pos_rel_obj"]:
-					if obj.checked:
-						if obj.active_pos_search:
-							raise RuntimeError("Relational position refers to itself.")
-						else:
-							rel_pos = obj.pos
-					else:
-						rel_pos = obj.get_rel_pos(object_list)
-		#get point from rect
-		rel_point = get_point(rel_pos, self.pos_data["from"])
-
-		#update position
-		self.pos.x = int(self.pos_data["x_abs"]
-				+ (self.pos_data["x_rel"] * rel_point[0]))
-		self.pos.y = int(self.pos_data["y_abs"]
-				+ (self.pos_data["y_rel"] * rel_point[1]))
-
-		#set "to" pos to "from" pos
-		dest_point = self.pos.topleft
-		org_point = get_point(self.pos, self.pos_data["to"])
-		self.pos.x += dest_point[0] - org_point[0]
-		self.pos.y += dest_point[1] - org_point[1]
-		self.ever_center = self.pos.center
-
-		#reset status and return pos for recursion
-		self.active_pos_search = False
-		return self.pos
-
 	def change_text(self, new_text):
 		assert self.content.type == "text"  # Tried to change text of image
 
@@ -137,13 +99,14 @@ class button():
 			self.state = 0
 		else:
 			self.state = 2
+		self.img = self.buttons[self.state]
 
 	def blit(self, screen):
 		"""Blits the button"""
 		screen.blit(self.buttons[self.state], self.pos)
 
 
-class input_field():
+class input_field(templates.element_template):
 
 	def __init__(self, x, y, text, typeface, color, box, layer=1):
 		"""Creates a new inputfield"""
@@ -206,7 +169,7 @@ class input_field():
 		screen.blit(self.render_text, self.textpos)
 
 
-class slider():
+class slider(templates.element_template):
 
 	def __init__(self, name, label, typeface, color, size, ratio,
 		options_list, default_value, design, pos_data, layer=1):
@@ -228,65 +191,26 @@ class slider():
 		self.pos_data = pos_data
 		tmp_size = (self.render_text.get_size()[1])
 		self.pos.size = (self.ratio * tmp_size, tmp_size)
-		self.box = create_outline(design, 0, self.pos)
-		self.pos.size = self.box[1].size
+		self.img, pos = create_outline(design, 0, self.pos)
+		self.pos.size = pos.size
 		self.knob = pygame.transform.scale(pygame.image.load(design["slider_knob"]),
 					(self.pos.w / 15, self.pos.h)).convert()
 		self.knob_pos = self.knob.get_rect()
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
 		self.scale = 1.0 / self.pos.w
+		self.blit = self.blit_decorator(templates.element_template.blit)
+		self.get_rel_pos = self.get_rel_pos_decorator(templates.element_template.get_rel_pos)
 		self.checked = False
 		self.active_pos_search = False
 
-	def get_rel_pos(self, object_list):
-		#set status
-		self.checked = True
-		self.active_pos_search = True
-
-		if self.pos_data["pos_rel_obj"] == "master_screen":
-			rel_pos = object_list[0]
-			self.pos_data["from"] = "BottomRight"
-		else:
-			#search and get relational points
-			for obj in object_list[1:]:
-				if obj.name == self.pos_data["pos_rel_obj"]:
-					if obj.checked:
-						if obj.active_pos_search:
-							raise RuntimeError("Relational position refers to itself.")
-						else:
-							rel_pos = obj.pos
-					else:
-						rel_pos = obj.get_rel_pos(object_list)
-		#get point from rect
-		rel_point = get_point(rel_pos, self.pos_data["from"])
-
-		#update position
-		self.pos.x = int(self.pos_data["x_abs"]
-				+ (self.pos_data["x_rel"] * rel_point[0]))
-		self.pos.y = int(self.pos_data["y_abs"]
-				+ (self.pos_data["y_rel"] * rel_point[1]))
-
-		#set "to" pos to "from" pos
-		dest_point = self.pos.topleft
-		org_point = get_point(self.pos, self.pos_data["to"])
-		self.pos.x += dest_point[0] - org_point[0]
-		self.pos.y += dest_point[1] - org_point[1]
-		self.box[1].center = self.pos.center
-
-		#update knob position
-		self.knob_pos.top = self.pos.top
-		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
-
-		#reset status and return pos for recursion
-		self.active_pos_search = False
-		return self.pos
-
-	def center(self):
-		"""Centeres itself around its topleft point"""
-		self.pos.center = self.pos.topleft
-		self.knob_pos.top = self.pos.top
-		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
+	def get_rel_pos_decorator(self, func):
+		def get_rel_pos(object_list):
+			self.pos = func(self, object_list)
+			self.knob_pos.top = self.pos.top
+			self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
+			return self.pos
+		return get_rel_pos
 
 	def get_selection_index(self):
 		steps = 1.0 / len(self.options_list)
@@ -330,14 +254,16 @@ class slider():
 		self.textpos = self.render_text.get_rect()
 		self.textpos.center = self.pos.center
 
-	def blit(self, screen):
+	def blit_decorator(self, func):
 		"""Blits the slider"""
-		screen.blit(self.box[0], self.box[1])
-		screen.blit(self.knob, self.knob_pos)
-		screen.blit(self.render_text, self.textpos)
+		def wrapper(screen):
+			func(self, screen)
+			screen.blit(self.knob, self.knob_pos)
+			screen.blit(self.render_text, self.textpos)
+		return wrapper
 
 
-class text():
+class text(templates.element_template):
 
 	default_conf = {
 		"color": [0, 0, 0],
@@ -371,44 +297,6 @@ class text():
 		self.checked = False
 		self.active_pos_search = False
 
-	def get_rel_pos(self, object_list):
-		#set status
-		self.checked = True
-		self.active_pos_search = True
-
-		if self.pos_data["pos_rel_obj"] == "master_screen":
-			rel_pos = object_list[0]
-			self.pos_data["from"] = "BottomRight"
-		else:
-			#search and get relational points
-			for obj in object_list[1:]:
-				if obj.name == self.pos_data["pos_rel_obj"]:
-					if obj.checked:
-						if obj.active_pos_search:
-							raise RuntimeError("Relational position refers to itself.")
-						else:
-							rel_pos = obj.pos
-					else:
-						rel_pos = obj.get_rel_pos(object_list)
-		#get point from rect
-		rel_point = get_point(rel_pos, self.pos_data["from"])
-
-		#update position
-		self.pos.x = int(self.pos_data["x_abs"]
-				+ (self.pos_data["x_rel"] * rel_point[0]))
-		self.pos.y = int(self.pos_data["y_abs"]
-				+ (self.pos_data["y_rel"] * rel_point[1]))
-
-		#set "to" pos to "from" pos
-		dest_point = self.pos.topleft
-		org_point = get_point(self.pos, self.pos_data["to"])
-		self.pos.x += dest_point[0] - org_point[0]
-		self.pos.y += dest_point[1] - org_point[1]
-
-		#reset status and return pos for recursion
-		self.active_pos_search = False
-		return self.pos
-
 	def get_size(self):
 		return self.renderer.size(self.label)
 
@@ -429,7 +317,7 @@ class text():
 		screen.blit(self.text_img, self.pos)
 
 
-class image():
+class image(templates.element_template):
 
 	def __init__(self, name, image, pos_data, layer=1):
 		if type(image) in [str, file]:
@@ -449,44 +337,6 @@ class image():
 
 	def get_size(self):
 		return self.pos.size
-
-	def get_rel_pos(self, object_list):
-		#set status
-		self.checked = True
-		self.active_pos_search = True
-
-		if self.pos_data["pos_rel_obj"] == "master_screen":
-			rel_pos = object_list[0]
-			self.pos_data["from"] = "BottomRight"
-		else:
-			#search and get relational points
-			for obj in object_list[1:]:
-				if obj.name == self.pos_data["pos_rel_obj"]:
-					if obj.checked:
-						if obj.active_pos_search:
-							raise RuntimeError("Relational position refers to itself.")
-						else:
-							rel_pos = obj.pos
-					else:
-						rel_pos = obj.get_rel_pos(object_list)
-		#get point from rect
-		rel_point = get_point(rel_pos, self.pos_data["from"])
-
-		#update position
-		self.pos.x = int(self.pos_data["x_abs"]
-				+ (self.pos_data["x_rel"] * rel_point[0]))
-		self.pos.y = int(self.pos_data["y_abs"]
-				+ (self.pos_data["y_rel"] * rel_point[1]))
-
-		#set "to" pos to "from" pos
-		dest_point = self.pos.topleft
-		org_point = get_point(self.pos, self.pos_data["to"])
-		self.pos.x += dest_point[0] - org_point[0]
-		self.pos.y += dest_point[1] - org_point[1]
-
-		#reset status and return pos for recursion
-		self.active_pos_search = False
-		return self.pos
 
 	def blit(self, screen):
 		screen.blit(self.image, self.pos)
@@ -568,27 +418,3 @@ def create_outline(button_design, mode, rect):
 
 	return final, pos
 
-
-def get_point(rect, point_name):
-	point_name = point_name.lower()
-	if point_name == "topleft":
-		return rect.topleft
-	if point_name in ["topcenter", "topmid"]:
-		return rect.midtop
-	if point_name == "topright":
-		return rect.topright
-	if point_name == "centerleft":
-		return rect.midleft
-	if point_name in ["centercenter", "center", "midmid", "mid"]:
-		return rect.center
-	if point_name == "centerright":
-		return rect.midright
-	if point_name == "bottomleft":
-		return rect.bottomleft
-	if point_name in ["bottomcenter", "bottommid"]:
-		return rect.midbottom
-	if point_name == "bottomright":
-		return rect.bottomright
-
-	#did not match
-	raise ValueError(point_name + " is not a valid point.")

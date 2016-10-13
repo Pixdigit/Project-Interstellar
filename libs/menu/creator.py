@@ -72,6 +72,17 @@ def load_vars(filename, pre_imports=[]):
 	return variables
 
 
+default_pos = {
+	"pos_rel_obj": "master_screen",
+	"from": "BottomRight",
+	"to": "Center",
+	"x_rel": 0.5,
+	"y_rel": 0.5,
+	"x_abs": 0,
+	"y_abs": 0,
+	"layer": 1}
+
+
 class create_menu():
 
 	def __init__(self, filename, ref, ref_updater, static=True):
@@ -218,15 +229,6 @@ class create_menu():
 			raise RuntimeError("I have no idea how this happend! : "
 					+ str(data_in) + " | " + str(expect_type))
 
-		default_pos = {
-				"pos_rel_obj": "master_screen",
-				"from": "TopLeft",
-				"to": "TopLeft",
-				"x_rel": 1,
-				"y_rel": 1,
-				"x_abs": 0,
-				"y_abs": 0,
-				"layer": 1}
 
 		default_font = {
 			"color": [0, 0, 0],

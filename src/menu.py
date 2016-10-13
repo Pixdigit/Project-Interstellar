@@ -135,7 +135,7 @@ def pause():
 	pygame.mouse.set_visible(True)
 
 	pause_menu = menu.templates.complete_template("./assets/templates/pause.json",
-					event_updater)
+					settings.screen, event_updater)
 
 	run = True
 
