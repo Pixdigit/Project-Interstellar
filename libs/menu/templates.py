@@ -105,6 +105,10 @@ class element_template():
 		"""Process events"""
 		pass
 
+	def adjust(self, screen):
+		"""Adjust to new screen size"""
+		pass
+
 	def blit(self, screen):
 		screen.blit(self.img, self.pos)
 
@@ -148,7 +152,7 @@ class complete_template():
 					menu_config_path,
 					pygame.Rect((0, 0), (self.screenx, self.screeny)), self.variables)
 
-		#TODO Add externals
+		self.menu.objects = self.menu.objects + externals
 
 	def run(self):
 		events = self.event_getter()
@@ -161,7 +165,7 @@ class complete_template():
 	def update(self, screen):
 		self.screenx, self.screeny = screen.get_size()
 		for external in self.externals:
-			external.update(self.screenx, self.screeny)
+			external.adjust(self.screenx, self.screeny)
 		self.__init__(self.conf_path, screen, self.event_getter,
 			self.variables, self.externals)
 

@@ -43,9 +43,12 @@ def main():
 	"""main menu"""
 
 	# create the planets animation
-	class create_planet():
+	class create_planet(menu.templates.element_template, object):
 
 		def __init__(self, screenx, screeny):
+			super(create_planet, self).__init__()
+			self.name = "planet"
+			self.type = "animation"
 			planet_sprite_part1 = pyganim.getImagesFromSpriteSheet(
 								"./assets/sprites/spinning_planet/planet_part-0.png",
 								width=384, height=384)
@@ -68,14 +71,14 @@ def main():
 			planet = pyganim.PygAnimation(planet_sprite_and_attr)
 			planet.scale((int(0.2 * screenx), int(0.2 * screenx)))
 			planet_pos = pygame.Rect((0, 0), (384, 384))
-			self.planet_pos = planet_pos.move(int(screenx * 0.7), int(screeny * 0.4))
+			self.pos = planet_pos.move(int(screenx * 0.7), int(screeny * 0.4))
 			planet.play()
 			self.planet = planet
 
 		def blit(self, screen):
-			self.planet.blit(screen, self.planet_pos)
+			self.planet.blit(screen, self.pos)
 
-		def update(self, screenx, screeny):
+		def adjust(self, screenx, screeny):
 			self.__init__(screenx, screeny)
 	planet = create_planet(settings.screenx_current, settings.screeny_current)
 
