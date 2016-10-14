@@ -345,8 +345,8 @@ def options():
 
 	old_button_size = menu.IO.read("./assets/templates/default_vars.json", "size")
 	#to set value of slider 10 + (size * 5) is reversed
-	#    and half a category size is added to center the knob
-	old_button_size = (old_button_size - 10) / 25.0 + 1 / 10.0
+	#    and converted to a value between 0 and 1 -> * (1 / 5.0)
+	old_button_size = (old_button_size - 10) / 25.0
 	#the centering is reversed and the value is converted into category index if
 	#    size is not changed so this is used
 	button_size = int(old_button_size * 5)

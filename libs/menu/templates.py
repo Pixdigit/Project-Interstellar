@@ -2,6 +2,17 @@
 import pygame
 
 
+global default_font_conf
+default_font_conf = {
+		"color": [0, 0, 0],
+		"font": "monospace",
+		"size": 20,
+		"bold": False,
+		"italics": False,
+		"underline": False,
+		"anitalias": True}
+
+
 def get_point(rect, point_name):
 	point_name = point_name.lower()
 	if point_name == "topleft":
@@ -30,7 +41,7 @@ def get_point(rect, point_name):
 class element_template():
 
 	def __init__(self):
-		self.pos = pygame.Rext(0, 0, 0, 0)
+		self.pos = pygame.Rect(0, 0, 0, 0)
 		self.layer = 1
 		self.name = "Generic Element"
 		self.type = "custom"
@@ -86,6 +97,13 @@ class element_template():
 		#reset status and return pos for recursion
 		self.active_pos_search = False
 		return self.pos
+
+	def get_size(self):
+		return self.pos.size
+
+	def update(self, events):
+		"""Process events"""
+		pass
 
 	def blit(self, screen):
 		screen.blit(self.img, self.pos)

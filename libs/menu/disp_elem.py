@@ -22,14 +22,13 @@ def modrender(typeface, size, text, antialias, color, maxsize, borderoff):
 	return tmpfont.render(text, antialias, color)
 
 
-class button(templates.element_template):
+class button(templates.element_template, object):
 
 	def __init__(self, name, content_obj, ratio, button_design, pos_data, layer=1):
 		"""Initalises with x and y as center point"""
-		# basic font and then everything should be clear
-		# three different instances of create_outline!
-		# this way three images can be generated
-
+		#Note: No actual prototype behaviour from JS
+		self.proto = super(button, self)
+		self.proto.__init__()
 		self.name = name
 		self.type = "button"
 		self.ratio = ratio
@@ -43,24 +42,27 @@ class button(templates.element_template):
 			size[0] = int(size[1] * ratio)
 
 		self.pos_data = pos_data
-		self.pos = pygame.Rect((0, 0), size)
+		self.pos.size = size
 		self.ever_center = self.pos.center
 
+		#create the images of the button
 		self.buttons = []
 		for i in range(3):
 			image = create_outline(button_design, i, self.pos)[0]
 			self.content.pos.center = (image.get_size()[0] / 2, image.get_size()[1] / 2)
 			self.content.blit(image)
 			self.buttons.append(image)
+		#adjust rect to include border
 		self.pos.size = image.get_size()
 
 		#set status
 		self.state = 0
 		self.klicked = False
 
-		#set position status
-		self.checked = False
-		self.active_pos_search = False
+	def get_rel_pos(self, object_list):
+		self.proto.get_rel_pos(object_list)
+		self.ever_center = self.pos.center
+		return self.pos
 
 	def change_text(self, new_text):
 		assert self.content.type == "text"  # Tried to change text of image
@@ -77,7 +79,8 @@ class button(templates.element_template):
 			self.content.pos.center = (image.get_size()[0] / 2, image.get_size()[1] / 2)
 			self.content.blit(image)
 			self.buttons.append(image)
-		self.pos.size = image.get_size()
+		self.img = self.buttons[self.state]
+		self.pos.size = self.img.get_size()
 		self.pos.center = self.ever_center
 
 	def update(self, events):
@@ -101,15 +104,14 @@ class button(templates.element_template):
 			self.state = 2
 		self.img = self.buttons[self.state]
 
-	def blit(self, screen):
-		"""Blits the button"""
-		screen.blit(self.buttons[self.state], self.pos)
 
-
-class input_field(templates.element_template):
+class input_field(templates.element_template, object):
 
 	def __init__(self, x, y, text, typeface, color, box, layer=1):
 		"""Creates a new inputfield"""
+		#Note: No actual prototype behaviour from JS
+		self.proto = super(input_field, self)
+		self.proto.__init__()
 		self.name = text
 		self.typeface = typeface
 		self.color = color
@@ -164,18 +166,22 @@ class input_field(templates.element_template):
 
 	def blit(self, screen):
 		"""Blits the inputfield"""
+		self.proto.blit(screen)
 		screen.blit(self.render_header, self.headerpos)
-		screen.blit(self.img, self.pos)
 		screen.blit(self.render_text, self.textpos)
 
 
-class slider(templates.element_template):
+class slider(templates.element_template, object):
 
 	def __init__(self, name, label, typeface, color, size, ratio,
 		options_list, default_value, design, pos_data, layer=1):
 		"""Creates a new slider"""
+		#Note: No actual prototype behaviour from JS
+		self.proto = super(slider, self)
+		self.proto.__init__()
 		self.type = "slider"
-		self.value = default_value
+		#Set the slider centered in the category
+		self.value = default_value + 1.0 / (len(options_list) * 2)
 		self.dragged = False
 		self.typeface = pygame.font.SysFont(typeface, int(size))
 		self.color = color
@@ -199,18 +205,12 @@ class slider(templates.element_template):
 		self.knob_pos.top = self.pos.top
 		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
 		self.scale = 1.0 / self.pos.w
-		self.blit = self.blit_decorator(templates.element_template.blit)
-		self.get_rel_pos = self.get_rel_pos_decorator(templates.element_template.get_rel_pos)
-		self.checked = False
-		self.active_pos_search = False
 
-	def get_rel_pos_decorator(self, func):
-		def get_rel_pos(object_list):
-			self.pos = func(self, object_list)
-			self.knob_pos.top = self.pos.top
-			self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
-			return self.pos
-		return get_rel_pos
+	def get_rel_pos(self, object_list):
+		self.pos = self.proto.get_rel_pos(object_list)
+		self.knob_pos.top = self.pos.top
+		self.knob_pos.left = self.pos.left + (self.pos.w * self.value)
+		return self.pos
 
 	def get_selection_index(self):
 		steps = 1.0 / len(self.options_list)
@@ -254,27 +254,19 @@ class slider(templates.element_template):
 		self.textpos = self.render_text.get_rect()
 		self.textpos.center = self.pos.center
 
-	def blit_decorator(self, func):
+	def blit(self, screen):
 		"""Blits the slider"""
-		def wrapper(screen):
-			func(self, screen)
-			screen.blit(self.knob, self.knob_pos)
-			screen.blit(self.render_text, self.textpos)
-		return wrapper
+		self.proto.blit(screen)
+		screen.blit(self.knob, self.knob_pos)
+		screen.blit(self.render_text, self.textpos)
 
 
-class text(templates.element_template):
-
-	default_conf = {
-		"color": [0, 0, 0],
-		"font": "monospace",
-		"size": 20,
-		"bold": False,
-		"italics": False,
-		"underline": False,
-		"anitalias": True}
+class text(templates.element_template, object):
 
 	def __init__(self, name, label, font_config, pos_data, layer=1):
+		#Note: No actual prototype behaviour from JS
+		self.proto = super(text, self)
+		self.proto.__init__()
 		self.type = "text"
 		self.name = name
 		self.label = label
@@ -282,7 +274,7 @@ class text(templates.element_template):
 		for attr in ["color", "font", "size",
 				"bold", "italics", "underline", "anitalias"]:
 			if attr not in self.conf:
-				self.conf[attr] = text.default_conf[attr]
+				self.conf[attr] = templates.default_font_conf[attr]
 
 		self.conf["size"] = int(self.conf["size"])
 
@@ -290,12 +282,9 @@ class text(templates.element_template):
 		self.renderer = pygame.font.SysFont(self.conf["font"], self.conf["size"],
 					bold=self.conf["bold"], italic=self.conf["italics"])
 		self.renderer.set_underline(self.conf["underline"])
-		self.text_img = self.render()
+		self.img = self.render()
 		self.pos_data = pos_data
-		self.pos = pygame.Rect((0, 0), self.text_img.get_size())
-
-		self.checked = False
-		self.active_pos_search = False
+		self.pos = pygame.Rect((0, 0), self.img.get_size())
 
 	def get_size(self):
 		return self.renderer.size(self.label)
@@ -303,43 +292,29 @@ class text(templates.element_template):
 	def change_text(self, new_text):
 		self.label = new_text
 		self.render()
-		self.pos.size = self.text_img.get_size()
+		self.pos.size = self.img.get_size()
 
 	def render(self):
-		self.text_img = self.renderer.render(self.label,
+		self.img = self.renderer.render(self.label,
 						self.conf["anitalias"], self.conf["color"])
-		return self.text_img
-
-	def update(self, events):
-		pass
-
-	def blit(self, screen):
-		screen.blit(self.text_img, self.pos)
+		return self.img
 
 
-class image(templates.element_template):
+class image(templates.element_template, object):
 
-	def __init__(self, name, image, pos_data, layer=1):
-		if type(image) in [str, file]:
-			self.image = pygame.image.load(image).convert()
-		elif type(image) == pygame.Surface:
-			self.image = image
+	def __init__(self, name, image_data, pos_data, layer=1):
+		#Note: No actual prototype behaviour from JS
+		self.proto = super(image, self)
+		self.proto.__init__()
+		if type(image_data) in [str, file]:
+			self.img = pygame.image.load(image_data).convert()
+		elif type(image_data) == pygame.Surface:
+			self.img = image_data
 		self.pos_data = pos_data
 		self.layer = layer
 		self.type = "image"
 		self.name = name
-		self.pos = pygame.Rect((0, 0), self.image.get_size())
-		self.checked = False
-		self.active_pos_search = False
-
-	def update(self, events):
-		pass
-
-	def get_size(self):
-		return self.pos.size
-
-	def blit(self, screen):
-		screen.blit(self.image, self.pos)
+		self.pos = pygame.Rect((0, 0), self.img.get_size())
 
 
 def create_outline(button_design, mode, rect):

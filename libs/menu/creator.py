@@ -323,10 +323,7 @@ class create_menu():
 		merge_elems = {}
 
 		for elem in self.objects:
-			if elem.type == "text":
-				merge_elems[elem.text_img] = elem.layer
-			if elem.type == "image":
-				merge_elems[elem.image] = elem.layer
+			merge_elems[elem.img] = elem.layer
 
 	def update(self, events):
 		for obj in self.objects:
