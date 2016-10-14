@@ -1,153 +1,165 @@
 {
-	"imports": [
-		"./assets/templates/default_vars.json"
-	],
-	"objects": {
-		"images": [{
-			"name": "world1",
-			"label": "",
-			"klickable": true,
-			"image": "$image1",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%25",
-				"y_rel": "%25",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world2",
-			"label": "",
-			"klickable": true,
-			"image": "$image2",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%50",
-				"y_rel": "%25",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world3",
-			"label": "",
-			"klickable": true,
-			"image": "$image3",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%75",
-				"y_rel": "%25",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world4",
-			"label": "",
-			"klickable": true,
-			"image": "$image4",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%25",
-				"y_rel": "%50",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world5",
-			"label": "",
-			"klickable": true,
-			"image": "$image5",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%75",
-				"y_rel": "%50",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world6",
-			"label": "",
-			"klickable": true,
-			"image": "$image6",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%25",
-				"y_rel": "%75",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world7",
-			"label": "",
-			"klickable": true,
-			"image": "$image7",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%50",
-				"y_rel": "%75",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}, {
-			"name": "world8",
-			"label": "",
-			"klickable": true,
-			"image": "$image8",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "%75",
-				"y_rel": "%75",
-				"x_abs": 0,
-				"y_abs": 0
-			}
-		}],
-		"buttons": [{
-			"name": "warp",
-			"label": "Warp",
-			"size": "$size",
-			"width_to_hight_ratio": 8,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "$half",
-				"x_abs": 0,
-				"y_abs": -20
-			}
-		}, {
-			"name": "return",
-			"label": "Return",
-			"size": "$size",
-			"width_to_hight_ratio": 8,
-			"typeface": "$typeface",
-			"color": "$color",
-			"box": "$box1",
-			"position": {
-				"pos_relation_obj": "master_screen",
-				"relation_point": "TopLeft",
-				"x_rel": "$half",
-				"y_rel": "$half",
-				"x_abs": 0,
-				"y_abs": 20
-			}
-		}]
-	}
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ],
+            "objects": {
+                        "buttons": [
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Warp",
+                                                "font_conf": "$standard_font",
+                                                "name": "warp",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": -20,
+                                                            "y_rel": "$half",
+                                                            "layer": 1
+                                                },
+                                                "width_to_hight_ratio": 8
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Return",
+                                                "font_conf": "$standard_font",
+                                                "name": "return",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 20,
+                                                            "y_rel": "$half",
+                                                            "layer": 1
+                                                },
+                                                "width_to_hight_ratio": 8
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image1",
+                                                "name": "world1",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%25",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%25",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image2",
+                                                "name": "world2",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%50",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%25",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image3",
+                                                "name": "world3",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%75",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%25",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image4",
+                                                "name": "world4",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%25",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%50",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image5",
+                                                "name": "world5",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%75",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%50",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image6",
+                                                "name": "world6",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%25",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%75",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image7",
+                                                "name": "world7",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%50",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%75",
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "content": "$image8",
+                                                "name": "world8",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "MidMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "%75",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%75",
+                                                            "layer": 1
+                                                }
+                                    }
+                        ]
+            }
 }
