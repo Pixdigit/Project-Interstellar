@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from libs.overlay import overlay
+import libs.overlay as overlay
 import pygame
 
 

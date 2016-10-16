@@ -163,8 +163,8 @@ class create_menu():
 				try:
 						data_in = get_data(self.merged_variables, data_in[1:])
 				except KeyError:
-					print ""
-					print self.merged_variables
+					print("")
+					print((self.merged_variables))
 					raise KeyError(data_in + " is not a variable.")
 				return data_in
 
@@ -228,7 +228,6 @@ class create_menu():
 					type_mismatch(expect_type)
 			raise RuntimeError("I have no idea how this happend! : "
 					+ str(data_in) + " | " + str(expect_type))
-
 
 		default_font = {
 			"color": [0, 0, 0],

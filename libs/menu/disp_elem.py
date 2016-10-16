@@ -392,4 +392,3 @@ def create_outline(button_design, mode, rect):
 			final.get_size())
 
 	return final, pos
-

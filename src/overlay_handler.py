@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import settings
-from libs.overlay import overlay as overlay_creator
+from libs.overlay import create_overlay_handler
 from . import items
 from . import overlays
 
@@ -12,7 +12,7 @@ if not "overlay" in globals():
 def init():
 	global overlay
 
-	overlay = overlay_creator.create_overlay()
+	overlay = create_overlay_handler()
 
 	overlay_elem_pos = (settings.screenx_current / 2, settings.screeny_current)
 	overlay_obj = overlays.item_bar("items", overlay_elem_pos, "midbottom")
