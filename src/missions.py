@@ -1,27 +1,12 @@
 # -*- coding: utf-8 -*-
 from . import settings
+from . import menu
 import pygame
 import math
 
 
 def init():
-	time("start")
-
-
-def time(action):
-	global oldtime
-	global newtime
-	if not "newtime" in globals():
-		newtime = pygame.time.get_ticks()
-	if action == "pause":
-		oldtime = newtime
-		newtime = pygame.time.get_ticks()
-		settings.player.timeplay += newtime - oldtime
-	if action == "start":
-		oldtime = pygame.time.get_ticks()
-		newtime = pygame.time.get_ticks()
-	if action == "get_time":
-		return pygame.time.get_ticks() - oldtime + settings.player.timeplay
+	settings.time("start")
 
 
 def handle():
@@ -52,7 +37,7 @@ def target_shooting():
 
 		font = pygame.font.SysFont(settings.typeface, 50)
 
-		points = time("get_time")
+		points = settings.time("get_time")
 		color = settings.color
 		texttime = font.render("Your time: " + str(points) + "ms", True, color)
 		tmp = str(points / (settings.dtargets * 8.0))[:6]
@@ -97,11 +82,9 @@ def player_hit_by_explosion():
 	if settings.player.explosion_anim is not None:
 		if (settings.player.explosion_anim.state in ["paused", "stopped"]
 			or settings.player.explosion_anim.isFinished()):
-				settings.quit()
+				play_failed_sequence()
 
 
 def play_failed_sequence():
 
-	#TODO:
-	#introduce game over screen
-	pass
+	menu.game_over()
