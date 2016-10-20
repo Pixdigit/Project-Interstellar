@@ -212,8 +212,7 @@ def reset():
 	konstspeed = 0.0025
 	color = (255, 255, 10)
 
-	from . import missions
-	missions.time("start")
+	time("start")
 
 	if debugmode:  # lint:ok
 		fullscreen = False  # lint:ok
@@ -299,6 +298,22 @@ def quit():
 	pygame.quit()
 	shutil.rmtree('./assets/sprites/player')
 	sys.exit()
+
+
+def time(action):
+	global oldtime
+	global newtime
+	if not "newtime" in globals():
+		newtime = pygame.time.get_ticks()
+	if action == "pause":
+		oldtime = newtime
+		newtime = pygame.time.get_ticks()
+		player.timeplay += newtime - oldtime  # lint:ok
+	if action == "start":
+		oldtime = pygame.time.get_ticks()
+		newtime = pygame.time.get_ticks()
+	if action == "get_time":
+		return pygame.time.get_ticks() - oldtime + player.timeplay  # lint:ok
 
 
 def default_buttonmap():

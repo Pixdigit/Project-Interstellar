@@ -2,7 +2,6 @@
 from . import settings
 from . import namings
 from . import sounds
-from . import missions
 from . import game_data
 from libs.pyganim import pyganim
 from libs import menu
@@ -133,7 +132,7 @@ def main():
 def pause():
 	"""pausing menu"""
 
-	missions.time("pause")
+	settings.time("pause")
 	sounds.music.play("pause")
 	pygame.mouse.set_visible(True)
 
@@ -174,7 +173,7 @@ def pause():
 				run = False
 		pygame.display.flip()
 	pygame.mouse.set_visible(False)
-	missions.time("start")
+	settings.time("start")
 
 
 def choose_world():
@@ -426,6 +425,10 @@ def change_controls():
 				pressed.change_text(new_label)
 
 		pygame.display.flip()
+
+
+def game_over():
+	settings.quit()
 
 
 def choose_button(key_map, key_name):
