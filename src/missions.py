@@ -87,4 +87,6 @@ def player_hit_by_explosion():
 
 def play_failed_sequence():
 
+	global running
+	del(running)
 	menu.game_over()

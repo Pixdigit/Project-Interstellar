@@ -1,0 +1,146 @@
+{
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ],
+            "objects": {
+                        "titles": [
+                                                {
+                                                            "name": "title",
+                                                            "label": "Game Over",
+                                                            "size": 40,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "$half",
+                                                                        "y_rel": "%28",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                },
+                                                {
+                                                            "name": "time",
+                                                            "label": "Time:",
+                                                            "size": 30,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "%47",
+                                                                        "y_rel": "%35",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                },
+                                                {
+                                                            "name": "time_value",
+                                                            "label": "$time",
+                                                            "size": 30,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "%55",
+                                                                        "y_rel": "%35",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                },
+                                                {
+                                                            "name": "targets",
+                                                            "label": "Targets left:",
+                                                            "size": 30,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "%47",
+                                                                        "y_rel": "%40",
+                                                                        "x_abs": -73,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                },
+                                                {
+                                                            "name": "targets_value",
+                                                            "label": "$targets",
+                                                            "size": 30,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "%55",
+                                                                        "y_rel": "%40",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                }
+                         ],
+                         "images": [
+                                                {
+                                                            "name": "background",
+                                                            "image": "./assets/sprites/Background1.tif",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopLeft",
+                                                                        "x_rel": 0,
+                                                                        "y_rel": 0,
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 0
+                                                            }
+                                                }
+                         ],
+                        "buttons": [
+                                    {
+                                                "name": "retry",
+                                                "content": "Retry",
+                                                "font_conf": "$standard_font",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "pos_rel_obj": "master_screen",
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
+                                                            "x_rel": "$half",
+                                                            "y_rel": 0.45,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "name": "main_menu",
+                                                "content": "Back to Menu",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "from": "BottomMid",
+                                                            "pos_rel_obj": "retry",
+                                                            "to": "TopMid",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    }
+                        ]
+            }
+}
