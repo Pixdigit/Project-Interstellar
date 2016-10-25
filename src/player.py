@@ -219,8 +219,4 @@ class player():
 			self.explosion_anim.blit(screen, pos)
 
 	def reset(self):
-		self.should_move = False
-		self.rot_dest = 0
-		self.rotation = 0
-		self.speedboost = 1
-		self.pos = self.img.get_rect()
+		self.__init__()

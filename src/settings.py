@@ -220,12 +220,6 @@ def reset():
 	world.generate(world.background, dstars, dtargets)  # lint:ok
 
 
-def new_player():
-	global player
-	from .player import player as player
-	player = player()
-
-
 def upd(level):
 
 	"""updates various variables"""

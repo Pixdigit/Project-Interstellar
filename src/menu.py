@@ -399,8 +399,6 @@ def options():
 
 def game_over():
 
-	settings.new_player()
-
 	points = settings.time("get_time")
 
 	alltargets = 0
@@ -409,7 +407,7 @@ def game_over():
 		alltargets += len(settings.localmap[world].targets)
 	disp_targets = str(alltargets) + "/" + str(settings.dtargets * 8)
 
-	vars_ = {"time": str(points) + "ms", "targets": disp_targets}
+	vars_ = {"time": str(points/1000) + "s", "targets": disp_targets}
 
 	endscreen = menu.templates.complete_template(
 			"./assets/templates/game_over.json",

@@ -161,7 +161,7 @@ class create_menu():
 			if (type(data_in) in [str, unicode]) and data_in[0] == "$":
 				#Try to load variable
 				try:
-						data_in = get_data(self.merged_variables, data_in[1:])
+						data_in = get_data(self.merged_variables, data_in[1:], expect_type)
 				except KeyError:
 					print ""
 					print self.merged_variables

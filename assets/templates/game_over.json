@@ -42,11 +42,11 @@
                                                             "size": 30,
                                                             "font_conf": "$standard_font",
                                                             "position": {
-                                                                        "pos_rel_obj": "master_screen",
-                                                                        "from": "TopLeft",
-                                                                        "to": "TopMid",
-                                                                        "x_rel": "%55",
-                                                                        "y_rel": "%35",
+                                                                        "pos_rel_obj": "time",
+                                                                        "from": "TopRight",
+                                                                        "to": "TopLeft",
+                                                                        "x_rel": "%105",
+                                                                        "y_rel": "%100",
                                                                         "x_abs": 0,
                                                                         "y_abs": 0,
                                                                         "layer": 1
@@ -58,12 +58,12 @@
                                                             "size": 30,
                                                             "font_conf": "$standard_font",
                                                             "position": {
-                                                                        "pos_rel_obj": "master_screen",
-                                                                        "from": "TopLeft",
-                                                                        "to": "TopMid",
-                                                                        "x_rel": "%47",
-                                                                        "y_rel": "%40",
-                                                                        "x_abs": -73,
+                                                                        "pos_rel_obj": "time",
+                                                                        "from": "BottomRight",
+                                                                        "to": "TopRight",
+                                                                        "x_rel": "%100",
+                                                                        "y_rel": "%100",
+                                                                        "x_abs": 0,
                                                                         "y_abs": 0,
                                                                         "layer": 1
                                                             }
@@ -74,11 +74,11 @@
                                                             "size": 30,
                                                             "font_conf": "$standard_font",
                                                             "position": {
-                                                                        "pos_rel_obj": "master_screen",
-                                                                        "from": "TopLeft",
-                                                                        "to": "TopMid",
-                                                                        "x_rel": "%55",
-                                                                        "y_rel": "%40",
+                                                                        "pos_rel_obj": "targets",
+                                                                        "from": "TopRight",
+                                                                        "to": "TopLeft",
+                                                                        "x_rel": "%105",
+                                                                        "y_rel": "%100",
                                                                         "x_abs": 0,
                                                                         "y_abs": 0,
                                                                         "layer": 1
