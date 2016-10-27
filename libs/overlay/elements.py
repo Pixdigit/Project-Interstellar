@@ -12,12 +12,13 @@ class overlay_element():
 		self.sub_elements = []
 		self.active = True
 
-		self.pos = pygame.Rect(0, 0, 0, 0)
+		self.rel_pos = pygame.Rect(0, 0, 0, 0)
 		if not callable(pos_getter):
 			rect = pygame.Rect(pos_getter)
-			pos_getter = lambda old_rect: rect
-		self.pos = pos_getter(self.pos)
+			pos_getter = lambda self, old_rect: rect
+		self.pos = pygame.Rect(0, 0, 0, 0)
 		self.pos_getter = pos_getter
+		self.pos_getter()
 
 		if img is None:
 			self.has_image = False
@@ -67,8 +68,27 @@ class overlay_element():
 				break
 		return test_elem
 
-	def create_sub(self, *args):
-		sub = overlay_element(*args)
+	def get_upper(self, id_or_name):
+		if type(id_or_name) in [str, unicode]:
+			elem_id = self.get_by_name(id_or_name).id
+		else:
+			elem_id = id_or_name
+
+		obj = self.get_by_id(elem_id)
+
+		for elem in self.get_sub() + [self]:
+			if obj in elem.sub_elements:
+				return elem
+		return None
+
+	def create_sub(self, *args, **kwargs):
+
+		if "subclass" not in kwargs:
+			kwargs["subclass"] = overlay_element
+
+		assert issubclass(kwargs["subclass"], overlay_element)
+
+		sub = kwargs["subclass"](*args)
 		self.sub_elements.append(sub)
 		return sub
 
@@ -101,14 +121,18 @@ class overlay_element():
 		return removed_object
 
 	def update(self):
+		self.pos_getter()
 		for elem in self.sub_elements:
 			elem.update()
-		self.pos = self.pos_getter(self.pos)
 
-	def blit(self, screen):
+	def blit(self, screen, rel_pos):
+		rel_pos = pygame.Rect(rel_pos)
+		if self.name == "item_bar":
+			print self.pos
 		if self.active:
-			self.merge_image.fill((0, 0, 0, 0))
-			self.merge_image.blit(self.img, (0, 0))
+			tmp_pos = self.pos.copy()
+			tmp_pos.top += rel_pos.top
+			tmp_pos.left += rel_pos.left
+			screen.blit(self.img, tmp_pos)
 			for elem in self.sub_elements:
-				elem.blit(self.merge_image)
-			screen.blit(self.merge_image, self.pos)
+				elem.blit(screen, tmp_pos)

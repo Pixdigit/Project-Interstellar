@@ -126,6 +126,7 @@ def process_events():
 					item_overlay = overlay_elements.item_bar
 					item = item_overlay.rm_sub("speed_boost")
 					item_overlay.get_by_name("item_slot_" + key).set_sub(item)
+					item.update()
 				#Numpad presses
 				#Switches between worlds
 				if len(key) == 3:
