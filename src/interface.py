@@ -8,7 +8,7 @@ from . import sounds
 from . import objects
 from . import midi_in
 from . import specials
-from . import overlay_elements
+from . import overlay_handler
 from pygame.locals import QUIT, KEYUP, KEYDOWN
 
 
@@ -118,15 +118,14 @@ def process_events():
 					for target in settings.world.targets:
 						print((target.pos))
 				if key == "i":
-					overlay = overlay_elements.item_bar
+					overlay = overlay_handler.overlay.get_by_name("item_bar")
 					old_status = overlay.active
 					overlay.set_visability(not old_status)
 				#change item location
 				if key in [str(i + 1) for i in range(6)]:
-					item_overlay = overlay_elements.item_bar
+					item_overlay = overlay_handler.overlay.get_by_name("item_bar")
 					item = item_overlay.rm_sub("speed_boost")
 					item_overlay.get_by_name("item_slot_" + key).set_sub(item)
-					item.update()
 				#Numpad presses
 				#Switches between worlds
 				if len(key) == 3:

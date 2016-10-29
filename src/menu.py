@@ -4,6 +4,7 @@ from . import namings
 from . import sounds
 from . import missions
 from . import game_data
+from . import overlay_handler
 from libs.pyganim import pyganim
 from libs import menu
 import pygame
@@ -395,6 +396,7 @@ def options():
 	game_data.save_user_settings(	volume=settings.volume,
 				size=10 + (5 * button_size),
 				buttonmap=settings.buttonmap)
+	overlay_handler.overlay.update()
 	pygame.mouse.set_visible(False)
 
 

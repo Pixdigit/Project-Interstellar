@@ -31,11 +31,9 @@ class overlay_element():
 			else:
 				self.img = img
 			self.pos.size = self.img.get_size()
-		self.merge_image = self.img.copy()
 
 		try:
 			self.img.convert_alpha()
-			self.merge_image.convert_alpha()
 		except pygame.error:
 			print(("Warning: Creating overlays without video mode set\n"
 				"         causes decreased performance while blitting."))
@@ -127,8 +125,6 @@ class overlay_element():
 
 	def blit(self, screen, rel_pos):
 		rel_pos = pygame.Rect(rel_pos)
-		if self.name == "item_bar":
-			print self.pos
 		if self.active:
 			tmp_pos = self.pos.copy()
 			tmp_pos.top += rel_pos.top

@@ -15,7 +15,6 @@ from . import specials
 from . import sounds
 from . import midi_in
 from . import items
-from . import overlay_elements
 from . import overlay_handler
 from . import game_data
 from pygame.locals import USEREVENT
@@ -32,7 +31,6 @@ sounds.init()
 movement.handle()
 specials.init()
 midi_in.init()
-overlay_elements.init()
 overlay_handler.init()
 items.init()
 
