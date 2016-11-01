@@ -16,10 +16,10 @@ def init():
 	pass
 	#nothing to initialize
 
-"""Handles user input"""
-
 
 def handle():
+
+	"""Calls neccesary update functions"""
 
 	#If debugging is active, midi-events will be qued to event-list
 	midi_in.do()

@@ -15,7 +15,7 @@ class stars():
 		screenx = settings.screenx_current
 		screeny = settings.screeny_current
 
-		self.image = pygame.image.load("./assets/sprites/star1.tif")
+		self.image = pygame.image.load("./assets/sprites/star1.tif").convert_alpha()
 		imgsize = self.image.get_width()
 
 		# random size between 0 and 100 %
@@ -26,7 +26,8 @@ class stars():
 		self.depth = (self.size * (maximum - minimum)
 				) + minimum  # value mapped between .15 and .70
 		self.image = pygame.transform.smoothscale(self.image,
-						(int(imgsize * self.depth), int(imgsize * self.depth)))
+						(int(imgsize * self.depth), int(imgsize * self.depth))
+						).convert_alpha()
 
 		self.pos = self.image.get_rect()
 		self.screenx = screenx - self.pos.w

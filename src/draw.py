@@ -3,7 +3,6 @@ import pygame
 import math
 from . import settings
 from . import sounds
-from . import specials
 from . import missions
 from . import overlay_handler
 from pygame.locals import *
@@ -44,10 +43,9 @@ def ingame():
 
 	settings.world.blit()
 
-	status()
-
 	settings.player.blit(settings.screen)
-	debug()
+	if settings.debugscreen:
+		debug()
 	drawsongname()
 	drawtargetsum()
 	drawworldname()
@@ -63,7 +61,6 @@ def debug():
 	"""shows debug info on screen"""
 	# nothing to explain here too?
 
-	debugscreen = settings.debugscreen
 	rot_dest = settings.player.rot_dest
 	rotation = settings.player.rotation
 	font = settings.stdfont
@@ -84,34 +81,33 @@ def debug():
 	else:
 		isnear = "False"
 
-	if debugscreen:
-		rot = str(rot_dest) + ", " + str(rotation) + ")"
-		speed = "(" + str(round(move_x, 3)) + ", " + str(round(move_y, 3)) + ")"
-		pos = ("(" + str(pos_x) + ", " + str(pos_y) + ")")
-		fps = str(math.floor(clock.get_fps()))
-		time = "time scince start: " + str(missions.time("get_time"))
-		pixpos = "(" + str(player_pos.left) + ", " + str(player_pos.top) + ")"
-		entitys = "Entitys: " + str(objects_on_screen)
+	rot = str(rot_dest) + ", " + str(rotation) + ")"
+	speed = "(" + str(round(move_x, 3)) + ", " + str(round(move_y, 3)) + ")"
+	pos = ("(" + str(pos_x) + ", " + str(pos_y) + ")")
+	fps = str(math.floor(clock.get_fps()))
+	time = "time scince start: " + str(missions.time("get_time"))
+	pixpos = "(" + str(player_pos.left) + ", " + str(player_pos.top) + ")"
+	entitys = "Entitys: " + str(objects_on_screen)
 
-		texttime = font.render(time, True, color)
-		textfps = font.render("fps: " + fps, True, color)
-		textxy = font.render("(x%, y%): " + pos, True, color)
-		textpixpos = font.render("(x, y): " + pixpos, True, color)
-		textrot = font.render("(destination, current): (" + rot, True, color)
-		textspeed = font.render("(speedx, speedy): " + speed, True, color)
-		isnear = font.render("Inzone: " + isnear, True, color)
-		textdoesmove = font.render("move?: " + str(move), True, color)
-		textentitys = font.render(entitys, True, color)
+	texttime = font.render(time, True, color)
+	textfps = font.render("fps: " + fps, True, color)
+	textxy = font.render("(x%, y%): " + pos, True, color)
+	textpixpos = font.render("(x, y): " + pixpos, True, color)
+	textrot = font.render("(destination, current): (" + rot, True, color)
+	textspeed = font.render("(speedx, speedy): " + speed, True, color)
+	isnear = font.render("Inzone: " + isnear, True, color)
+	textdoesmove = font.render("move?: " + str(move), True, color)
+	textentitys = font.render(entitys, True, color)
 
-		screen.blit(textfps, (0, 0))
-		screen.blit(textxy, (0, 20))
-		screen.blit(textpixpos, (0, 40))
-		screen.blit(textrot, (0, 60))
-		screen.blit(textspeed, (0, 80))
-		screen.blit(isnear, (0, 100))
-		screen.blit(textdoesmove, (0, 120))
-		screen.blit(texttime, (0, 140))
-		screen.blit(textentitys, (0, 160))
+	screen.blit(textfps, (0, 0))
+	screen.blit(textxy, (0, 20))
+	screen.blit(textpixpos, (0, 40))
+	screen.blit(textrot, (0, 60))
+	screen.blit(textspeed, (0, 80))
+	screen.blit(isnear, (0, 100))
+	screen.blit(textdoesmove, (0, 120))
+	screen.blit(texttime, (0, 140))
+	screen.blit(textentitys, (0, 160))
 
 
 def drawtargetsum():
@@ -183,23 +179,3 @@ def drawworldname():
 			pos = name.get_rect()
 			pos.centerx = settings.screenx_current / 2
 			settings.screen.blit(name, pos)
-
-
-def status():
-	"""Draws the ships energy in the lower right corner."""
-	xsize = int(settings.screenx_current * 0.05)
-	ysize = int(settings.screeny_current * 0.3) + 10
-	bar = pygame.Surface((xsize, ysize)).convert_alpha()
-	border = pygame.transform.scale(settings.border1, (xsize, ysize)
-				).convert_alpha()
-	border.set_alpha(0)
-	borderpos = border.get_rect()
-	borderpos.bottomright = (settings.screenx_current,
-		settings.screeny_current - correcture_pos.h)
-	pos = bar.fill((62, 186, 23, 40))
-	pos.right = settings.screenx_current
-	pos.top = (settings.screeny_current
-		- (pos.h / 100.0) * specials.energy
-		- correcture_pos.h)
-	settings.screen.blit(bar, pos)
-	settings.screen.blit(border, borderpos)

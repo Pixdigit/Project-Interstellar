@@ -386,7 +386,7 @@ def create_outline(button_design, mode, rect):
 	final.blit(right, pygame.Rect(width - border_size, 0, 0, 0))
 	final.blit(top, pygame.Rect(0, 0, 0, 0))
 	final.blit(bottom, pygame.Rect(0, height - border_size, 0, 0))
-	final.convert()
+	final = final.convert_alpha()
 
 	pos = pygame.Rect((rect.x - border_size, rect.y - border_size),
 			final.get_size())

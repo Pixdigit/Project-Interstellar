@@ -270,7 +270,7 @@ class create_menu():
 					print(("Could not load image file: " + content))
 					print(("Using filename as text.\n"))
 			elif type(content) == pygame.Surface:
-				image = content.convert()
+				image = content.convert_alpha()
 				content = disp_elem.image("NONAME", image, {"NOPOSDATA": True})
 			else:
 				font_conf = get_data(button_data, "font_conf", default=default_font)

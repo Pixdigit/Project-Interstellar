@@ -2,6 +2,7 @@
 import pygame
 import libs.overlay as overlay
 from . import settings
+from . import specials
 
 
 class item_bar_creator(overlay.elements.overlay_element, object):
@@ -38,3 +39,31 @@ class item_slot(overlay.elements.overlay_element, object):
 		self.pos.size = (int(0.11 * settings.screeny_current),) * 2
 		self.pos.top = 0
 		self.pos.left = (self.slot_nr * self.pos.width)
+
+
+class status_bar(overlay.elements.overlay_element, object):
+
+	def __init__(self):
+		self.proto = super(status_bar, self)
+		self.proto.__init__("status_bar", self.pos_getter)
+		self.pos_getter()
+		self.border = pygame.transform.smoothscale(
+				settings.border1, self.pos.size).convert_alpha()
+		self.indicator = pygame.Surface(self.pos.size).convert()
+		self.indicator.set_alpha(40)
+		self.indicator.fill((62, 186, 23))
+
+	def pos_getter(self):
+		self.pos.width = int(settings.screenx_current * 0.042)
+		self.pos.height = int(settings.screeny_current * 0.25) + 10
+		self.pos.bottom = settings.screeny_current
+		self.pos.right = settings.screenx_current
+
+	def blit(self, screen):
+		if not settings.player.pos.colliderect(self.pos):
+			screen.blit(self.indicator, (self.pos.left, settings.screeny_current
+							- int(specials.energy / 100.0 * self.pos.height)))
+			screen.blit(self.border, self.pos)
+
+	def update(self):
+		self.__init__()

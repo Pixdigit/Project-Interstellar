@@ -5,7 +5,6 @@ from draw import debug
 from draw import drawtargetsum
 from draw import drawsongname
 from draw import drawworldname
-from draw import status
 from game_data import save
 from game_data import save_user_settings
 from game_data import load
@@ -47,7 +46,9 @@ from objects import stars
 from objects import bullet
 from objects import target
 from objects import warp_station
-from overlay_elements import item_bar_pos
+from overlay_elements import item_bar_creator
+from overlay_elements import item_slot
+from overlay_elements import status_bar
 from overlay_handler import init
 from overlay_handler import blit
 from player import player
