@@ -1,0 +1,155 @@
+{
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ],
+            "objects": {
+                        "titles": [
+                                                {
+                                                            "name": "title",
+                                                            "label": "Project Interstellar",
+                                                            "size": 40,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "$half",
+                                                                        "y_rel": "%10",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                },
+                                                {
+                                                            "name": "menu",
+                                                            "label": "Main Menu",
+                                                            "size": 30,
+                                                            "font_conf": "$standard_font",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopMid",
+                                                                        "x_rel": "$half",
+                                                                        "y_rel": "$qrt",
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 1
+                                                            }
+                                                }
+                         ],
+                         "images": [
+                                                {
+                                                            "name": "background",
+                                                            "image": "./assets/sprites/Background1.tif",
+                                                            "position": {
+                                                                        "pos_rel_obj": "master_screen",
+                                                                        "from": "TopLeft",
+                                                                        "to": "TopLeft",
+                                                                        "x_rel": 0,
+                                                                        "y_rel": 0,
+                                                                        "x_abs": 0,
+                                                                        "y_abs": 0,
+                                                                        "layer": 0
+                                                            }
+                                                }
+                         ],
+                        "buttons": [
+                                    {
+                                                "name": "start",
+                                                "content": "Start",
+                                                "font_conf": "$standard_font",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "pos_rel_obj": "master_screen",
+                                                            "from": "TopLeft",
+                                                            "to": "TopMid",
+                                                            "x_rel": "$half",
+                                                            "y_rel": 0.4,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "name": "load",
+                                                "content": "Load Game",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "from": "BottomMid",
+                                                            "pos_rel_obj": "start",
+                                                            "to": "TopMid",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "name": "settings",
+                                                "content": "Settings",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "from": "BottomMid",
+                                                            "pos_rel_obj": "load",
+                                                            "to": "TopMid",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "name": "credits",
+                                                "content": "Credits",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "settings",
+                                                            "to": "TopLeft",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    },
+                                    {
+                                                "name": "exit",
+                                                "content": "Exit",
+                                                "font": "$typeface",
+                                                "size": "$size",
+                                                "color": "$color",
+                                                "box": "$box1",
+                                                "width_to_hight_ratio": "$ratio",
+                                                "position": {
+                                                            "pos_rel_obj": "credits",
+                                                            "from": "BottomMid",
+                                                            "to": "TopMid",
+                                                            "x_rel": 1,
+                                                            "y_rel": 1,
+                                                            "x_abs": 0,
+                                                            "y_abs": 10,
+                                                            "layer": 1
+                                                }
+                                    }
+                        ]
+            }
+}

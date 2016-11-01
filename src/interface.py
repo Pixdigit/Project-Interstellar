@@ -16,13 +16,10 @@ def init():
 	pass
 	#nothing to initialize
 
-"""Handles user input"""
-
 
 def handle():
 
-	# handles user input
-	#TODO: Add docs
+	"""Calls neccesary update functions"""
 
 	#If debugging is active, midi-events will be qued to event-list
 	midi_in.do()
@@ -48,46 +45,46 @@ def process_events():
 			key = pygame.key.name(event.key)
 			if key == "x" or key == "y":
 				settings.player.speedboost = 1
-			if key in settings.buttonmap["up"]:
+			if key in settings.buttonmap["up_key"]:
 				settings.up = False
-			if key in settings.buttonmap["down"]:
+			if key in settings.buttonmap["down_key"]:
 				settings.down = False
-			if key in settings.buttonmap["left"]:
+			if key in settings.buttonmap["left_key"]:
 				settings.left = False
-			if key in settings.buttonmap["right"]:
+			if key in settings.buttonmap["right_key"]:
 				settings.right = False
 		#Handles keypresses
 		if event.type == KEYDOWN:
 			key = pygame.key.name(event.key)
-			if key in settings.buttonmap["pause"]:
+			if key in settings.buttonmap["pause_key"]:
 				menu.pause()
-			if key in settings.buttonmap["debugscreen"]:
+			if key in settings.buttonmap["debugscreen_key"]:
 				settings.debugscreen = settings.toggle(settings.debugscreen, True, False)
-			if key in settings.buttonmap["screenshot"]:
+			if key in settings.buttonmap["screenshot_key"]:
 				filename = "./screenshots/screenshot" + time.strftime("^%d-%m-%Y^%H.%M.%S")
 				pygame.image.save(settings.screen, filename + ".png")
-			if key in settings.buttonmap["next_track"]:
+			if key in settings.buttonmap["next_track_key"]:
 				sounds.music.play("next")
-			if key in settings.buttonmap["speeddown"]:
+			if key in settings.buttonmap["speeddown_key"]:
 				settings.player.speedboost = 0.3
-			if key in settings.buttonmap["speedup"]:
+			if key in settings.buttonmap["speedup_key"]:
 				settings.player.speedboost = 1.7
-			if key in settings.buttonmap["up"]:
+			if key in settings.buttonmap["up_key"]:
 				settings.up = True
-			if key in settings.buttonmap["down"]:
+			if key in settings.buttonmap["down_key"]:
 				settings.down = True
-			if key in settings.buttonmap["left"]:
+			if key in settings.buttonmap["left_key"]:
 				settings.left = True
-			if key in settings.buttonmap["right"]:
+			if key in settings.buttonmap["right_key"]:
 				settings.right = True
 			if key == "o":
 				if settings.player.pos.x >= 0.9 and settings.player.pos.y >= 0.9:
 					pygame.mixer.music.load("./assets/music/$not$ard_tatort.ogg")
 					pygame.mixer.music.play(1, 0.0)
-			if key in settings.buttonmap["fire"]:
+			if key in settings.buttonmap["fire_key"]:
 				tmp_bullet = objects.bullet(settings.player.rotation, settings.player.pos)
 				settings.bullets.append(tmp_bullet)
-			if key in settings.buttonmap["fire2"]:
+			if key in settings.buttonmap["fire_circle_key"]:
 				specials.fire = True
 			#These are debugging relevant interfaces
 			if settings.debugmode:
@@ -120,13 +117,15 @@ def process_events():
 				if key == "h":
 					for target in settings.world.targets:
 						print((target.pos))
+				if key == "i":
+					overlay = overlay_handler.overlay.get_by_name("item_bar")
+					old_status = overlay.active
+					overlay.set_visability(not old_status)
 				#change item location
 				if key in [str(i + 1) for i in range(6)]:
-					new_pos = int(key) - 1
-					items_overlay = overlay_handler.overlay.objects["items"]
-					old_pos = items_overlay.get_item_pos("speed_boost")
-					if old_pos is not None:
-						overlay_handler.overlay.objects["items"].set_pos_of_item(old_pos, new_pos)
+					item_overlay = overlay_handler.overlay.get_by_name("item_bar")
+					item = item_overlay.rm_sub("speed_boost")
+					item_overlay.get_by_name("item_slot_" + key).set_sub(item)
 				#Numpad presses
 				#Switches between worlds
 				if len(key) == 3:

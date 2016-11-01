@@ -1,8 +1,0 @@
-&./assets/templates/default.vars
-*|Load saved game|30     |$typeface|$color      |$half + 0|%10 + 0|
-*|$savename      |20     |$typeface|$color      |$half + 0|%20 + 0|
-@|Return         |$size|5|$typeface|$color|$box1|%80   + 0|%30 + 0|
-/add project stats here
-@|Previous       |$size|5|$typeface|$color|$box1|%20   + 0|%90 + 0|
-@|Load           |$size|5|$typeface|$color|$box1|%50   + 0|%90 + 0|
-@|Next           |$size|5|$typeface|$color|$box1|%80   + 0|%90 + 0|

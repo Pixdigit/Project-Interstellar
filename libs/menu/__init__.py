@@ -1,3 +1,4 @@
-from creator import create_menu
 import IO
+import templates
+import creator
 import disp_elem

@@ -31,8 +31,8 @@ sounds.init()
 movement.handle()
 specials.init()
 midi_in.init()
-items.init()
 overlay_handler.init()
+items.init()
 
 game_data.load_user_settings()
 

@@ -103,7 +103,7 @@ self._timeplayed (dict)
 				files.append(filename)
 		return files
 
-	def update(self, events=True, shouldplaynextsong=True):
+	def update(self, events=False, shouldplaynextsong=False):
 		"""Update variables and process events.
 
 Usage:
@@ -131,13 +131,16 @@ shouldplaynextsong (bool)
 		if type(events) == bool:
 			if events:
 				events = pygame.event.get()
-			else:
-				return
-		# Playes next song if the previous one has ended.
-		if self.__endevent in events and shouldplaynextsong:
-			self.playlist.pop(0)
-			self._playing = False
-			self.play("play", 0)
+				# Playes next song if the previous one has ended.
+				if self.__endevent in events and shouldplaynextsong:
+					self.playlist.pop(0)
+					self._playing = False
+					self.play("play", 0)
+		elif type(events) == list:
+			if self.__endevent in events and shouldplaynextsong:
+				self.playlist.pop(0)
+				self._playing = False
+				self.play("play", 0)
 
 	def play(self, *options):
 		"""Control music playback.

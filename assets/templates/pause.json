@@ -1,0 +1,125 @@
+{
+            "imports": [
+                        "./assets/templates/default_vars.json"
+            ],
+            "objects": {
+                        "buttons": [
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Continue",
+                                                "name": "continue",
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 10,
+                                                            "y_rel": "%40",
+                                                            "layer": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Save Game",
+                                                "name": "save",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "continue",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1,
+                                                            "layer": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Load Game",
+                                                "name": "load",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "save",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1,
+                                                            "layer": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Settings",
+                                                "name": "settings",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "load",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1,
+                                                            "layer": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    },
+                                    {
+                                                "box": "$box1",
+                                                "color": "$color",
+                                                "content": "Exit",
+                                                "name": "exit",
+                                                "position": {
+                                                            "from": "BottomLeft",
+                                                            "pos_rel_obj": "settings",
+                                                            "to": "TopLeft",
+                                                            "x_abs": 0,
+                                                            "x_rel": 1,
+                                                            "y_abs": 10,
+                                                            "y_rel": 1,
+                                                            "layer": 1
+                                                },
+                                                "size": "$size",
+                                                "typeface": "$typeface",
+                                                "width_to_hight_ratio": "$ratio"
+                                    }
+                        ],
+                        "titles": [
+                                    {
+                                                "color": "$color",
+                                                "label": "Pause",
+                                                "name": "pause",
+                                                "bold": false,
+                                                "italics": false,
+                                                "position": {
+                                                            "from": "TopLeft",
+                                                            "pos_rel_obj": "master_screen",
+                                                            "to": "TopMid",
+                                                            "x_abs": 0,
+                                                            "x_rel": "$half",
+                                                            "y_abs": 0,
+                                                            "y_rel": "%12",
+                                                            "layer": 1
+                                                },
+                                                "size": 35,
+                                                "typeface": "$typeface"
+                                    }
+                        ]
+            }
+}

@@ -2,11 +2,28 @@
 import pygame
 import json
 import disp_elem
-import os
 
 
+def convert2list(string):
+	num_of_elem = string.count(",") + 1
+	elements = []
+	string = string[1:]
+	for a in range(num_of_elem - 1):
+		elements.append(string[:string.index(",")].strip())
+		string = string[string.index(",") + 1:].strip()
+	elements.append(string[:-1])
+	return elements
+
+
+datatypes = ["strings",
+	"floats",
+	"lists",
+	"colors",
+	"box_designs"]
+
+
+#This loader returns filename when json loading failed
 def load_json(json_file):
-	"""This loader returns filename when json loading failed"""
 	with open(json_file) as conf_file:
 		try:
 			json_data = json.load(conf_file)
@@ -55,9 +72,13 @@ def load_vars(filename, pre_imports=[]):
 	menu_data = add_key("variables", menu_data, dict)
 	menu_data = add_key("imports", menu_data, list)
 	variables = menu_data["variables"]
+	variables = add_key("lists", variables, dict)
+	variables = add_key("strings", variables, dict)
+	variables = add_key("floats", variables, dict)
+	variables = add_key("images", variables, dict)
 
 	#resolve imports
-	imports = {}
+	imports = {datatype: {} for datatype in datatypes}
 	pre_imports.append(filename)
 	for import_file in menu_data["imports"]:
 		#prevent looping imports
@@ -72,20 +93,9 @@ def load_vars(filename, pre_imports=[]):
 	return variables
 
 
-default_pos = {
-	"pos_rel_obj": "master_screen",
-	"from": "BottomRight",
-	"to": "Center",
-	"x_rel": 0.5,
-	"y_rel": 0.5,
-	"x_abs": 0,
-	"y_abs": 0,
-	"layer": 1}
-
-
 class create_menu():
 
-	def __init__(self, filename, ref, ref_updater, static=True):
+	def __init__(self, filename, ref, ref_updater):
 
 		self.data_file = filename
 		self.reference = ref
@@ -102,16 +112,14 @@ class create_menu():
 						str(float_var * 100)[:str(float_var * 100).find(".")] + "%")
 		floats_list = [number_corrector((x + 1) / 255.0) for x in range(255)]
 		self.merged_variables = {"floats": floats_list}
-		self.merged_variables.update(self.variables)
+		for variable in list(self.variables.values()):
+			self.merged_variables.update(variable)
 
 		#add custom runtime variables
 		self.ref_updater = ref_updater
 		self.merged_variables.update(self.ref_updater())
 
 		self.load_objects()
-
-		if static:
-			self.merge_static()
 
 	def load_objects(self):
 
@@ -124,7 +132,7 @@ class create_menu():
 		self.object_data = self.menu_data["objects"]
 		self.objects = []
 
-		def get_data(data_dict, key_name, expect_type=None, default=None):
+		def get_data(data_dict, key_name, expect_type=None):
 
 			def type_mismatch(expect_type):
 				if expect_type is None:
@@ -145,10 +153,7 @@ class create_menu():
 			try:
 				data_in = data_dict[key_name]
 			except KeyError:
-				#Not in dict -> Raise error or return default
-				if default is not None and key_name not in data_dict:
-					return default
-
+				#Not in dict -> Raise error
 				if not "name" in data_dict:
 					data_dict["name"] = "NONAME"
 				error = (str(key_name)
@@ -163,8 +168,7 @@ class create_menu():
 				try:
 						data_in = get_data(self.merged_variables, data_in[1:])
 				except KeyError:
-					print("")
-					print((self.merged_variables))
+					print ""
 					raise KeyError(data_in + " is not a variable.")
 				return data_in
 
@@ -186,7 +190,7 @@ class create_menu():
 						try:
 							return float(data_in)
 						except TypeError:
-							type_mismatch(float)
+							type_mismatch()
 				except ValueError:
 					type_mismatch(expect_type)
 			#If we got a list recursively resolve
@@ -197,8 +201,6 @@ class create_menu():
 					if type(item) in [str, unicode] and item[0] == "$":
 						if type(self.merged_variables[item[1:]]) == list:
 							new_list = new_list + get_data(data_in, data_in.index(item), None)
-						else:
-							new_list.append(str(self.merged_variables[item[1:]]))
 					else:
 						new_list.append(get_data(data_in, data_in.index(item), None))
 				return new_list
@@ -211,9 +213,6 @@ class create_menu():
 			#If input is int there is not much else to return
 			elif type(data_in) in [int, float]:
 				return float(data_in)
-			#If input is bool return bool
-			elif type(data_in) == bool:
-				return data_in
 			#If no expection is given try float first then usual value
 			elif expect_type is None:
 				try:
@@ -229,113 +228,62 @@ class create_menu():
 			raise RuntimeError("I have no idea how this happend! : "
 					+ str(data_in) + " | " + str(expect_type))
 
-		default_font = {
-			"color": [0, 0, 0],
-			"font": "monospace",
-			"size": 20,
-			"bold": False,
-			"italics": False,
-			"underline": False,
-			"anitalias": True}
-
 		#create titles
 		for title_data in self.object_data["titles"]:
 			name = get_data(title_data, "name", str)
-			label = get_data(title_data, "label", str, default="")
-			font_conf = get_data(title_data, "font_conf", dict, default=default_font)
-			pos_data = get_data(title_data, "position", dict, default=default_pos)
-			layer = pos_data["layer"]
+			label = get_data(title_data, "label", str)
+			typeface = get_data(title_data, "typeface", str)
+			size = get_data(title_data, "size", int)
+			color = get_data(title_data, "color", list)
+			bold = get_data(title_data, "bold", bool)
+			italics = get_data(title_data, "italics", bool)
+			pos_data = get_data(title_data, "position", dict)
 
-			for attr in ["color", "font", "size",
-				"bold", "italics", "underline", "antialias"]:
-				if attr in title_data:
-					font_conf[attr] = get_data(title_data, attr)
-
-			self.objects.append(disp_elem.text(name, label, font_conf,
-						pos_data, layer=layer))
+			self.objects.append(disp_elem.text(name, label, typeface, size, color,
+					bold, italics, pos_data))
 
 		#create buttons
 		for button_data in self.object_data["buttons"]:
 			name = get_data(button_data, "name", str)
-			content = get_data(button_data, "content", str, default="")
+			label = get_data(button_data, "label", str)
+			typeface = get_data(button_data, "typeface", str)
+			size = get_data(button_data, "size", int)
+			color = get_data(button_data, "color", list)
 			box = get_data(button_data, "box", list)
-			ratio = get_data(button_data, "width_to_hight_ratio", float, default=1)
-			pos_data = get_data(button_data, "position", dict, default=default_pos)
-			layer = pos_data["layer"]
+			ratio = get_data(button_data, "width_to_hight_ratio", float)
+			pos_data = get_data(button_data, "position", dict)
 
-			if type(content) in [str, unicode] and os.path.isfile(content):
-				try:
-					content = pygame.image.load(content)
-				except pygame.error:
-					print(("Could not load image file: " + content))
-					print(("Using filename as text.\n"))
-			elif type(content) == pygame.Surface:
-				image = content.convert_alpha()
-				content = disp_elem.image("NONAME", image, {"NOPOSDATA": True})
-			else:
-				font_conf = get_data(button_data, "font_conf", default=default_font)
-
-				for attr in ["color", "font", "size",
-					"bold", "italics", "underline", "antialias"]:
-					if attr in button_data:
-						font_conf[attr] = get_data(button_data, attr)
-				content = disp_elem.text("NONE42", content, font_conf,
-						default_pos, layer=0)
-
-			self.objects.append(
-					disp_elem.button(name, content, ratio, box, pos_data, layer=layer))
+			self.objects.append(disp_elem.button(name, label, typeface, color, size,
+					ratio, box, pos_data))
 
 		#create sliders
 		for slider_data in self.object_data["sliders"]:
 			name = get_data(slider_data, "name", str)
-			label = get_data(slider_data, "label", str, default="")
-			typeface = get_data(slider_data, "typeface", str, default="monospace")
+			label = get_data(slider_data, "label", str)
+			typeface = get_data(slider_data, "typeface", str)
 			size = get_data(slider_data, "size", int)
-			color = get_data(slider_data, "color", list, default=(255, 255, 255))
+			color = get_data(slider_data, "color", list)
 			options_list = get_data(slider_data, "selection_range", list)
 			default_value = get_data(slider_data, "preset_value", float)
 			box = get_data(slider_data, "box", list)
 			ratio = get_data(slider_data, "width_to_hight_ratio", float)
-			pos_data = get_data(slider_data, "position", dict, default=default_pos)
-			layer = pos_data["layer"]
-
+			pos_data = get_data(slider_data, "position", dict)
 			self.objects.append(disp_elem.slider(name, label, typeface, color, size,
-					ratio, options_list, default_value, box, pos_data, layer=layer))
+					ratio, options_list, default_value, box, pos_data))
 
-		#create images
-		for image_data in self.object_data["images"]:
-			img = disp_elem.image(
-					get_data(image_data, "name", str),
-					get_data(image_data, "image", str),
-					get_data(image_data, "position", dict, default=default_pos),
-					layer=get_data(image_data, "position", dict, default=default_pos)["layer"])
+		self.objects.insert(0, self.reference)
+		for obj in self.objects[1:]:
+			obj.get_rel_pos(self.objects)
 
-			self.objects.append(img)
-
-		for obj in self.objects:
-			obj.get_rel_pos([self.reference] + self.objects)
-
-	def merge_static(self):
-
-		#TODO: Finish merging all mergable types
-
-		merge_elems = {}
-
-		for elem in self.objects:
-			merge_elems[elem.img] = elem.layer
-
-	def update(self, events):
-		for obj in self.objects:
+	def blit(self, screen, events):
+		#screen.blit(self.objects[0])
+		for obj in self.objects[1:]:
 			obj.update(events)
-
-	def blit(self, screen):
-		self.objects.sort(key=lambda obj: obj.layer)
-		for obj in self.objects:
 			obj.blit(screen)
 
 	def get_klicked(self):
 		klicked = []
-		for obj in self.objects:
+		for obj in self.objects[1:]:
 			if obj.type == "button":
 				if obj.klicked:
 					klicked.append(obj)
@@ -343,12 +291,12 @@ class create_menu():
 
 	def get_types(self, obj_type):
 		obj_list = []
-		for obj in self.objects:
+		for obj in self.objects[1:]:
 			if obj.type == obj_type:
 				obj_list.append(obj)
 		return obj_list
 
 	def get_obj(self, name):
-		for obj in self.objects:
+		for obj in self.objects[1:]:
 			if obj.name == name:
 				return obj

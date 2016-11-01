@@ -3,11 +3,10 @@ from . import settings
 from . import namings
 from . import sounds
 from . import game_data
+from . import overlay_handler
 from libs.pyganim import pyganim
-import pygame
 from libs import menu
-from pygame.locals import QUIT, USEREVENT, KEYDOWN
-
+import pygame
 """Responsible tor the menus"""
 
 
@@ -35,115 +34,21 @@ class fade_screen():
 		self.__init__(self.step, self.max_alpha, screenx, screeny)
 
 
-class menu_template():
-
-	def __init__(self, menu_name, fade_step, fade_step2, fade_max,
-			variables, externals):
-		"""Initialize menu"""
-
-		# import variables
-		self.screenx = settings.screenx_current
-		self.screeny = settings.screeny_current
-		self.screen = settings.screen
-		self.fade_step = fade_step
-		self.fade_max = fade_max
-		self.variables = variables
-		self.externals = externals
-		self.menu_name = menu_name
-		self.fade_step2 = fade_step2
-
-		# set mouse visible
-		pygame.mouse.set_visible(True)
-
-		# create menu
-		self.menu = menu.create_menu(
-					"./assets/templates/" + self.menu_name + ".menu",
-					self.variables, pygame.Rect((0, 0), (self.screenx, self.screeny)))
-
-		# create fade effect
-		fade = fade_screen(self.fade_step, self.fade_step2, self.fade_max,
-				self.screenx, self.screeny)
-		self.menu.elems["externals"] = [fade]
-
-		for elem in self.externals:
-			self.menu.elems["externals"].insert(0, elem)
-
-	class slider_post():
-		"""A class for posting sliders and including their value
-		as a float representative of the class. When the Class is compared
-		it will compare the sliders name and reuturn the result."""
-		def __init__(self, name, value):
-			self.name = name
-			self.value = value
-
-		def __eq__(self, other):
-			return self.name == other
-
-		def __float__(self):
-			return float(self.value)
-
-		def __int__(self):
-			return int(self.value)
-
-		def __nonzero__(self):
-			try:
-				return bool(int(self.value))
-			except:
-				raise ValueError(
-					"Could not convert {0} to bool: {1}".format(type(self.value), self.value))
-
-		def __bool__(self):
-			return self.__nonzero__()
-
-	def run(self):
-
-		settings.upd("get_events")
-		self.menu.blit(self.screen, settings.events)
-		sounds.music.update(False, False)
-
-		events = []
-		for event in settings.events:
-			if event.type == QUIT:
-				pygame.mouse.set_visible(False)
-				events.append("event.EXIT")
-			if event.type == KEYDOWN:
-				key = pygame.key.name(event.key)
-				if key == "escape":
-					pygame.mouse.set_visible(False)
-					events.append("event.QUIT")
-				if key in ["return", "enter"]:
-					pygame.mouse.set_visible(False)
-					events.append("event.CONTINUE")
-				events.append(key)
-			if event.type == USEREVENT and event.code == "MENU":
-				klicked = self.menu.get_klicked()
-				for elem in klicked:
-					elem.klicked = False
-					events.append(elem.name)
-		for slider in self.menu.elems["sliders"]:
-			if slider.dragged:
-				if slider.is_defined_list:
-					tmp_value = slider.state
-				else:
-					tmp_value = slider.value
-				tmp_event = self.slider_post(slider.name, tmp_value)
-				events.append(tmp_event)
-		return(events)
-
-	def update(self):
-		for external in self.externals:
-			external.update(settings.screenx_current, settings.screeny_current)
-		self.__init__(self.menu_name, self.fade_step, self.fade_step2, self.fade_max,
-				self.variables, self.externals)
+def event_updater():
+	settings.upd("get_events")
+	return settings.events
 
 
 def main():
 	"""main menu"""
 
 	# create the planets animation
-	class create_planet():
+	class create_planet(menu.templates.element_template, object):
 
 		def __init__(self, screenx, screeny):
+			super(create_planet, self).__init__()
+			self.name = "planet"
+			self.type = "animation"
 			planet_sprite_part1 = pyganim.getImagesFromSpriteSheet(
 								"./assets/sprites/spinning_planet/planet_part-0.png",
 								width=384, height=384)
@@ -166,19 +71,20 @@ def main():
 			planet = pyganim.PygAnimation(planet_sprite_and_attr)
 			planet.scale((int(0.2 * screenx), int(0.2 * screenx)))
 			planet_pos = pygame.Rect((0, 0), (384, 384))
-			self.planet_pos = planet_pos.move(int(screenx * 0.7), int(screeny * 0.4))
+			self.pos = planet_pos.move(int(screenx * 0.7), int(screeny * 0.4))
 			planet.play()
 			self.planet = planet
 
 		def blit(self, screen):
-			self.planet.blit(screen, self.planet_pos)
+			self.planet.blit(screen, self.pos)
 
-		def update(self, screenx, screeny):
+		def adjust(self, screenx, screeny):
 			self.__init__(screenx, screeny)
 	planet = create_planet(settings.screenx_current, settings.screeny_current)
 
 	# Load menu
-	main_menu = menu_template("main", 70, 1, 100, {}, [planet])
+	main_menu = menu.templates.complete_template("./assets/templates/main.json",
+			settings.screen, event_updater, externals=[planet])
 
 	# inserts menu music
 	sounds.music.queue("$not$menue.ogg", 0)
@@ -192,17 +98,16 @@ def main():
 
 	# Menu loop
 	while run:
-
 		# Calling events and checking through events
 		events = main_menu.run()
 		for event in events:
 			if event == "event.CONTINUE":
 				run = False
-			if event == "Start":
+			if event == "start":
 				settings.reset()
 				sounds.music.play("next")
 				run = False
-			if event == "Load Game":
+			if event == "load":
 				savegame = savegames()
 				if savegame is not None:
 					game_data.load(savegame)
@@ -213,12 +118,12 @@ def main():
 					run = False
 				else:
 					pygame.mouse.set_visible(True)
-			if event == "Settings":
+			if event == "settings":
 				options()
-				main_menu.update()
-			if event == "Credits":
+				main_menu.update(settings.screen)
+			if event == "credits":
 				namings.run()
-			if event in ["Exit", "event.EXIT", "event.QUIT"]:
+			if event in ["exit", "event.EXIT", "event.QUIT"]:
 				settings.quit()
 		pygame.display.flip()
 	sounds.music.play("next", 0)
@@ -232,7 +137,8 @@ def pause():
 	sounds.music.play("pause")
 	pygame.mouse.set_visible(True)
 
-	pause_menu = menu_template("pause", 5, 5, 150, {}, [])
+	pause_menu = menu.templates.complete_template("./assets/templates/pause.json",
+					settings.screen, event_updater)
 
 	run = True
 
@@ -240,17 +146,17 @@ def pause():
 
 		events = pause_menu.run()
 		for event in events:
-			if event in ["event.CONTINUE", "Continue"]:
+			if event in ["event.CONTINUE", "continue"]:
 				sounds.music.play("unpause")
 				run = False
-			if event == "Save Game":
+			if event == "save":
 				savename = inputpopup(settings.screenx_current / 2,
 						settings.screeny_current / 2,
 						"Save Game")
 				if savename != "Exit":
 					game_data.save(savename)
 				settings.upd("get_saves")
-			if event == "Load Game":
+			if event == "load":
 				savegame = savegames()
 				if savegame is not None:
 					game_data.load(savegame)
@@ -260,10 +166,10 @@ def pause():
 					run = False
 				else:
 					pygame.mouse.set_visible(True)
-			if event == "Settings":
+			if event == "settings":
 				options()
-				pause_menu.update()
-			if event in ["Exit", "event.EXIT", "event.QUIT"]:
+				pause_menu.update(settings.screen)
+			if event in ["exit", "event.EXIT", "event.QUIT"]:
 				main()
 				run = False
 		pygame.display.flip()
@@ -277,31 +183,41 @@ def choose_world():
 	sounds.music.play("pause")
 	pygame.mouse.set_visible(True)
 
-	background = settings.screen.copy()
-	prewiev_images = []
+	preview_images = []
 	tmpfont = pygame.font.SysFont("monospace", 13)
 	for tmp in range(8):
-		prewiev_size = (int(settings.screenx_current / 5.0),
+		preview_size = (int(settings.screenx_current / 5.0),
 				int(settings.screeny_current / 5.0))
 		surf = settings.localmap[str(tmp + 1)].background
-		surf = pygame.transform.smoothscale(surf, prewiev_size)
+		surf = pygame.transform.smoothscale(surf, preview_size)
 		text = tmpfont.render("world" + str(tmp + 1), True, settings.color)
 		tmprect = text.get_rect()
 		tmprect.center = surf.get_rect().center
 		surf.blit(text, tmprect)
-		prewiev_images.append(surf)
-	world_menu = menu_template("world", 5, 5, 150, {
-				"image1": prewiev_images[0],
-				"image2": prewiev_images[1],
-				"image3": prewiev_images[2],
-				"image4": prewiev_images[3],
-				"image5": prewiev_images[4],
-				"image6": prewiev_images[5],
-				"image7": prewiev_images[6],
-				"image8": prewiev_images[7]}, {})
+		preview_images.append(surf)
+	world_menu = menu.templates.complete_template("./assets/templates/world.json",
+				settings.screen, event_updater,
+				{"image1": preview_images[0],
+				"image2": preview_images[1],
+				"image3": preview_images[2],
+				"image4": preview_images[3],
+				"image5": preview_images[4],
+				"image6": preview_images[5],
+				"image7": preview_images[6],
+				"image8": preview_images[7]})
 
-	world_menu.menu.elems["surfs"]["background"] = [background,
-						pygame.Rect(0, 0, 0, 0)]
+	pos_data = {
+		"pos_rel_obj": "master_screen",
+		"from": "TopLeft",
+		"to": "TopLeft",
+		"x_abs": 0,
+		"x_rel": 0,
+		"y_abs": 0,
+		"y_rel": 0
+		}
+	background = menu.creator.disp_elem.image("background", settings.screen.copy(),
+					pos_data, layer=0)
+	world_menu.menu.objects.append(background)
 	selected = -1
 
 	run = True
@@ -309,39 +225,20 @@ def choose_world():
 	while run:
 		events = world_menu.run()
 		for event in events:
-			if event in ["event.CONTINUE", "Warp"]:
+			if event in ["event.CONTINUE", "warp"]:
 				sounds.music.play("unpause")
 				run = False
-			if event in ["Return", "event.QUIT"]:
+			if event in ["return", "event.QUIT"]:
 				selected = -1
 				run = False
 			if event in ["event.EXIT"]:
 				settings.quit()
-			if event[0:5] == "world":
-				selected = event[5]
-			if len(event) > 1:
-				if event[1] in ["1", "2", "3", "4", "6", "7", "8", "9"]:
-					#maps keys to worlds
-					selected = int(event[1])
-					if selected == 1:
-						selected = 6
-					elif selected == 2:
-						selected = 7
-					elif selected == 3:
-						selected = 8
-					elif selected == 6:
-						selected = 5
-					elif selected == 7:
-						selected = 1
-					elif selected == 8:
-						selected = 2
-					elif selected == 9:
-						selected = 3
-					selected = str(selected)
-		for elem in world_menu.menu.elems["buttons"]:
-			if elem.name == "world" + str(selected):
-				elem.state = 2
-				elem.blit(settings.screen)
+			if type(event) == str and event[0:5] == "world":
+				selected = event[-1]
+		selected_obj = world_menu.menu.get_obj("world" + str(selected))
+		if selected_obj is not None:
+			selected_obj.state = 2
+
 		pygame.display.flip()
 
 	pygame.mouse.set_visible(False)
@@ -351,8 +248,7 @@ def choose_world():
 
 def inputpopup(x, y, header):
 	"""Method for having an inputfield or selecting savegame"""
-	# as said takes and input and returns a string or returns
-	# savegame if header is saying so
+	# as said takes and input and returns a string
 
 	screen = settings.screen
 	fade = pygame.Surface((settings.screenx_current, settings.screeny_current))
@@ -369,15 +265,12 @@ def inputpopup(x, y, header):
 
 		screen.blit(fade, fade_pos)
 
-		if header == "Load Game":
-			text = savegames()
-			return text
 		settings.upd("get_events")
 
 		text = infield1.gettext(settings.events)
 
 		for event in settings.events:
-			if event.type == KEYDOWN:
+			if event.type == pygame.locals.KEYDOWN:
 				if pygame.key.name(event.key) == "escape":
 					return "Exit"
 
@@ -403,9 +296,10 @@ def savegames():
 		return None
 
 	# Defines Menu
-	settings_menu = menu_template("load", 0, 255, 255,
-			{"savename": list_of_saves[currently_selected]},
-			[])
+	settings_menu = menu.templates.complete_template(
+			"./assets/templates/load.json",
+			settings.screen, event_updater,
+			{"savename": list_of_saves[currently_selected]})
 
 	run = True
 	while run:
@@ -414,34 +308,34 @@ def savegames():
 		events = settings_menu.run()
 		for event in events:
 			# Exits savegame menu
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				run = False
 				return None
 			# Sets the current selected savegame to load
-			if event == "Load":
+			if event == "load":
 				return list_of_saves[currently_selected]
 			# Shows next savegame
-			if event == "Next":
+			if event == "next":
 				# Points to an later save
 				currently_selected += 1
 				# Wraps to the beginning to create a not ending loop
 				if currently_selected + 1 > D_saves:
 					currently_selected = currently_selected - D_saves
-				settings_menu = menu_template("load", 0, 255, 255,
-						{"savename": list_of_saves[currently_selected]},
-						[])
+				settings_menu = menu.templates.complete_template(
+						"./assets/templates/load.json", settings.screen, event_updater,
+						{"savename": list_of_saves[currently_selected]})
 				# Lets the button last longer in klicked mode
 				pygame.time.delay(50)
 			# Shows previous savegame
-			if event == "Previous":
+			if event == "previous":
 				# Points to an earlier save
 				currently_selected -= 1
 				# Wraps to the end to create a not ending loop
 				if currently_selected < 0:
 					currently_selected = D_saves + currently_selected
-				settings_menu = menu_template("load", 0, 255, 255,
-						{"savename": list_of_saves[currently_selected]},
-						[])
+				settings_menu = menu.templates.complete_template(
+						"./assets/templates/load.json", settings.screen, event_updater,
+						{"savename": list_of_saves[currently_selected]})
 				# Lets the button last longer in klicked mode
 				pygame.time.delay(50)
 
@@ -452,17 +346,20 @@ def savegames():
 def options():
 	"""The settings menu"""
 
-	button_size = menu.IO.read("./assets/templates/default.vars", "size")
-	# a conversion method between selector
-	# and actual text size
-	# found by trial and error
-	button_size = int(float(button_size) - 10) / 5
+	old_button_size = menu.IO.read("./assets/templates/default_vars.json", "size")
+	#to set value of slider 10 + (size * 5) is reversed
+	#    and converted to a value between 0 and 1 -> * (1 / 5.0)
+	old_button_size = (old_button_size - 10) / 25.0
+	#the centering is reversed and the value is converted into category index if
+	#    size is not changed so this is used
+	button_size = int(old_button_size * 5)
 
-	settings_menu = menu_template("settings", 0, 0, 255,
-			{"fullscreen": str(int(settings.fullscreen)),
-			"volume": str(settings.volume),
-			"button size": str(button_size)},
-			[])
+	settings_menu = menu.templates.complete_template(
+			"./assets/templates/settings.json",
+			settings.screen, event_updater,
+			{"fullscreen": int(settings.fullscreen),
+			"volume": settings.volume,
+			"button_size": old_button_size})
 
 	sounds.music.play("pause")
 	sounds.music.queue("$not$testsound.mp3", 0)
@@ -473,79 +370,61 @@ def options():
 
 		events = settings_menu.run()
 		for event in events:
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				pygame.mixer.music.pause()
 				sounds.music.play("unpause")
 				run = False
-			if event == "Volume":
-				sounds.music.volume = float(event)
-				settings.volume = float(event)
-			if event == "Fullscreen":
-				settings.fullscreen = bool(event)
-			if event == "Button Size":
-				button_size = int(event)
-				# a conversion method between selector
-				# and actual text size
-				# found by trial and error
-				menu.IO.write("./assets/templates/default.vars", "size",
-						10 + (5 * button_size))
-			if event == "Controls":
-				change_controlls()
-				settings_menu.update()
+			if event == "volume":
+				sounds.music.volume = event.value
+				settings.volume = event.value
+			if event == "fullscreen":
+				settings.fullscreen = bool(event.index)
+			if event == "button_size":
+				button_size = float(event.index)
+			if event == "controls":
+				change_controls()
+				settings_menu.update(settings.screen)
 
 		sounds.music.update(False, False)
 		pygame.display.flip()
 
-	# explanation of the 10 + (5 * …) is written in
-	# the Button Size handler in events loop
-	menu.IO.write("./assets/templates/default.vars", "size",
+	# 10 + (5 * button_size) is found by trial an error
+	menu.IO.write("./assets/templates/default_vars.json", "size",
 			10 + (5 * button_size))
-	menu.IO.write("./assets/templates/default.vars", "ratio", 1100)
 	settings.upd("adjust_screen")
 	game_data.save_user_settings(	volume=settings.volume,
+				size=10 + (5 * button_size),
 				buttonmap=settings.buttonmap)
+	overlay_handler.overlay.update()
 	pygame.mouse.set_visible(False)
 
 
-def change_controlls():
+def change_controls():
 
 	run = True
-	button_text = {}
-	curr_button_color = menu.IO.read("./assets/templates/default.vars", "color")
-	#Transfer "tuple" string to list type
-	curr_button_color = list(map(lambda x: int(x),
-				curr_button_color[1:-1].split(",")))
 
-	for i in list(settings.buttonmap):
-		button_text[i] = settings.buttonmap[i][0]
-		if len(settings.buttonmap[i]) < 2:
-			#TODO change it so that the buttons can be identified
-			button_text[i + "_sec"] = "not_set"
-		else:
-			button_text[i + "_sec"] = settings.buttonmap[i][1]
+	keymap = {}
+	for key in settings.buttonmap:
+		keymap[key] = settings.buttonmap[key][0]
+		keymap[key[:-4] + "_sec_key"] = settings.buttonmap[key][1]
 
-	controls_menu = menu_template("change_controls", 5, 5, 150, button_text, [])
+	controls_menu = menu.templates.complete_template(
+			"./assets/templates/change_controls.json",
+			settings.screen, event_updater, keymap)
 
 	while run:
 		events = controls_menu.run()
-
 		for event in events:
-			if event in ["event.EXIT", "event.QUIT", "Return"]:
+			if event in ["event.EXIT", "event.QUIT", "return"]:
 				run = False
 				break
-			for name in button_text:
-				pass
-				if button_text[str(name)] == event:
-					pressed = controls_menu.menu.get_elem(button_text[str(name)])
-					ratio = pressed.ratio
-					pressed.changetext("Press to change", curr_button_color, ratio)
-					controls_menu.run()
-					pygame.display.flip()
-					choose_button(button_text, name)
-					#pressed.changetext(button_text[i], curr_button_color, 3)
-					#TODO fix alpha
-					controls_menu = menu_template("change_controls", 0, 25, 150, button_text, [])
-					controls_menu.run()
+			if type(event) == str and event in keymap:
+				pressed = controls_menu.menu.get_obj(event)
+				pressed.change_text("Press to change")
+				controls_menu.run()
+				pygame.display.flip()
+				new_label = choose_button(keymap, str(event))
+				pressed.change_text(new_label)
 
 		pygame.display.flip()
 
@@ -554,21 +433,32 @@ def game_over():
 	settings.quit()
 
 
-def choose_button(button_text, key):
+def choose_button(key_map, key_name):
 	choose = True
 	while choose:
 		settings.upd("get_events")
 		for event in settings.events:
-			if event.type == QUIT:
-				quit()  # temporarily
-			if event.type == KEYDOWN:
-				pressed_key = pygame.key.name(event.key)
-				button_text[key] = None
-				if pressed_key in list(button_text.values()):
-					raise ValueError("Can't assign a key multible times")
-				choose = False
-				if key[-4:] == "_sec":
-					settings.buttonmap[key[:-4]][1] = pressed_key
+			if event.type == pygame.locals.QUIT:
+				return
+			if event.type == pygame.locals.KEYDOWN:
+
+				old_key = key_map[key_name]
+				new_key = pygame.key.name(event.key)
+				if new_key == " ":
+					new_key = "space"
+
+				if "_sec_" in key_name:
+					map_key = key_name.replace("_sec_", "_")
+					index = 1
 				else:
-					settings.buttonmap[key][0] = pressed_key
-				button_text[key] = pressed_key
+					map_key = key_name
+					index = 0
+
+				if new_key in list(key_map.values()):
+					new_key = old_key
+					print("Can't assign a key multible times")
+				settings.buttonmap[map_key][index] = new_key
+				key_map[key_name] = new_key
+
+				choose = False
+	return new_key
