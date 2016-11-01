@@ -163,8 +163,8 @@ class create_menu():
 				try:
 						data_in = get_data(self.merged_variables, data_in[1:])
 				except KeyError:
-					print ""
-					print self.merged_variables
+					print("")
+					print((self.merged_variables))
 					raise KeyError(data_in + " is not a variable.")
 				return data_in
 
@@ -229,7 +229,6 @@ class create_menu():
 			raise RuntimeError("I have no idea how this happend! : "
 					+ str(data_in) + " | " + str(expect_type))
 
-
 		default_font = {
 			"color": [0, 0, 0],
 			"font": "monospace",
@@ -271,7 +270,7 @@ class create_menu():
 					print(("Could not load image file: " + content))
 					print(("Using filename as text.\n"))
 			elif type(content) == pygame.Surface:
-				image = content.convert()
+				image = content.convert_alpha()
 				content = disp_elem.image("NONAME", image, {"NOPOSDATA": True})
 			else:
 				font_conf = get_data(button_data, "font_conf", default=default_font)

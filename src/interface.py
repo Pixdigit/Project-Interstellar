@@ -16,13 +16,10 @@ def init():
 	pass
 	#nothing to initialize
 
-"""Handles user input"""
-
 
 def handle():
 
-	# handles user input
-	#TODO: Add docs
+	"""Calls neccesary update functions"""
 
 	#If debugging is active, midi-events will be qued to event-list
 	midi_in.do()
@@ -120,13 +117,15 @@ def process_events():
 				if key == "h":
 					for target in settings.world.targets:
 						print((target.pos))
+				if key == "i":
+					overlay = overlay_handler.overlay.get_by_name("item_bar")
+					old_status = overlay.active
+					overlay.set_visability(not old_status)
 				#change item location
 				if key in [str(i + 1) for i in range(6)]:
-					new_pos = int(key) - 1
-					items_overlay = overlay_handler.overlay.objects["items"]
-					old_pos = items_overlay.get_item_pos("speed_boost")
-					if old_pos is not None:
-						overlay_handler.overlay.objects["items"].set_pos_of_item(old_pos, new_pos)
+					item_overlay = overlay_handler.overlay.get_by_name("item_bar")
+					item = item_overlay.rm_sub("speed_boost")
+					item_overlay.get_by_name("item_slot_" + key).set_sub(item)
 				#Numpad presses
 				#Switches between worlds
 				if len(key) == 3:
