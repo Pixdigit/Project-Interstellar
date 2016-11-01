@@ -112,6 +112,7 @@ class element_template():
 	def blit(self, screen):
 		screen.blit(self.img, self.pos)
 
+
 class complete_template():
 
 	def __init__(self, menu_config_path, screen, event_getter=pygame.event.get,

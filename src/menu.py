@@ -2,8 +2,8 @@
 from . import settings
 from . import namings
 from . import sounds
-from . import missions
 from . import game_data
+from . import overlay_handler
 from libs.pyganim import pyganim
 from libs import menu
 import pygame
@@ -133,7 +133,7 @@ def main():
 def pause():
 	"""pausing menu"""
 
-	missions.time("pause")
+	settings.time("pause")
 	sounds.music.play("pause")
 	pygame.mouse.set_visible(True)
 
@@ -174,7 +174,7 @@ def pause():
 				run = False
 		pygame.display.flip()
 	pygame.mouse.set_visible(False)
-	missions.time("start")
+	settings.time("start")
 
 
 def choose_world():
@@ -395,6 +395,7 @@ def options():
 	game_data.save_user_settings(	volume=settings.volume,
 				size=10 + (5 * button_size),
 				buttonmap=settings.buttonmap)
+	overlay_handler.overlay.update()
 	pygame.mouse.set_visible(False)
 
 
@@ -426,6 +427,10 @@ def change_controls():
 				pressed.change_text(new_label)
 
 		pygame.display.flip()
+
+
+def game_over():
+	settings.quit()
 
 
 def choose_button(key_map, key_name):

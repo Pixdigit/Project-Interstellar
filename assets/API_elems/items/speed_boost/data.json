@@ -1,6 +1,5 @@
 {
             "script": "./item.py", 
-            "caller": "player", 
             "name": "speed_boost", 
             "icon_path": "./images/icon.png"
 }
