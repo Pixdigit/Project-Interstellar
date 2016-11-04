@@ -124,4 +124,6 @@ def load_user_settings():
 		except:
 			pass
 	else:
+		if not os.path.exists("./userdata/"):
+			os.mkdir("./userdata/")
 		pass
