@@ -399,6 +399,41 @@ def options():
 	pygame.mouse.set_visible(False)
 
 
+def game_over():
+
+	points = settings.time("get_time")
+
+	alltargets = 0
+
+	for world in settings.localmap:
+		alltargets += len(settings.localmap[world].targets)
+	disp_targets = str(alltargets) + "/" + str(settings.dtargets * 8)
+
+	vars_ = {"time": str(points/1000) + "s", "targets": disp_targets}
+
+	endscreen = menu.templates.complete_template(
+			"./assets/templates/game_over.json",
+			settings.screen, event_updater, vars_)
+
+	run = True
+
+	while run:
+		events = endscreen.run()
+		for event in events:
+			if event in ["exit", "event.EXIT", "event.QUIT"]:
+				settings.quit()
+
+			if event == "retry":
+				settings.reset()
+				sounds.music.play("next")
+				run = False
+			if event == "main_menu":
+				run = False
+				main()
+
+		pygame.display.flip()
+
+
 def change_controls():
 
 	run = True
@@ -427,10 +462,6 @@ def change_controls():
 				pressed.change_text(new_label)
 
 		pygame.display.flip()
-
-
-def game_over():
-	settings.quit()
 
 
 def choose_button(key_map, key_name):

@@ -70,14 +70,16 @@ def player_hit_by_explosion():
 
 	# need to be globals so it is are preserved everytime this is called
 	global running
+	if "running" not in globals():
+		running = True
 
 	for explosion in settings.explosions_disp:
 		distance = math.sqrt(
 				(explosion.pos.centerx - settings.player.pos.centerx) ** 2
 				+ (explosion.pos.centery - settings.player.pos.centery) ** 2)
 
-		if distance <= 20 and (not ("running" in globals())):
-			running = "Wow this variable exists"
+		if distance <= 20 and running:
+			running = False
 			settings.player.explode()
 	if settings.player.explosion_anim is not None:
 		if (settings.player.explosion_anim.state in ["paused", "stopped"]
@@ -87,4 +89,6 @@ def player_hit_by_explosion():
 
 def play_failed_sequence():
 
+	global running
+	running = True
 	menu.game_over()
