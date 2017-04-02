@@ -85,7 +85,7 @@ def debug():
 	speed = "(" + str(round(move_x, 3)) + ", " + str(round(move_y, 3)) + ")"
 	pos = ("(" + str(pos_x) + ", " + str(pos_y) + ")")
 	fps = str(math.floor(clock.get_fps()))
-	time = "time scince start: " + str(missions.time("get_time"))
+	time = "time scince start: " + str(settings.time("get_time"))
 	pixpos = "(" + str(player_pos.left) + ", " + str(player_pos.top) + ")"
 	entitys = "Entitys: " + str(objects_on_screen)
 
