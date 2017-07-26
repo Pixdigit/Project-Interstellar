@@ -3,17 +3,13 @@ import pygame
 import math
 from . import settings
 from . import sounds
-from . import missions
 from . import overlay_handler
-from pygame.locals import *
-
-"""Blits everything and flips screen"""
+from pygame.locals import USEREVENT
 
 
 def init():
 	"""Some variable initializing"""
 	# nothing to explain here
-	global playerup
 	global alpha
 	global no16to9
 	global correcture
@@ -29,7 +25,7 @@ def init():
 		delta_screeny = (settings.screeny_current
 				- (settings.screenx_current * 9.0 / 16))
 		correcture = pygame.Surface((settings.screenx_current, delta_screeny)
-					).convert_alpha()
+										).convert_alpha()
 		correcture_pos = correcture.fill((0, 0, 0))
 		correcture.set_alpha(255)
 		correcture_pos.topleft = (0, (settings.screenx_current * 9.0 / 16))
@@ -138,7 +134,6 @@ def drawsongname():
 	global show
 	global songname
 	global font_pos
-	global musics
 	global alpha
 
 	screenx = settings.screenx_current
@@ -164,7 +159,7 @@ def drawsongname():
 				alpha -= 1.6
 			try:
 				songname.set_alpha(int(alpha))
-			except:
+			except Exception:
 				pass
 				# Timing error is not important
 

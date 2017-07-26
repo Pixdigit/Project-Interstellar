@@ -18,8 +18,8 @@ def save(name):
 	if "%" in name:
 		name = name.replace("%", "")
 
-	if not os.path.isdir("./saves/%s/" % name):
-		os.makedirs("./saves/%s/" % name)
+	if not os.path.isdir("./saves/" + name + "/"):
+		os.makedirs("./saves/" + name + "/")
 
 	all_world_data = {}
 	world_image = {}
@@ -59,10 +59,8 @@ def save(name):
 
 def save_user_settings(**args):
 	path = "./userdata/user_settings.json"
-	settings_file = open(path, "w")
-	json.dump(args, settings_file, indent=12)
-	settings_file.close()
-
+	with open(path, "w") as settings_file:
+		json.dump(args, settings_file, indent=12)
 
 def load(name):
 	"""Load savegame"""
@@ -110,13 +108,13 @@ def load(name):
 
 def load_user_settings():
 	if os.path.exists("./userdata/user_settings.json"):
-		settings_file = open("./userdata/user_settings.json", "r")
-		setting = json.load(settings_file)
-		settings_file.close()
+		with open("./userdata/user_settings.json", "r") as settings_file:
+			setting = json.load(settings_file)
 
 		try:
 			settings.volume = setting["volume"]
 			sounds.music.volume = setting["volume"]
+			sounds.music.update()
 		except:
 			pass
 		try:
@@ -126,4 +124,3 @@ def load_user_settings():
 	else:
 		if not os.path.exists("./userdata/"):
 			os.mkdir("./userdata/")
-		pass

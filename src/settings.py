@@ -308,12 +308,12 @@ def time(action):
 	if action == "pause":
 		oldtime = newtime
 		newtime = pygame.time.get_ticks()
-		player.timeplay += newtime - oldtime  # lint:ok
+		player.timeplay += newtime - oldtime
 	if action == "start":
 		oldtime = pygame.time.get_ticks()
 		newtime = pygame.time.get_ticks()
 	if action == "get_time":
-		return pygame.time.get_ticks() - oldtime + player.timeplay  # lint:ok
+		return pygame.time.get_ticks() - oldtime + player.timeplay
 
 
 def default_buttonmap():
