@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from . import settings
+from . import busses
+from . import constants
+from libs import clock
 
 """This handles the movement of nearly everything"""
 
 
 def init():
 	"""Initzializing variables"""
-	global background_pos
-	global draw
-
-	background_pos = settings.world.background_pos
-	background_pos.left = -(settings.player.pos.left / 7.0) - 1
-	background_pos.top = -(settings.player.pos.top / 7.0) - 1
+	busses.schedules_bus["physics"] = clock.schedule(handle, constants.pyhsics_update_delay)
 
 
 def handle():

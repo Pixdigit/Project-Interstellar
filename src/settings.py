@@ -6,61 +6,63 @@ import os
 import shutil
 import sys
 import random
+from . import iface
+from . import constants as const
 
 
 def init():
 
-	global up  # player should move up
-	global down  # player should move down
-	global left  # player should move left
-	global right  # player should move right
-	global konstspeed  # some konstant for speed
+	#global up  # player should move up
+	#global down  # player should move down
+	#global left  # player should move left
+	#global right  # player should move right
+	#global konstspeed  # some konstant for speed
 	global clock  # clock object of pygame
-	global stdfont  # global font defenition
-	global typeface  # the typeface...
-	global fullscreen  # determines current state if fullscreen or not
-	global fullscreenold  # used to check if fullscreen has changes
+	#global stdfont  # global font defenition
+	#global typeface  # the typeface...
+	#global fullscreen  # determines current state if fullscreen or not
+	#global fullscreenold  # used to check if fullscreen has changes
 	global screen  # the screen
-	global screenx  # maximum x pixels
-	global screeny  # maximum y pixels
+	#global screenx  # maximum x pixels
+	#global screeny  # maximum y pixels
 	global aspect_ratio  # aspect ratio
-	global screenx_current  # current x pixels
-	global screeny_current  # current y pixels
+	#global screenx_current  # current x pixels
+	#global screeny_current  # current y pixels
 	global fake_size  # the ratio of screenx_current and size of the background
 	global bullets  # list of all bullets
 	global dstars  # amount of stars
 	global debugscreen  # determines wether to show debug info
 	global debugmode  # Enables debugmode
 	global isnear  # easteregg
-	global background  # background image
-	global field  # image for the inputfield
-	global bullet_img  # image for the bullet
-	global targeton_img  # surf for target whenlight turned on
-	global targetoff_img  # surf for target when turned off
-	global border1  # A box to hold the status information about energy level
-	global item_bar_image  # The background for items in the itembar
+	#global background  # background image
+	#global field  # image for the inputfield
+	#global bullet_img  # image for the bullet
+	#global targeton_img  # surf for target whenlight turned on
+	#global targetoff_img  # surf for target when turned off
+	#global border1  # A box to hold the status information about energy level
+	#global item_bar_image  # The background for items in the itembar
 	global code  # used for custom user events
 	global events  # events
 	global buttonmap  # dict containing the mapping of the userinputs
 	global music  # the music playlist object
-	global color  # global color defenition
+	#global color  # global color defenition
 	global skip  # unsused (currently)
 	global volume  # volume
 	global musics  # the list of music titles assoziated wih the music files
 	global saves  # all savegames
 	global psycomode  # if psycomode is turned on
-	global explosions  # list of surfs of explosions
+	#global explosions  # list of surfs of explosions
 	global explosions_disp  # list of showing explosions
-	global run  # boolean for main loop
-	global dtargets  # amount of targets
+	#global run  # boolean for main loop
+	#global dtargets  # amount of targets
 	global morevents  # custom event logger
-	global infinitevents  # A event logger which retriggers as long as condition
-	global musicend  # custom event number to show that music ended
+	#global infinitevents  # A event logger which retriggers as long as condition
+	#global musicend  # custom event number to show that music ended
 	global world  # a placeholder for the world class
 	global objects_on_screen  # entitys currently blitted to screen
 	global player  # abstract player class
 	global localmap  # A dict of the local worlds
-	global loading_time  # time until first blit
+	#global loading_time  # time until first blit
 	global seed  # the environments seed
 
 	# for this operation os.urandom is used
@@ -72,111 +74,103 @@ def init():
 	pygame.event.set_grab(False)
 	pygame.mouse.set_visible(False)
 
-	screenx = pygame.display.Info().current_w
-	screeny = pygame.display.Info().current_h
-	pygame.display.set_mode((1, 1))
+	iface.screen_conf["screenx"] = pygame.display.Info().current_w
+	iface.screen_conf["screeny"] = pygame.display.Info().current_h
+	screenx = iface.screen_conf["screenx"]
+	screeny = iface.screen_conf["screeny"]
 	aspect_ratio = screenx / float(screeny)
-	screenx_current = screenx
-	screeny_current = screeny
+	#TODO: is this needed?
+	iface.screen_conf["screenx_current"] = screenx
+	iface.screen_conf["screenx_current"] = screeny
+
+	#TODO: What does this do?
+	pygame.display.set_mode((1, 1))
+
 
 	# create empty folders if needed
 	if not os.path.exists("./assets/sprites/player/"):
 		os.makedirs("./assets/sprites/player/")
 	if not os.path.exists("./screenshots/"):
 		os.makedirs("./screenshots/")
+	if not os.path.exists("./userdata/"):
+		os.makedirs("./userdata/")
 
-	# load images and convert them to the fatest blittable format
-	background = pygame.image.load("./assets/sprites/Background2.tif").convert()
-	field = pygame.image.load("./assets/sprites/inputbox1.tif").convert_alpha()
-	bullet_img = pygame.image.load("./assets/sprites/Bullet.tif").convert_alpha()
-	targeton_img = pygame.image.load("./assets/sprites/mine_on.tif"
-				).convert_alpha()
-	targetoff_img = pygame.image.load("./assets/sprites/mine_off.tif"
-				).convert_alpha()
-	border1 = pygame.image.load("./assets/sprites/bar1.tif").convert_alpha()
-	item_bar_image = pygame.image.load("./assets/sprites/item_bar.tif")
 
+	#TODO: What is the clock good for?
 	# define some konstants or default values
 	clock = pygame.time.Clock()
-	typeface = "monospace"
-	stdfont = pygame.font.SysFont(typeface, 15)
 
-	version = "0.3.3.1 dev"
-	up = False
-	down = False
-	left = False
-	right = False
-	konstspeed = 0.0025
-	fullscreen = False
+	#TODO figure out how to restucture
+	#up = False
+	#down = False
+	#left = False
+	#right = False
+
+	#TODO: Where do I move this?
 	debugscreen = False
 	debugmode = True
-	dstars = 500
+
+	#TODO WHAT?
 	isnear = "False"
 	code = ""
-	events = []
+
+	#TODO Where?
 	buttonmap = default_buttonmap()
-	color = (255, 255, 10)
+
 	skip = False
+	#TODO Define interface for this
 	volume = 0.5
-	fullscreenold = False
+
+	#TODO What exactly is this? Put in constants
 	fake_size = 8 / 7.0
+
+	#TODO What and Where? | Maybe infinitevents?
 	psycomode = False
-	run = True
-	dtargets = 5
+
+	#TODO Check if this is still ok-isch practise
 	morevents = []
+
+	#TODO Make this part of the world interface
 	bullets = []
-	infinitevents = {"fire1": False, "roundfire": False}
-	musicend = USEREVENT + 100
-	events = []
+
+	#TODO why is this even needed?
 	loading_time = 0
 
+	fullscreen = iface.screen_conf["fullscreen"]
 	if fullscreen:
-		screen = pygame.display.set_mode(
-			(screenx_current, screeny_current),
-			pygame.FULLSCREEN, 32)
-	if not fullscreen:
-		screenx_current = int(screenx_current * 0.9)
+		iface.screen_conf["screen"] = pygame.display.set_mode(  (0, 0),
+																pygame.FULLSCREEN,
+																32)
+	else:
+		scale_factor = 0.9
+	 	screenx_current = int(iface.screen_conf["screenx"] * scale_factor)
 		screeny_current = int(screenx_current * 9.0 / 16)
-		screen = pygame.display.set_mode((screenx_current, screeny_current),
-		0, 32)
+		iface.screen_conf["screen"] = pygame.display.set_mode((screenx_current, screeny_current))
+		iface.screen_conf["screenx_current"] = screenx_current
+		iface.screen_conf["screenx_current"] = screeny_current
 
-	pygame.display.set_caption("Project Interstellar " + version)
+
+	pygame.display.set_caption("Project Interstellar " + const.version)
 	pygame.display.set_icon(pygame.image.load("./assets/sprites/logo.png"))
 
-	# more complex default settings like creation of stars and targets and so on
-	if debugmode:
-		# Add custom handler here for when debugmode is activated
-		volume = 0.0
-		# fullscreen = False
-		pass
+	if const.debugmode:
+		iface.sound_conf["volume"] = 0.0
+		fullscreen = False
 
+	#TODO DO THIS RIGHT
 	explosions_disp = []
-	explosions = []
-	for a in range(3):
-		this_width = 128
-		this_height = 128
-		if a == 2:
-			this_width = 96
-			this_height = 96
-		num = str(a + 9)
-		if a == 0:
-			num = "0" + num
-		explosion_files = pyganim.getImagesFromSpriteSheet(
-							"./assets/sprites/explosions/expl_" + num + ".png",
-							width=this_width, height=this_height)
-		explosion_attr = [(anim_file, 40) for anim_file in explosion_files]
-		explosions.append(pyganim.PygAnimation(explosion_attr, loop=False))
 
+	#TODO make long due change to upd
 	upd("get_saves")
 
-	old_img_size = item_bar_image.get_size()
-	new_x_size = screenx_current / 3
+	old_img_size = const.item_bar_image.get_size()
+	new_x_size = iface.sound_conf["screenx_current"] / 3
 	new_y_size = int(old_img_size[1] * (float(new_x_size) / old_img_size[0]))
 	item_bar_image = pygame.transform.smoothscale(item_bar_image,
 					(new_x_size, new_y_size))
 
-	from .player import player as player
-	player = player()
+	from .player import player as create_player
+	player = create_player()
 
 	from . import worlds
 	localmap = {}
@@ -207,17 +201,17 @@ def reset():
 	pygame.event.set_grab(False)
 	pygame.mouse.set_visible(False)
 
-	player.reset()  # lint:ok
+	player.reset()
 
 	konstspeed = 0.0025
 	color = (255, 255, 10)
 
 	time("start")
 
-	if debugmode:  # lint:ok
-		fullscreen = False  # lint:ok
+	if debugmode:
+		fullscreen = False
 
-	world.generate(world.background, dstars, dtargets)  # lint:ok
+	world.generate(world.background, dstars, dtargets)
 
 
 def upd(level):

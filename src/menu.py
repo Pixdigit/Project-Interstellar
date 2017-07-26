@@ -31,7 +31,7 @@ class fade_screen():
 		screen.blit(self.fade, pygame.Rect(0, 0, 0, 0))
 
 	def update(self, screenx, screeny):
-		self.__init__(self.step, self.max_alpha, screenx, screeny)
+		self.__init__(self.step, self.step2, self.max_alpha, screenx, screeny)
 
 
 def event_updater():

@@ -11,7 +11,7 @@ class timer():
 		get_time() returns the time since start() was called minus paused time.
 		Calling start() mulitple times has no effect if state has not changed.
 	"""
-
+	
 	def __init__(self):
 		self.start_time = time.time()
 		self.paused_start = self.start_time

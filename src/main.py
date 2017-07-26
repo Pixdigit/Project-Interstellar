@@ -5,6 +5,9 @@ Controlls the general flow.
 """
 
 import pygame
+from . import constants
+from . import iface
+from . import busses
 from . import movement
 from . import settings
 from . import interface
@@ -18,9 +21,6 @@ from . import items
 from . import overlay_handler
 from . import game_data
 from pygame.locals import USEREVENT
-
-# Starts timer/clock for the movement, so it stays constant
-pygame.time.set_timer(USEREVENT + 1, 25)
 
 # initialize all variables for the modules
 settings.init()
